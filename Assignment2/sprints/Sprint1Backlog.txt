@@ -3,15 +3,28 @@ October 21 to October 27
 
 User Stories from Product Backlog that we will address in this sprint:
 a) As a user, I want to access a shell that's connected to a storage system.
-b) As a user, I want to exit the shell when I am finished with it.
-c) As a user, I want to create new directories in storage, so I may use then for storage in the future.
-d) As a user, I want to change the current directory of the shell to another, so I may work in the directory I desire.
-e) As a user, I want the shell to print the contents of the current directory.
-f) As a user, I want the shell to print the current directory, so I know where I'm working in.
+b) As a user, I want the shell to be able to interpret my messages so it can manipulate the storage system.
+c) As a user, I want to exit the shell when I am finished with it.
+d) As a user, I want to create new directories in storage, so I may use then for storage in the future.
+e) As a user, I want to change the current directory of the shell to another, so I may work in the directory I desire.
+f) As a user, I want the shell to print the contents of the current directory.
+g) As a user, I want the shell to print the current directory, so I know where I'm working in.
 
 Specific tasks to be accomplished:
-a-1. 
-
+a-1. (Shell) Write base code for Shell class, which should have a root directory and current directory
+b-1. (Interpreter) Write base code for Interpreter class
+b-1. (ShellCommand) Write base code for ShellCommand class
+b-1. (Shell) Have shell prompt the user for input
+c-1. (Exit) Write base code for Exit class
+d-1. (Directory) Write base code for Directory class
+d-2. (MakeDirectory) Write base code for MakeDirectory class
+d-2. (MakeDirectory) Have MakeDirectory make a new directory in the shell's storage system
+e-1. (ChangeCurrentDirectory) Write base code for ChangeCurrentDirectory class
+e-1. (Shell) Have the shell be able to change its current directory
+f-1. (ListFiles) Write base code for ListFiles class
+f-1. (ListFiles) Have ListFiles tell the shell the files of the current directory 
+g-1. (PrintCurrentDirectory) Write base code for PrintCurrentDirectory class
+g-2. (PrintCurrentDirectory) Have PrintCurrentDirectory tell the shell the current directory
 
 These tasks are assigned as follows:
 
