@@ -14,19 +14,19 @@ h) As a user, I want the shell to print the current directory, so I know where I
 Specific tasks to be accomplished:
 a-1. (Shell) Write base code for Shell class, which should have a root directory and current directory
 b-1. (Interpreter) Write base code for Interpreter class
-b-1. (ShellCommand) Write base code for ShellCommand class
-b-1. (Shell) Have shell prompt the user for input
+b-2. (ShellCommand) Write base code for ShellCommand class
+b-3. (Shell) Have shell continually prompt for input
 c-1. (Shell) Have a method of the shell that allows it to print specific lines.
-c-1. (PrintCommand) Write base code for PrintCommand
-c-1. (PrintCommand) Have PrintCommand be able to feed the Shell certain lines.
+c-2. (PrintCommand) Write base code for PrintCommand
+c-3. (PrintCommand) Have PrintCommand be able to feed the Shell certain lines.
 d-1. (Exit) Write base code for Exit class
 e-1. (Directory) Write base code for Directory class
 e-2. (MakeDirectory) Write base code for MakeDirectory class
-e-2. (MakeDirectory) Have MakeDirectory make a new directory in the shell's storage system
+e-3. (MakeDirectory) Have MakeDirectory make a new directory in the shell's storage system
 f-1. (ChangeCurrentDirectory) Write base code for ChangeCurrentDirectory class
-f-1. (Shell) Have the shell be able to change its current directory
+f-2. (Shell) Have the shell be able to change its current directory
 g-1. (ListFiles) Write base code for ListFiles class
-g-1. (ListFiles) Have ListFiles tell the shell the files of the current directory 
+g-2. (ListFiles) Have ListFiles tell the shell the files of the current directory
 h-1. (PrintCurrentDirectory) Write base code for PrintCurrentDirectory class
 h-2. (PrintCurrentDirectory) Have PrintCurrentDirectory tell the shell the current directory
 
