@@ -1,0 +1,28 @@
+October 21 to October 27
+
+
+User Stories from Product Backlog that we will address in this sprint:
+a) As a user, I want to access a shell that's connected to a storage system.
+b) As a user, I want to exit the shell when I am finished with it.
+c) As a user, I want to create new directories in storage, so I may use then for storage in the future.
+d) As a user, I want to change the current directory of the shell to another, so I may work in the directory I desire.
+e) As a user, I want the shell to print the contents of the current directory.
+f) As a user, I want the shell to print the current directory, so I know where I'm working in.
+
+Specific tasks to be accomplished:
+a-1. 
+
+
+These tasks are assigned as follows:
+
+User: Collin Chan
+Tasks:
+
+User: Jeff He
+Tasks:
+
+User: Nevin Wong
+Tasks:
+
+User: David Huynh
+Tasks:
