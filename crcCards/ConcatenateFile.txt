@@ -1,0 +1,13 @@
+Class name: ConcatenateFile
+Parent class (if any): PrintCommand
+Subclasses (if any): 
+
+Responsibilities:
+* Print text content of files into the shell client
+* Report errors if file is inaccessible
+
+Collaborators:
+* PrintError
+* GetWorkingDirectory
+* Directory
+* File

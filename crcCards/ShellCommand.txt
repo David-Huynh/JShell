@@ -1,0 +1,10 @@
+Class name: ShellCommand
+Parent class (if any): 
+Subclasses (if any): ChangeDirectory, TransferFile, Echo, GetURL, ListFiles, MakeDirectory, Exit, PrintCommand
+
+Responsibilities:
+* Perform a specific user induced command
+* If the commmand cannot be carried out for any reason, report errors to be printed by the shell
+
+Collaborators:
+* PrintError

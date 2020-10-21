@@ -1,0 +1,9 @@
+Class name: Interpreter
+Parent class (if any): 
+Subclasses (if any): 
+
+Responsibilities:
+* Interpret user commands and call the appropriate command with the interpreted user arguments to perform the desired outcomes
+
+Collaborators:
+* ShellCommand

@@ -1,0 +1,11 @@
+Class name: Storage
+Parent class (if any): 
+Subclasses (if any): 
+
+Responsibilities:
+* Acts as a root directory
+* Contains a collection of Directories and Files (these ones are at the root)
+
+Collaborators:
+* Directory
+* File

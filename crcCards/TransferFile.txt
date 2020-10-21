@@ -1,0 +1,9 @@
+Class name: TransferFile
+Parent class (if any): ShellCommand
+Subclasses (if any): MoveFile, CopyFile
+
+Responsibilities:
+* Differentiate between a full path or a path relative to current directory
+* Provide errors if file/directory or directory is inaccessible
+
+Collaborators:
