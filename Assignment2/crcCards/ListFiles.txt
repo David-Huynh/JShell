@@ -1,0 +1,11 @@
+Class name: ListFiles
+Parent class (if any): ShellCommand
+Subclasses (if any): 
+
+Responsibilities:
+* Know the current working directory
+* Print each separate file or directory within current working directory with a break line separating each one
+
+Collaborators:
+* GetWorkingDirectory
+* Directory

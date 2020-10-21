@@ -1,0 +1,10 @@
+Class name: PrintCommand
+Parent class (if any): ShellCommand
+Subclasses (if any): PrintError, PrintWorkingDirectory, ConcatenateFile
+
+Responsibilities:
+* Tell the ShellClient what data to print to the interface
+* If the print command cannot be carried out for any reason, provide errors to be printed
+
+Collaborators:
+* ShellClient

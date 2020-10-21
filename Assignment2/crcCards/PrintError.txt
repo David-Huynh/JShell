@@ -1,0 +1,9 @@
+Class name: PrintError
+Parent class (if any): PrintCommand
+Subclasses (if any): 
+
+Responsibilities:
+* Print error messages on the command line
+* Print errors that were thrown by the OS
+
+Collaborators:
