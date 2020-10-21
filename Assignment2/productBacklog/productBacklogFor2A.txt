@@ -2,6 +2,7 @@ User Stories                                                                    
 
 As a user, I want to access a shell that's connected to a storage system.                                                       3 days
 As a user, I want the shell to be able to interpret my messages so it can manipulate the storage system.                        2 days
+As a user, I want the shell to be able to print messages to the screen.                                                         2 days
 As a user, I want the shell to print error messages whenever I cannot perform a desired task so I know what went wrong.         4 days
 As a user, I want to exit the shell when I am finished with it.                                                                 1 day
 As a user, I want to create new directories in storage, so I may use then for storage in the future.                            2 days
