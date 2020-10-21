@@ -35,6 +35,7 @@ g-1. (ListFiles) Write base code for ListFiles class
 g-2. (ListFiles) Have ListFiles tell the shell the files of the current directory
 h-1. (PrintCurrentDirectory) Write base code for PrintCurrentDirectory class
 h-2. (PrintCurrentDirectory) Have PrintCurrentDirectory tell the shell the current directory
+i-1: (File) Create base code for file class
 
 These tasks are assigned as follows:
 
