@@ -43,18 +43,20 @@ public class JShell {
 		this.isActive = true;
 	}
 
-	public void exit() {
+	public void exit() { // Exit class calls this
 		this.isActive = false;
 	}
-
-	public void run() {
+	
+	public void run() { // continually prompts the user for input and sends to
+						// Interpreter
 		String userCommand;
 		while (this.isActive == true) {
 			Scanner userInput = new Scanner(System.in);
 			userCommand = userInput.nextLine();
+			Interpreter.interpret(userCommand, this);
 		}
 	}
-	
+
 	public static void main(String[] args) {
 		JShell shell = new JShell();
 		shell.run();
