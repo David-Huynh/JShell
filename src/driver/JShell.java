@@ -31,9 +31,15 @@ package driver;
 
 public class JShell {
 
-  public static void main(String[] args) {
-    // TODO Auto-generated method stub
+	private Directory rootDir; // root directory stores everything 
+	private Directory currentDir;
 
-  }
-
+	public JShell() { // Shell instance initializer 
+		this.rootDir = new Directory();
+		this.currentDir = this.rootDir; // by default current directory is root
+	}
+	
+	public static void main(String[] args) {
+		JShell shell = new JShell();
+	}
 }
