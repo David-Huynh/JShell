@@ -29,17 +29,30 @@
 // *********************************************************
 package driver;
 
+import java.util.Scanner;
+
 public class JShell {
 
-	private Directory rootDir; // root directory stores everything 
+	private Directory rootDir; // root directory stores everything
 	private Directory currentDir;
+	private boolean isActive; // turn this off if user wants to exit
 
-	public JShell() { // Shell instance initializer 
+	public JShell() { // Shell instance initializer
 		this.rootDir = new Directory();
 		this.currentDir = this.rootDir; // by default current directory is root
+		this.isActive = true;
 	}
-	
+
+	public void exit() {
+		this.isActive = false;
+	}
+
 	public static void main(String[] args) {
 		JShell shell = new JShell();
+		String userCommand;
+		while (shell.isActive == true) {
+			Scanner userInput = new Scanner(System.in);
+			userCommand = userInput.nextLine();
+		}
 	}
 }
