@@ -47,12 +47,16 @@ public class JShell {
 		this.isActive = false;
 	}
 
-	public static void main(String[] args) {
-		JShell shell = new JShell();
+	public void run() {
 		String userCommand;
-		while (shell.isActive == true) {
+		while (this.isActive == true) {
 			Scanner userInput = new Scanner(System.in);
 			userCommand = userInput.nextLine();
 		}
+	}
+	
+	public static void main(String[] args) {
+		JShell shell = new JShell();
+		shell.run();
 	}
 }
