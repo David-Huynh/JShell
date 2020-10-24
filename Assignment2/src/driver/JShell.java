@@ -46,7 +46,11 @@ public class JShell {
 	public void exit() { // Exit class calls this
 		this.isActive = false;
 	}
-	
+
+	public void print(String message) {
+		System.out.print(message);
+	}
+
 	public void run() { // continually prompts the user for input and sends to
 						// Interpreter
 		String userCommand;
