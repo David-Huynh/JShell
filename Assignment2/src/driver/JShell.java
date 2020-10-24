@@ -54,7 +54,7 @@ public class JShell {
 	public void run() { // continually prompts the user for input and sends to
 						// Interpreter
 		String userCommand;
-		while (this.isActive == true) {
+		while (this.isActive) {
 			Scanner userInput = new Scanner(System.in);
 			userCommand = userInput.nextLine();
 			Interpreter.interpret(userCommand, this);
