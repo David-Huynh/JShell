@@ -7,9 +7,23 @@ public class Directory extends StorageUnit {
 	private ArrayList<StorageUnit> contents = new ArrayList<StorageUnit>();
 
 	public ArrayList<StorageUnit> getDirContents() {
-		ArrayList<StorageUnit> temp = new ArrayList<StorageUnit>();
-		temp = contents;
-		return temp;
+		return contents;
+	}
+
+	public void addFile(StorageUnit fileName) {
+		contents.add(fileName);
+	}
+
+	public void delFile(StorageUnit fileName) {
+		contents.remove(fileName);
+	}
+
+	public String getDirName() {
+		return this.name;
+	}
+
+	public void setDirName(String name) {
+		this.name = name;
 	}
 
 }
