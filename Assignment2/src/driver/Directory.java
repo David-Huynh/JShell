@@ -1,13 +1,14 @@
 package driver;
 
+import java.util.ArrayList;
+
 public class Directory extends StorageUnit {
 
-	private StorageUnit[] contents = {};
-	// hey collin i think it would be better if its an arraylist instead of an
-	// array bc the length of an array is immutable
-	public StorageUnit[] getDirContents() {
-		StorageUnit[] temp = contents;
+	private ArrayList<StorageUnit> contents = new ArrayList<StorageUnit>();
 
+	public ArrayList<StorageUnit> getDirContents() {
+		ArrayList<StorageUnit> temp = new ArrayList<StorageUnit>();
+		temp = contents;
 		return temp;
 	}
 
