@@ -1,5 +1,5 @@
 package driver;
 
-public class MakeDirectory {
+public class MakeDirectory extends ShellCommand {
 
 }
