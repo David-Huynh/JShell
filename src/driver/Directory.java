@@ -1,13 +1,14 @@
 package driver;
 
-public class Directory {
+public class Directory extends StorageUnit {
 
-  private String [] contents = {};
+	private StorageUnit[] contents = {};
+	// hey collin i think it would be better if its an arraylist instead of an
+	// array bc the length of an array is immutable
+	public StorageUnit[] getDirContents() {
+		StorageUnit[] temp = contents;
 
-  public String [] getDirContents() {
-    String [] temp = contents;
-
-    return temp;
-  }
+		return temp;
+	}
 
 }
