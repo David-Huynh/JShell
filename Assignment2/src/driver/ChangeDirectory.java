@@ -20,9 +20,11 @@ public class ChangeDirectory extends ShellCommand {
             if (contents.get(j).getClass().getSimpleName().equals("Directory")) {
               currDir.setParentDir(currDir);
               currDir = (Directory) contents.get(j);
+              shell.setCurrentDir(currDir);
             }
           } else {
             System.out.println("cd: no such directory: "+directories[i]);
+            return;
           }
         }
       }
