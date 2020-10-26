@@ -22,9 +22,9 @@ public class MakeDirectory extends ShellCommand {
   private static void makeDir(Directory currDir, String [] dir) {
     for (int i = 0; i < dir.length; i++) {
       if (i+1 == dir.length) {
-        //create directory
         Directory newDir = new Directory();
         newDir.name = dir[i];
+        currDir.addFile(newDir);
         newDir.setParentDir(currDir);
       } else {
         if (dir[i].equals("..") || dir[i].equals(".")) {
