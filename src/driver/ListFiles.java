@@ -9,7 +9,7 @@ public class ListFiles {
     String[] parameters = parameter.split(" "); //Split parameter into array of parameters, 
                                                 //with each individual element being an individual file/directory
     
-    if(parameter.equals("")) //Case 1: ls was called with no parameter, list files of current directory
+    if(parameter.equals("")) //Case 1: Called with no parameters, list files of current directory
     {
       List(shell.currentDir);
     }
