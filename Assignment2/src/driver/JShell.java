@@ -43,6 +43,10 @@ public class JShell {
 		this.isActive = true;
 	}
 
+	public Directory getCurrentDir() {
+		return this.currentDir;
+	}
+	
 	public void exit() { // Exit class calls this
 		this.isActive = false;
 	}
