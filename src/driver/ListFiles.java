@@ -2,18 +2,27 @@ package driver;
 
 import java.util.ArrayList;
 
-public class ListFiles {
+public class ListFiles extends ShellCommand{
   
-  public static void performOutcome(JShell shell, String parameter)
+  public static void performOutcome(JShell shell, String[] parameters)
   {
-    String[] parameters = parameter.split(" "); //Split parameter into array of parameters, 
-                                                //with each individual element being an individual file/directory
     
-    if(parameter.equals("")) //Case 1: Called with no parameters, list files of current directory
+    if(parameters.length == 1) //Case 1: Called with no parameters, list files of current directory
     {
       List(shell.getCurrentDir());
     }
-    
+    else
+    {
+      for(int i = 1; i < parameters.length; i++)
+      {
+        //Check if list element is directory
+          //Print directory name + ':'
+          //Print directory contents
+        
+        //Check if list element is file
+          //Print file name
+      }
+    }
   }
   
   public static void List(Directory currentDirectory) //Function used to print all files in directory
