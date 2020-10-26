@@ -4,8 +4,8 @@ Subclasses (if any):
 
 Responsibilities:
 * Report errors if user tries to change to forbidden directories
-* Change the CurrentDirectory to the user-specified one 
+* Change the current directory of JShell to the user-specified one 
 * Differentiate between a full path or a path relative to current directory
 
 Collaborators:
-* CurrentDirectory
+* JShell

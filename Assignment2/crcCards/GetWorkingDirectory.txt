@@ -3,9 +3,9 @@ Parent class (if any): None
 Subclasses (if any): None
 
 Responsibilities:
-* Find the current working directory in the Storage the ShellClient is working in
+* Find the current working directory in the Storage the JShell is working in
 
 Collaborators:
-* ShellClient
+* JShell
 * Storage
 * Directory

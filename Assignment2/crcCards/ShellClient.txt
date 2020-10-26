@@ -1,16 +1,15 @@
-Class name: ShellClient
+Class name: JShell
 Parent class (if any): 
 Subclasses (if any): 
 
 Responsibilities:
 * Provide the user an interface in which to enter commands to modify the file system
 * Send entered commands for Interpreter to interpret
-* Has a specific Storage area the user works in
-* Keep track of a current directory in Storage
+* Has a specific root directory area the user works in
+* Keep track of a current directory somewhere in root
 * Start up when prompted
 * Exit when prompted
 * Print specific lines to the interface when prompted
 
 Collaborators:
-* Storage
 * Interpreter

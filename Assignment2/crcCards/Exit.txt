@@ -7,4 +7,4 @@ Responsibilities:
 * Report any errors to be printed to the shell
 
 Collaborators:
-* ShellClient
+* JShell
