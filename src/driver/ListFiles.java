@@ -11,7 +11,7 @@ public class ListFiles {
     
     if(parameter.equals("")) //Case 1: Called with no parameters, list files of current directory
     {
-      List(shell.currentDir);
+      List(shell.getCurrentDir());
     }
     
   }
