@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Directory extends StorageUnit {
 
 	private ArrayList<StorageUnit> contents = new ArrayList<StorageUnit>();
+	private Directory parentDir;
 
 	public ArrayList<StorageUnit> getDirContents() {
 		return contents;
@@ -26,4 +27,11 @@ public class Directory extends StorageUnit {
 		this.name = name;
 	}
 
+	public Directory getParentDir() {
+		return parentDir;
+	}
+
+	public void setParentDir(Directory parent) {
+		this.parentDir = parent;
+	}
 }
