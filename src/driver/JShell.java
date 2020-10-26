@@ -46,6 +46,10 @@ public class JShell {
 	public Directory getCurrentDir() {
 		return this.currentDir;
 	}
+
+	public void setCurrentDir(Directory currentDir) {
+		this.currentDir = currentDir;
+	}
 	
 	public void exit() { // Exit class calls this
 		this.isActive = false;
