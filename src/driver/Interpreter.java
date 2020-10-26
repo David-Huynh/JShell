@@ -16,7 +16,7 @@ public class Interpreter {
 		// shell.print(message);
 
 		// Parse the userCommand into a String and a list of parameters
-		String parameters[] = userCommand.strip().split(" +");
+		String parameters[] = userCommand.strip().split(" ");
 
 		String command = parameters[0]; // The first word is the command
 
@@ -28,9 +28,9 @@ public class Interpreter {
 			// ChangeDirectory.performOutcome(shell, parameters); commented em
 			// out bc they dont exist yet
 		} else if (command.equals("ls")) {
-			// ListFiles.performOutcome(shell, parameters);
+			ListFiles.performOutcome(shell, parameters);
 		} else if (command.equals("pwd")) {
-			// PrintWorkingDirectory.performOutcome(shell, parameters);
+			PrintWorkingDirectory.performOutcome(shell);
 		} else if (command.equals("pushd")) {
 			// PushDirOntoStack.performOutcome(shell, parameters);
 		} else if (command.equals("popd")) {
