@@ -18,8 +18,8 @@ public class Directory extends StorageUnit {
 		contents.remove(fileName);
 	}
 
-	public String getDirName() {
-		return this.name;
+	public Directory getDir() {
+		return this;
 	}
 
 	public void setDirName(String name) {
