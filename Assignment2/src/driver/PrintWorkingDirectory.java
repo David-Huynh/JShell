@@ -7,13 +7,19 @@ public class PrintWorkingDirectory {
     Directory currDir = shell.getCurrentDir();
     String fullPath = "";
     
-    while(currDir != shell.getRootDir())
+    if(currDir != shell.getRootDir())
     {
       fullPath = currDir.getParentDir().name + "\\" + currDir.name + fullPath;
       currDir = currDir.getParentDir();
     }
     
-    System.out.println(currDir.name + fullPath);
+    while(currDir != shell.getRootDir())
+    {
+      fullPath = currDir.getParentDir().name + "\\" + fullPath;
+      currDir = currDir.getParentDir();
+    }
+    
+    System.out.println(fullPath);
   }
 
 }
