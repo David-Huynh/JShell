@@ -63,17 +63,18 @@ public class JShell {
 	}
 
 	public void print(String message) {
-		System.out.print(message);
+		System.out.println(message);
 	}
 
 	public void run() { // continually prompts the user for input and sends to
 						// Interpreter
 		String userCommand;
+		Scanner userInput = new Scanner(System.in);
 		while (this.isActive) {
-			Scanner userInput = new Scanner(System.in);
 			userCommand = userInput.nextLine();
 			Interpreter.interpret(userCommand, this);
 		}
+		userInput.close();
 	}
 
 	public static void main(String[] args) {
