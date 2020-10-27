@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class MakeDirectory extends ShellCommand {
 
+  // function to execute command for mkdir
   public static void performOutcome(JShell shell, String [] parameters) {
     Directory currDir = shell.getCurrentDir();
     String [] dir1 = {};
@@ -19,42 +20,30 @@ public class MakeDirectory extends ShellCommand {
     }
   }
 
-  //private static int isSubDir(Directory dir, String dirName) {
-    //int valid = 0;
-
-    //for (StorageUnit)
-  //}
-
+  // function to check for valid paths and create directory when path is valid
   private static void makeDir(Directory currDir, String [] dir) {
     for (int i = 0; i < dir.length; i++) {
       if (i+1 == dir.length) {
-        //if () {
-
-        //}
-        Directory newDir = new Directory();
-        newDir.name = dir[i];
-        currDir.addFile(newDir);
-        newDir.setParentDir(currDir);
+        if (currDir.isSubDir(dir[i]) == -1) {
+          Directory newDir = new Directory();
+          newDir.name = dir[i];
+          currDir.addFile(newDir);
+          newDir.setParentDir(currDir);
+        } else {
+          System.out.println("mkdir: Directory already exists: "+dir[i]);
+        }
       } else {
         if (dir[i].equals("..") || dir[i].equals(".")) {
           if (dir[i].equals("..")) {
             currDir = currDir.getParentDir();
           }
         } else {
-          ArrayList<StorageUnit> contents = currDir.getDirContents();
-          int valid = 0;
-          for (StorageUnit content: contents) {
-            if (content.name.equals(dir[i])) {
-              if (content.getClass().getSimpleName().equals("Directory")) {
-                currDir = (Directory) content;
-                valid = 1;
-                break;
-              }
-            }
-          }
-          if (valid == 0) {
+          if (currDir.isSubDir(dir[i]) == -1) {
             System.out.println("mkdir: No such directory: "+dir[i]);
             return;
+          } else {
+            int index = currDir.isSubDir(dir[i]);
+            currDir = (Directory) currDir.getDirContents().get(index);
           }
         }
       }
