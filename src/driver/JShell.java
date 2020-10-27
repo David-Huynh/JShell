@@ -39,6 +39,7 @@ public class JShell {
 
 	public JShell() { // Shell instance initializer
 		this.rootDir = new Directory();
+		this.rootDir.setDirName("root");
 		this.rootDir.setParentDir(rootDir); // parent of root directory is always the root
 		this.currentDir = this.rootDir; // by default current directory is root
 		this.isActive = true;
