@@ -19,9 +19,18 @@ public class MakeDirectory extends ShellCommand {
     }
   }
 
+  //private static int isSubDir(Directory dir, String dirName) {
+    //int valid = 0;
+
+    //for (StorageUnit)
+  //}
+
   private static void makeDir(Directory currDir, String [] dir) {
     for (int i = 0; i < dir.length; i++) {
       if (i+1 == dir.length) {
+        //if () {
+
+        //}
         Directory newDir = new Directory();
         newDir.name = dir[i];
         currDir.addFile(newDir);
@@ -44,7 +53,7 @@ public class MakeDirectory extends ShellCommand {
             }
           }
           if (valid == 0) {
-            System.out.println("mkdir: No such directory: "+dir[i-1]+"/"+dir[i]);
+            System.out.println("mkdir: No such directory: "+dir[i]);
             return;
           }
         }
