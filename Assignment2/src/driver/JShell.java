@@ -1,6 +1,6 @@
 // **********************************************************
 // Assignment2:
-// Student1: 
+// Student1: Collin Chan
 // UTORID user_name: chancol7
 // UT Student #: 1006200889
 // Author: Collin Chan
