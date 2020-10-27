@@ -1,10 +1,10 @@
 Class name: PrintWorkingDirectory
-Parent class (if any): 
+Parent class (if any): ShellCommand
 Subclasses (if any):
 
 Responsibilities:
-* Get current working directory using GetWorkingDirectory and print it to the shell
+* Get current working directory and print it to the shell
 * Report errors to be printed by the shell
 
 Collaborators:
-* GetWorkingDirectory
+* JShell
