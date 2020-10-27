@@ -1,5 +1,5 @@
 Class name: ListFiles
-Parent class (if any): 
+Parent class (if any): ShellCommand
 Subclasses (if any): 
 
 Responsibilities:

@@ -30,12 +30,14 @@
 package driver;
 
 import java.util.Scanner;
+//import java.util.Stack;
 
 public class JShell {
 
 	private Directory rootDir; // root directory stores everything
 	private Directory currentDir;
 	private boolean isActive; // turn this off if user wants to exit
+	//private Stack<String> absoluteDir; needed for determining absolute paths (the bottom should be the root folder, the top should be the current directory)
 
 	public JShell() { // Shell instance initializer
 		this.rootDir = new Directory();
@@ -47,6 +49,10 @@ public class JShell {
 	public Directory getCurrentDir() {
 		return this.currentDir;
 	}
+	
+	//public Stack<String> getAbsolutePath(){
+	//    return this.absoluteDir;
+	//}
 
 	public void setCurrentDir(Directory currentDir) {
 		this.currentDir = currentDir;
