@@ -5,10 +5,10 @@
 // UT Student #: 1006200889
 // Author: Collin Chan
 //
-// Student2:
-// UTORID user_name:
-// UT Student #:
-// Author:
+// Student2: Jeff He
+// UTORID user_name: Hejeff2
+// UT Student #: 1006398783
+// Author: Jeff He
 //
 // Student3: Nevin Wong
 // UTORID user_name: wongnevi
