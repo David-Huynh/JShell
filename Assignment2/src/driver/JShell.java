@@ -1,7 +1,7 @@
 // **********************************************************
 // Assignment2:
-// Student1:
-// UTORID user_name:
+// Student1: 
+// UTORID user_name: 
 // UT Student #:
 // Author:
 //
@@ -10,10 +10,10 @@
 // UT Student #:
 // Author:
 //
-// Student3:
-// UTORID user_name:
-// UT Student #:
-// Author:
+// Student3: Nevin Wong
+// UTORID user_name: wongnevi
+// UT Student #: 1005391434
+// Author: Nevin Wong
 //
 // Student4:
 // UTORID user_name:
