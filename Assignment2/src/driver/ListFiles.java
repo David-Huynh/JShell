@@ -31,7 +31,7 @@ public class ListFiles extends ShellCommand{
     
     for(int i = 0; i < fileList.size();i++)
     {
-      System.out.println(fileList.get(i));
+      System.out.println(fileList.get(i).name);
     }
   }
 

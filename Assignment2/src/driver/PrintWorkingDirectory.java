@@ -1,25 +1,19 @@
 package driver;
 
-import java.util.Stack;
-
 public class PrintWorkingDirectory {
 
   public static void performOutcome(JShell shell) {
     
-    //To print the absolute path, we need to implement a directory stack 
-    
-    //Stack<String> directoryStack = shell.getAbsolutePath();
-    
+    Directory currDir = shell.getCurrentDir();
     String fullPath = "";
     
-    Stack<String> directoryStack = null; // remove when directoryStack is actually implemented
-    
-    for(int i = 0; i < directoryStack.size(); i++)
+    while(currDir != shell.getRootDir())
     {
-      fullPath = directoryStack.get(i) + "\\" + fullPath;
+      fullPath = currDir.getParentDir().name + "\\" + currDir.name + fullPath;
+      currDir = currDir.getParentDir();
     }
     
-    System.out.println(fullPath);
+    System.out.println(currDir.name + fullPath);
   }
 
 }
