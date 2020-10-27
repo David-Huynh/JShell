@@ -25,8 +25,7 @@ public class Interpreter {
 		} else if (command.equals("mkdir")) {
 			MakeDirectory.performOutcome(shell, parameters);
 		} else if (command.equals("cd")) {
-			// ChangeDirectory.performOutcome(shell, parameters); commented em
-			// out bc they dont exist yet
+			ChangeDirectory.performOutcome(shell, parameters);
 		} else if (command.equals("ls")) {
 			ListFiles.performOutcome(shell, parameters);
 		} else if (command.equals("pwd")) {
