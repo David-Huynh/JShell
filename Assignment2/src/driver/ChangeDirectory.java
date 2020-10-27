@@ -14,7 +14,7 @@ public class ChangeDirectory extends ShellCommand {
     for (int i = 0; i < directories.length; i++) {
       if (directories[i].equals("..") || directories[i].equals(".")) {
         if (directories[i].equals("..")) {
-          currDir = currDir.getParentDir();
+          shell.setCurrentDir(currDir.getParentDir());
         }
       } else {
         ArrayList<StorageUnit> contents = currDir.getDirContents();
