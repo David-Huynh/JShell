@@ -15,10 +15,10 @@
 // UT Student #: 1005391434
 // Author: Nevin Wong
 //
-// Student4:
-// UTORID user_name:
-// UT Student #:
-// Author:
+// Student4: David Huynh
+// UTORID user_name: huynhd12
+// UT Student #: 1005991937
+// Author: David Huynh
 //
 //
 // Honor Code: I pledge that this program represents my own
@@ -70,6 +70,7 @@ public class JShell {
 		String userCommand;
 		Scanner userInput = new Scanner(System.in);
 		while (this.isActive) {
+			System.out.print(currentDir.getDirName() + ">");
 			userCommand = userInput.nextLine();
 			Interpreter.interpret(userCommand, this);
 		}
