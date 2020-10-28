@@ -34,7 +34,9 @@ n-2: (Echo) Have Echo be able to echo a string into the end of a file's contents
 n-3: (Echo) Test and use test cases to ensure full functionality og Echo-ing a string to append to a file
 o-1: (File) Create a method for File that gets its contents, i.e., a getter method
 o-2: (ConcatenateFile) Have ConcatenateFile use the method created in o-1 to print to the shell the contents of a specific file in the current directory
+o-3: (ConcatenateFile) Test and use test cases to ensure full functionality of using Concatenate to print the contents of a specific file
 p-1: (ConcatenateFile) Have ConcatenateFile use the method created in o-1 to print to the shell the contents of a specific file concatenated with another file in the current directory.
+p-2: (ConcatenateFile) Test and use test cases to ensure full functionality of using Concatenate to concatenating two files and printing them
 
 These tasks are assigned as follows:
 
