@@ -17,6 +17,8 @@ i-2: (ListFiles) Have this command be able to print contents of a directory give
 i-3: (ListFiles) Test and use test cases to ensure full functionality of ListFiles command 
 j-1: (PrintError) Write base code for PrintError
 j-2: (PrintError) Write various error messages for all possible errors for all commands
+j-3: (StorageUnit) Write the CRC card for StorageUnit, the superclass of File and Directory
+j-4: (StorageUnit) Have a static method in StorageUnit that checks if a string has any forbidden characters, and call it before any file/directory is created to catch errors 
 k-1: (Manual) Write the CRC card for Manual class, another subclass of ShellCommand
 k-2: (Manual) Write manual strings in each ShellCommand (create each ShellCommand class if they don't exist yet)
 k-3: (Manual) Write base code for Manual class and have Manual print the manual variable the command the user desires
@@ -41,13 +43,13 @@ p-2: (ConcatenateFile) Test and use test cases to ensure full functionality of u
 These tasks are assigned as follows:
 
 User: Collin Chan
-Tasks: o-2, o-3, p-1, p-2
+Tasks: o-2, o-3, p-1, p-2, j-4
 
 User: Jeff He
 Tasks: i-1, i-2, i-3, m-2, m-5, n-1, o-1
 
 User: Nevin Wong
-Tasks: j-1, j-2, k-1, k-2, k-3, k-4
+Tasks: j-1, j-2, j-3, k-1, k-2, k-3, k-4
 
 User: David Huynh
 Tasks: l-1, l-2, m-3, m-4, m-6, m-7, n-2, n-3
