@@ -43,13 +43,13 @@ p-2: (ConcatenateFile) Test and use test cases to ensure full functionality of u
 These tasks are assigned as follows:
 
 User: Collin Chan
-Tasks: o-2, o-3, p-1, p-2, j-4
+Tasks: o-2, o-3, p-1, p-2, j-3, j-4
 
 User: Jeff He
 Tasks: i-1, i-2, i-3, m-2, m-5, n-1, o-1
 
 User: Nevin Wong
-Tasks: j-1, j-2, j-3, k-1, k-2, k-3, k-4
+Tasks: j-1, j-2, k-1, k-2, k-3, k-4
 
 User: David Huynh
 Tasks: l-1, l-2, m-3, m-4, m-6, m-7, n-2, n-3
