@@ -50,17 +50,17 @@ public class Interpreter {
 		} else if (command.equals("pwd")) {
 			PrintWorkingDirectory.performOutcome(shell);
 		} else if (command.equals("pushd")) {
-			// PushDirOntoStack.performOutcome(shell, parameters);
+			PushDirOntoStack.performOutcome(shell, parameters);
 		} else if (command.equals("popd")) {
-			// PopDirFromStack.performOutcome(shell, parameters);
+			PopDirFromStack.performOutcome(shell, parameters);
 		} else if (command.equals("history")) {
-			// PrintHistory.performOutcome(shell, parameters);
+			PrintHistory.performOutcome(shell, parameters);
 		} else if (command.equals("cat")) {
-			// ConcatenateFile.performOutcome(shell, parameters);
+			ConcatenateFile.performOutcome(shell, parameters);
 		} else if (command.equals("echo")) {
-			// Echo.performOutcome(shell, parameters);
+			Echo.performOutcome(shell, parameters);
 		} else if (command.equals("man")) {
-			// Manual.performOutcome(shell, parameters);
+			Manual.performOutcome(shell, parameters);
 		} else {
 			shell.print("error: not a valid command");
 		}

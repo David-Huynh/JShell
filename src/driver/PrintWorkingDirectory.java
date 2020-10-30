@@ -30,7 +30,7 @@
 
 package driver;
 
-public class PrintWorkingDirectory {
+public class PrintWorkingDirectory extends ShellCommand {
 
   public static void performOutcome(JShell shell) {
     
