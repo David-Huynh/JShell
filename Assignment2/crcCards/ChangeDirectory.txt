@@ -6,6 +6,7 @@ Responsibilities:
 * Report errors if user tries to change to forbidden directories
 * Change the current directory of JShell to the user-specified one 
 * Differentiate between a full path or a path relative to current directory
+* Provide a manual for how to use this class
 
 Collaborators:
 * JShell

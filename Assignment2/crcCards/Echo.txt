@@ -6,6 +6,7 @@ Responsibilities:
 * Overwrite given file with a given string of characters using CreateTextFile
 * Append given file's contents with a given string of characters
 * Prompt error if file is inaccessible
+* Provide a manual for how to use this class
 
 Collaborators:
 * CreateTextFile
