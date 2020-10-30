@@ -6,6 +6,7 @@ Responsibilities:
 * Know the current working directory
 * Print each separate file or directory within a given directory with a break line separating each one
 * Print names of files
+* Provide a manual for how to use this class
 
 Collaborators:
 * Directory

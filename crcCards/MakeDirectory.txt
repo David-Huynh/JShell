@@ -9,6 +9,7 @@ Responsibilities:
 * Be able to interpret a directory path 
 * Create a new directory with user-specified in a user-specified directory path 
 * Report an error if a directory exists with the same name
+* Provide a manual for how to use this class
 
 Collaborators:
 * GetWorkingDirectory

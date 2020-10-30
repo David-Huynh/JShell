@@ -1,10 +1,9 @@
-Class name: Exit
+Class name: Manual
 Parent class (if any): ShellCommand
 Subclasses (if any): 
 
 Responsibilities:
-* Tell the shell to terminate
-* Report any errors to be printed to the shell
+* Tell the shell to print certain manuals for certain commands (including this one)
 * Provide a manual for how to use this class
 
 Collaborators:
