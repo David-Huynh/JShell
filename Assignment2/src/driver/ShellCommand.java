@@ -32,7 +32,9 @@ package driver;
 
 public class ShellCommand {
 
-	String manual;
+	public static String getManual() {
+		return "";
+	}
 	
 	public static void performOutcome(JShell shell, String[] parameters) {
 	}
