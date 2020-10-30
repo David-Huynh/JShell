@@ -79,4 +79,19 @@ public class Directory extends StorageUnit {
 
 		return index;
 	}
+	
+	// function to check if a file named fileName is under Directory dir.
+    // returns -1 if file named dirName is not in dir or index of file if it is
+	public int containsFile(String fileName) {
+      int index = -1;
+      for (int i = 0; i < contents.size(); i++) {
+          if (contents.get(i).getClass().getSimpleName().equals("File")) {
+              if (contents.get(i).name.equals(fileName)) {
+                  index = i;
+              }
+          }
+      }
+
+      return index;
+  }
 }
