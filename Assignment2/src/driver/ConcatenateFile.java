@@ -33,7 +33,19 @@ package driver;
 public class ConcatenateFile extends ShellCommand {
 
 	public static void performOutcome(JShell shell, String[] parameters) {
-		// TODO Auto-generated method stub
+		File file1;
+		File file2;
+		if (parameters.length == 2) {
+			// file path 1
+		} else if (parameters.length == 3) {
+			// optional file path 2
+		}
+
+		// Get current directory, then check if file path specified is valid
+
+
+		// if valid, then check print contents from file
+		// else print out the error
 
 	}
 

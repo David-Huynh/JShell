@@ -34,5 +34,11 @@ public class StorageUnit { // Subclasses of this class are Files and Directories
 
 	protected String name;
 	protected Directory location; // null if it's the root
-	
+
+	public static boolean hasForbidChar(String name) {
+		boolean valid = false;
+		//Check if name contains any forbidden characters and alter valid accordingly
+
+		return valid;
+	}
 }
