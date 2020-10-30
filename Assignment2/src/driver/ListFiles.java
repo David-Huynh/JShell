@@ -46,32 +46,59 @@ public class ListFiles extends ShellCommand {
 	}
 	
 	public static void performOutcome(JShell shell, String[] parameters) {
+	  
+	  Directory currDir = shell.getCurrentDir();
+	  ArrayList<StorageUnit> fileList = currDir.getDirContents();
+	  int directoryIndex = -1;
+	  int fileIndex = -1;
 
-		if (parameters.length == 1) // Case 1: Called with no parameters, list
-									// files of current directory
-		{
-			List(shell.getCurrentDir());
-		} else {
-			for (int i = 1; i < parameters.length; i++) {
-				// Check if list element is directory
-				// Print directory name + ':'
-				// Print directory contents
-
-				// Check if list element is file
-				// Print file name
+	  if (parameters.length == 1) // Case 1: Called with no parameters, list files of current directory
+	  {
+	    List(fileList);
+	  } 
+	  else 
+	  {
+		for (int i = 1; i < parameters.length; i++) //Case 2: Called with >= 1 parameters, index through each of them
+		{ 
+		  if(parameters[i].contains("\\")) //check if parameter is a path with > 1 directories
+		  { 
+			    
+		  } 
+		  else //parameter is a file or directory in current directory
+		  { 
+		    directoryIndex = currDir.isSubDir(parameters[i]); 
+			fileIndex = currDir.containsFile(parameters[i]);
+			
+			if (directoryIndex != -1) //check if parameter is a directory in current directory
+			{ 
+	          System.out.println(parameters[i] + ":");
+	          List(((Directory) fileList.get(directoryIndex)).getDirContents());
+	        }
+			else if(fileIndex != -1) //check if parameter is a file in current directory
+			{
+			  System.out.println(parameters[i]);
 			}
+			else //parameter is not in current directory
+			{ 
+			  printError(parameters[i]);
+			}
+		  }
 		}
+	  }
 	}
 
-	public static void List(Directory currentDirectory) // Function used to
-														// print all files in
-														// directory
+	public static void List(ArrayList<StorageUnit> fileList) // Function used to print all files in directory
 	{
-		ArrayList<StorageUnit> fileList = currentDirectory.getDirContents();
-
 		for (int i = 0; i < fileList.size(); i++) {
 			System.out.println(fileList.get(i).name);
 		}
 	}
+	
+	public static void printError(String parameter) // Function used print error is parameter is not file/directory
+    {
+	  System.out.println("ls: cannot access '"+ parameter+ "': No such file or directory");
+     
+    }
+
 
 }
