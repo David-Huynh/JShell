@@ -62,8 +62,11 @@ public class JShell {
 		this.isActive = false;
 	}
 
-	public void print(String message) {
+	public void println(String message) {
 		System.out.println(message);
+	}
+	public void print(String message) {
+		System.out.print(message);
 	}
 
 	public void run() { // continually prompts the user for input and sends to
