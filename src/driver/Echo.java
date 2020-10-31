@@ -77,13 +77,14 @@ public class Echo extends ShellCommand {
 	}
 	public static void performOutcome(JShell shell, String[] parameters) {
 		int numArrow = contains(parameters,">");
-		if (numArrow == 0){ //Print string to shell command
-			for (int i = 1; i < parameters.length; i++){
-				shell.println(parameters[i]);
-			}
-		}
 		String [] parsedParams = parseParameters(parameters);
-		if (numArrow == 1){//Overwrite file with string
+		if (parsedParams[0].substring(1,parsedParams[0].length()-1).contains("\"")){
+			shell.println("Error: \" is an invalid string character");
+			return;
+		}
+		if (numArrow == 0){ //Print string to shell command
+			shell.println(parsedParams[0]);
+		}else if (numArrow == 1){//Overwrite file with string
 
 		}else{//Append to file with string
 
