@@ -36,7 +36,7 @@ public class PrintWorkingDirectory extends ShellCommand {
 		return "pwd \nPrint the current working directory (including the whole "
 				+ "path).  ";
 	}
-	
+
 	public static void performOutcome(JShell shell) {
 
 		Directory currDir = shell.getCurrentDir(); // get current directory

@@ -32,6 +32,31 @@ package driver;
 
 public class PrintHistory extends ShellCommand {
 
+	public static String getManual() {
+		return "history [number] \n" + "This command will print out recent "
+				+ "commands, one command per " + "line. i.e. \r\n"
+				+ "    1. cd ..\r\n" + "    2. mkdir textFolder\r\n"
+				+ "    3. echo “Hello World”\r\n" + "    4. fsjhdfks\r\n"
+				+ "    5. history\r\n"
+				+ "The above output from history has two columns. The first "
+				+ "column is\r\n" + "numbered such that the line with the "
+				+ "highest number is the most recent command.\r\n"
+				+ "The most recent command is history. The "
+				+ "second column contains the actual\r\n"
+				+ "command. Note: Your output should also contain as output "
+				+ "any syntactical errors\r\n"
+				+ "typed by the user as seen on line 4.\n"
+				+ "We can truncate the output by specifying"
+				+ " a number (>=0) after the command.\r\n"
+				+ "For instance, if we want to only see the "
+				+ "last 3 commands typed, we can type the\r\n"
+				+ "following on the command line:\n" + "    history 3\r\n"
+				+ "And the output will be as follows:\r\n"
+				+ "    4. fsjhdfks\r\n" + "    5. history\r\n"
+				+ "    6. history 3";
+
+	}
+
 	public static void performOutcome(JShell shell, String[] parameters) {
 		// TODO Auto-generated method stub
 

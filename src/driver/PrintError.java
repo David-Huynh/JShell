@@ -30,19 +30,14 @@
 
 package driver;
 
-public class File extends StorageUnit {
+public class PrintError {
 
-	private String contents;
-
-	public File(String text) {
-		contents = text;
+	public static void reportError(JShell shell, String errMsg) {
+		shell.printError(errMsg);
 	}
 
-	public void append(String text) {
-		this.contents = this.contents + text;
+	public static void reportError(JShell shell, String cmd, String errMsg) {
+		shell.printError(cmd + ": " + errMsg);
 	}
 
-	public void print() {
-		System.out.println(this.contents + "\n\n\n");
-	}
 }

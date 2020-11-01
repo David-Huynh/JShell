@@ -31,26 +31,44 @@
 package driver;
 
 public class Echo extends ShellCommand {
-	private static int contains(String[] parameters, String keyword){
+
+	public static String getManual() {
+		return "echo STRING [> OUTFILE]\n"
+				+ "If OUTFILE is not provided, print STRING on the shell.\n"
+				+ "Otherwise, put STRING into file OUTFILE.\n"
+				+ "STRING is a string of characters "
+				+ "surrounded by double quotation marks.\n"
+				+ "This creates a new file if "
+				+ "OUTFILE does not exists and erases "
+				+ "the old contents if OUTFILE already exists.\n"
+				+ "In either case, the only "
+				+ "thing in OUTFILE should be STRING.\n"
+				+ "echo STRING >> OUTFILE\n"
+				+ "appends to OUTFILE instead of overwrite";
+	}
+
+	private static int contains(String[] parameters, String keyword) {
 		int counter = 0;
-		for (int i = 1; i < parameters.length; i++){
-			if (parameters[i].contains(keyword)){
+		for (int i = 1; i < parameters.length; i++) {
+			if (parameters[i].contains(keyword)) {
 				counter += parameters[i].length();
 			}
 		}
 		return counter;
 	}
-	private static String[] parseParameters(String [] parameters){
-		String parsedParams [] = {"",""};
+	private static String[] parseParameters(String[] parameters) {
+		String parsedParams[] = {"", ""};
 		boolean closedString = false;
-		for (int i = 1; i < parameters.length;i++) {
+		for (int i = 1; i < parameters.length; i++) {
 			if (!closedString) {
 				if (parameters[i].charAt(0) == '>') {
 					closedString = true;
-					if(parameters[i].charAt(parameters[i].length()-1) != '>'){
+					if (parameters[i]
+							.charAt(parameters[i].length() - 1) != '>') {
 						parsedParams[1] = parameters[i].replace(">", "");
 					}
-				} else if (parameters[i].charAt(parameters[i].length() - 1) == '>') {
+				} else if (parameters[i]
+						.charAt(parameters[i].length() - 1) == '>') {
 					closedString = true;
 					parsedParams[0] += parameters[i].replace(">", "");
 					continue;
@@ -64,29 +82,20 @@ public class Echo extends ShellCommand {
 		}
 		return parsedParams;
 	}
-	public static String getManual() {
-		return "echo STRING [> OUTFILE]\n"
-				+ "If OUTFILE is not provided, print STRING on the shell.\n"
-				+ "Otherwise, put STRING into file OUTFILE.\n"
-				+ "STRING is a string of characters surrounded by double quotation marks.\n"
-				+ "This creates a new file if OUTFILE does not exists and erases "
-				+ "the old contents if OUTFILE already exists.\n "
-				+ "In either case, the only thing in OUTFILE should be STRING.\n"
-				+ "echo STRING >> OUTFILE\n"
-				+ "appends to OUTFILE instead of overwrite";
-	}
+
 	public static void performOutcome(JShell shell, String[] parameters) {
-		int numArrow = contains(parameters,">");
-		String [] parsedParams = parseParameters(parameters);
-		if (parsedParams[0].substring(1,parsedParams[0].length()-1).contains("\"")){
+		int numArrow = contains(parameters, ">");
+		String[] parsedParams = parseParameters(parameters);
+		if (parsedParams[0].substring(1, parsedParams[0].length() - 1)
+				.contains("\"")) {
 			shell.println("Error: \" is an invalid string character");
 			return;
 		}
-		if (numArrow == 0){ //Print string to shell command
+		if (numArrow == 0) { // Print string to shell command
 			shell.println(parsedParams[0]);
-		}else if (numArrow == 1){//Overwrite file with string
+		} else if (numArrow == 1) {// Overwrite file with string
 
-		}else{//Append to file with string
+		} else {// Append to file with string
 
 		}
 

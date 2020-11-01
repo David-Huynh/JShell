@@ -30,8 +30,6 @@
 
 package driver;
 
-import java.util.ArrayList;
-
 public class ChangeDirectory extends ShellCommand {
 
 	public static String getManual() {
@@ -41,14 +39,18 @@ public class ChangeDirectory extends ShellCommand {
 				+ "directory. The directory must be /, the forward slash. The "
 				+ "foot of \nthe file system is a single slash: /.  ";
 	}
-	
+
 	// function to execute command for cd
 	public static void performOutcome(JShell shell, String[] parameters) {
+		if (parameters.length != 2) {
+			PrintError.reportError(shell, "cd", "Invalid number of arguments.");
+			return;
+		}
+
 		Directory currDir = shell.getCurrentDir();
 		String[] subDir = {};
-		if (parameters.length > 1) {
-			subDir = parameters[1].split("/");
-		}
+
+		subDir = parameters[1].split("/");
 
 		for (int i = 0; i < subDir.length; i++) {
 			if (subDir[i].equals("..") || subDir[i].equals(".")) {
@@ -58,7 +60,8 @@ public class ChangeDirectory extends ShellCommand {
 				}
 			} else {
 				if (currDir.isSubDir(subDir[i]) == -1) {
-					System.out.println("cd: no such directory: " + subDir[i]);
+					PrintError.reportError(shell, "cd",
+							"That is not a valid directory.");
 					return;
 				} else {
 					int index = currDir.isSubDir(subDir[i]);
