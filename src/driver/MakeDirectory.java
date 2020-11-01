@@ -58,14 +58,28 @@ public class MakeDirectory extends ShellCommand {
 			boolean mDir1;
 			boolean mDir2;
 			if (parameters[1].indexOf("/") == 0) {
-				currDir = shell.getRootDir();
-				parameters[1] = parameters[1].substring(1);
+				if (parameters[1].equals("/")) {
+					PrintError.reportError(shell, "mkdir",
+							"Directory already exits: "+parameters[1]);
+				} else {
+					currDir = shell.getRootDir();
+					parameters[1] = parameters[1].substring(1);
+				}
 			}
 			dir1 = parameters[1].split("/");
 			mDir1 = makeDir(shell, currDir, dir1);
 			if (parameters.length == 3) {
 				if (!mDir1) {
 					return;
+				}
+				if (parameters[2].indexOf("/") == 0) {
+					if (parameters[2].equals("/")) {
+						PrintError.reportError(shell, "mkdir",
+								"Directory already exits: "+parameters[1]);
+					} else {
+						currDir = shell.getRootDir();
+						parameters[2] = parameters[2].substring(1);
+					}
 				}
 				dir2 = parameters[2].split("/");
 				mDir2 = makeDir(shell, currDir, dir2);
