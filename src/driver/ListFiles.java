@@ -46,7 +46,7 @@ public class ListFiles extends ShellCommand {
 	}
 
 	public static void performOutcome(JShell shell, String[] parameters) {
-		
+
 		Directory currDir = shell.getCurrentDir();
 		ArrayList<StorageUnit> fileList = currDir.getDirContents();
 		int directoryIndex = -1;
@@ -87,6 +87,7 @@ public class ListFiles extends ShellCommand {
 						PrintError.reportError(shell, "ls",
 								"Cannot access '" + parameters[i]
 										+ "', no such file or directory.");
+						return; 
 					}
 				}
 			}
