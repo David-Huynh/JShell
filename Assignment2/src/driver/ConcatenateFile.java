@@ -75,6 +75,7 @@ public class ConcatenateFile extends ShellCommand {
 				if (fIndex == -1) {
 					PrintError.reportError(shell, "cat",
 							"Invalid File Name.");
+					return;
 				} else {
 					File file = (File) contents.get(fIndex);
 					file.print();
@@ -89,6 +90,7 @@ public class ConcatenateFile extends ShellCommand {
 					if (index == -1) {
 						PrintError.reportError(shell, "cat",
 								"Invalid Directory.");
+						return;
 					} else {
 						currDir = (Directory) contents.get(index);
 						contents = currDir.getDirContents();

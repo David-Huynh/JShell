@@ -74,6 +74,8 @@ public class Manual extends ShellCommand {
 			} else {
 				PrintError.reportError(shell, "man",
 						command + " is not a valid command.");
+				shell.println("");
+				return;
 			}
 
 			shell.println("");
