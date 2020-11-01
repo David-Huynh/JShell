@@ -46,7 +46,12 @@ public class ListFiles extends ShellCommand {
 	}
 
 	public static void performOutcome(JShell shell, String[] parameters) {
-
+		if (parameters.length > 2) {
+			PrintError.reportError(shell, "man",
+					"Invalid number of arguments.");
+			return;
+		}
+		
 		Directory currDir = shell.getCurrentDir();
 		ArrayList<StorageUnit> fileList = currDir.getDirContents();
 		int directoryIndex = -1;
@@ -55,7 +60,7 @@ public class ListFiles extends ShellCommand {
 		if (parameters.length == 1) // Case 1: Called with no parameters, list
 									// files of current directory
 		{
-			List(fileList);
+			list(shell, fileList);
 		} else {
 			for (int i = 1; i < parameters.length; i++) // Case 2: Called with
 														// >= 1 parameters,
@@ -75,39 +80,30 @@ public class ListFiles extends ShellCommand {
 												// directory in current
 												// directory
 					{
-						System.out.println(parameters[i] + ":");
-						List(((Directory) fileList.get(directoryIndex))
+						shell.println(parameters[i] + ":");
+						list(shell, ((Directory) fileList.get(directoryIndex))
 								.getDirContents());
 					} else if (fileIndex != -1) // check if parameter is a file
 												// in current directory
 					{
-						System.out.println(parameters[i]);
+						shell.println(parameters[i]);
 					} else // parameter is not in current directory
 					{
-						printError(parameters[i]);
+						PrintError.reportError(shell, "ls",
+								"Cannot access '" + parameters[i]
+										+ "', no such file or directory.");
 					}
 				}
 			}
 		}
 	}
 
-	public static void List(ArrayList<StorageUnit> fileList) // Function used to
-																// print all
-																// files in
-																// directory
+	public static void list(JShell shell, ArrayList<StorageUnit> fileList)
+	// Function used to print all files in directory
 	{
 		for (int i = 0; i < fileList.size(); i++) {
 			System.out.println(fileList.get(i).name);
 		}
-	}
-
-	public static void printError(String parameter) // Function used print error
-													// is parameter is not
-													// file/directory
-	{
-		System.out.println("ls: cannot access '" + parameter
-				+ "': No such file or directory");
-
 	}
 
 }

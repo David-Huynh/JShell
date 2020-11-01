@@ -44,7 +44,11 @@ public class PopDirFromStack extends ShellCommand {
 	}
 
 	public static void performOutcome(JShell shell, String[] parameters) {
-		// TODO Auto-generated method stub
+		if (parameters.length != 1) {
+			PrintError.reportError(shell, "popd",
+					"Invalid number of arguments.");
+			return;
+		}
 
 	}
 

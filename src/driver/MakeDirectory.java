@@ -45,22 +45,34 @@ public class MakeDirectory extends ShellCommand {
 
 	// function to execute command for mkdir
 	public static void performOutcome(JShell shell, String[] parameters) {
+		if (parameters.length != 3) {
+			PrintError.reportError(shell, "mkdir",
+					"Invalid number of arguments.");
+			return;
+		}
+
 		Directory currDir = shell.getCurrentDir();
 		String[] dir1 = {};
 		String[] dir2 = {};
 		if (parameters.length == 2) {
 			dir1 = parameters[1].split("/");
-			makeDir(currDir, dir1);
+			makeDir(shell, currDir, dir1);
 		} else if (parameters.length == 3) {
 			dir1 = parameters[1].split("/");
 			dir2 = parameters[2].split("/");
-			makeDir(currDir, dir1);
-			makeDir(currDir, dir2);
+			if (!makeDir(shell, currDir, dir1)) { // if an error occurs creating
+													// dir1, cannot proceed with
+													// creating dir2
+				return;
+			}
+			makeDir(shell, currDir, dir2);
 		}
 	}
 
-	// function to check for valid paths and create directory when path is valid
-	private static void makeDir(Directory currDir, String[] dir) {
+	// function to check for valid paths and create directory when path is
+	// valid, the function returns whether it is successful.
+	private static boolean makeDir(JShell shell, Directory currDir,
+			String[] dir) {
 		for (int i = 0; i < dir.length; i++) {
 			if (i + 1 == dir.length) {
 				if (currDir.isSubDir(dir[i]) == -1) {
@@ -69,8 +81,9 @@ public class MakeDirectory extends ShellCommand {
 					currDir.addFile(newDir);
 					newDir.setParentDir(currDir);
 				} else {
-					System.out.println(
-							"mkdir: Directory already exists: " + dir[i]);
+					PrintError.reportError(shell, "mkdir",
+							"Directory already exists: " + dir[i]);
+					return false;
 				}
 			} else {
 				if (dir[i].equals("..") || dir[i].equals(".")) {
@@ -79,9 +92,9 @@ public class MakeDirectory extends ShellCommand {
 					}
 				} else {
 					if (currDir.isSubDir(dir[i]) == -1) {
-						System.out
-								.println("mkdir: No such directory: " + dir[i]);
-						return;
+						PrintError.reportError(shell, "mkdir",
+								"No such directory: " + dir[i]);
+						return false;
 					} else {
 						int index = currDir.isSubDir(dir[i]);
 						currDir = (Directory) currDir.getDirContents()
@@ -90,5 +103,6 @@ public class MakeDirectory extends ShellCommand {
 				}
 			}
 		}
+		return true;
 	}
 }

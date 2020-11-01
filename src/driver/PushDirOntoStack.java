@@ -48,7 +48,11 @@ public class PushDirOntoStack extends ShellCommand {
 	}
 
 	public static void performOutcome(JShell shell, String[] parameters) {
-		// TODO Auto-generated method stub
+		if (parameters.length != 2) {
+			PrintError.reportError(shell, "pushd",
+					"Invalid number of arguments.");
+			return;
+		}
 
 	}
 
