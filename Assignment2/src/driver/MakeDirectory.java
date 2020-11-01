@@ -54,18 +54,22 @@ public class MakeDirectory extends ShellCommand {
 		Directory currDir = shell.getCurrentDir();
 		String[] dir1 = {};
 		String[] dir2 = {};
-		if (parameters.length == 2) {
-			dir1 = parameters[1].split("/");
-			makeDir(shell, currDir, dir1);
-		} else if (parameters.length == 3) {
-			dir1 = parameters[1].split("/");
-			dir2 = parameters[2].split("/");
-			if (!makeDir(shell, currDir, dir1)) { // if an error occurs creating
-													// dir1, cannot proceed with
-													// creating dir2
-				return;
+		if (parameters.length == 2 || parameters.length == 3) {
+			boolean mDir1;
+			boolean mDir2;
+			if (parameters[1].indexOf("/") == 0) {
+				currDir = shell.getRootDir();
+				parameters[1] = parameters[1].substring(1);
 			}
-			makeDir(shell, currDir, dir2);
+			dir1 = parameters[1].split("/");
+			mDir1 = makeDir(shell, currDir, dir1);
+			if (parameters.length == 3) {
+				if (!mDir1) {
+					return;
+				}
+				dir2 = parameters[2].split("/");
+				mDir2 = makeDir(shell, currDir, dir2);
+			}
 		}
 	}
 
