@@ -46,11 +46,6 @@ public class ListFiles extends ShellCommand {
 	}
 
 	public static void performOutcome(JShell shell, String[] parameters) {
-		if (parameters.length > 2) {
-			PrintError.reportError(shell, "man",
-					"Invalid number of arguments.");
-			return;
-		}
 		
 		Directory currDir = shell.getCurrentDir();
 		ArrayList<StorageUnit> fileList = currDir.getDirContents();
