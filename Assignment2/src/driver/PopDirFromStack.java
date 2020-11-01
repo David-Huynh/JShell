@@ -40,10 +40,9 @@ public class PopDirFromStack extends ShellCommand {
 				+ "removes the top most directory from the "
 				+ "directory stack and makes it the \n"
 				+ "current working directory. If there is no directory onto "
-				+ "the stack, then give \n"
-				+ "appropriate error message.";
+				+ "the stack, then give \n" + "appropriate error message.";
 	}
-	
+
 	public static void performOutcome(JShell shell, String[] parameters) {
 		// TODO Auto-generated method stub
 

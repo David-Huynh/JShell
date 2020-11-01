@@ -35,7 +35,7 @@ public class ShellCommand {
 	public static String getManual() {
 		return "";
 	}
-	
+
 	public static void performOutcome(JShell shell, String[] parameters) {
 	}
 

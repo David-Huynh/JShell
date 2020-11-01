@@ -62,7 +62,8 @@ public class Interpreter {
 		} else if (command.equals("man")) {
 			Manual.performOutcome(shell, parameters);
 		} else {
-			shell.println("error: not a valid command");
+			PrintError.reportError(shell,
+					"Error: " + command + " is not a valid command.");
 		}
 	}
 

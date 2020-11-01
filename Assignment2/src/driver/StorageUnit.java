@@ -33,11 +33,12 @@ package driver;
 public class StorageUnit { // Subclasses of this class are Files and Directories
 
 	protected String name;
-	protected Directory location; // null if it's the root
+	protected Directory parentDir;
 
-	public static boolean hasForbidChar(String name) {
+	public boolean hasForbidChar() {
 		boolean valid = false;
-		//Check if name contains any forbidden characters and alter valid accordingly
+		// Check if name contains any forbidden characters and alter valid
+		// accordingly
 
 		return valid;
 	}

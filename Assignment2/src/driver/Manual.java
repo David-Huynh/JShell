@@ -32,11 +32,14 @@ package driver;
 
 public class Manual extends ShellCommand {
 
-	public static void performOutcome(JShell shell, String[] parameters) {
-		// TODO Auto-generated method stub
+	public static String getManual() { // Well this is quite meta
+		return "man CMD [CMD2 …]\n" + "Print documentation for CMD(s)";
+	}
 
-		System.out.println("");
-		
+	public static void performOutcome(JShell shell, String[] parameters) {
+
+		shell.println("");
+
 		String command = parameters[1]; // only accounts for one parameter for
 										// now, need to account for multiple
 										// using a while loop TODO
@@ -64,10 +67,10 @@ public class Manual extends ShellCommand {
 		} else if (command.equals("man")) {
 			System.out.println(Manual.getManual());
 		} else {
-			shell.print("error: not a valid command");
+			PrintError.reportError(shell, "man",
+					command + " is not a valid command.");
 		}
-		
-		
+
 		System.out.println("");
 	}
 

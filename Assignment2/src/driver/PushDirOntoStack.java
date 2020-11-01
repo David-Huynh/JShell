@@ -46,7 +46,7 @@ public class PushDirOntoStack extends ShellCommand {
 				+ "is dynamic and dependent on the pushd and the popd "
 				+ "commands.";
 	}
-	
+
 	public static void performOutcome(JShell shell, String[] parameters) {
 		// TODO Auto-generated method stub
 

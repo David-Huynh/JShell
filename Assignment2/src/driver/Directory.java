@@ -35,7 +35,6 @@ import java.util.ArrayList;
 public class Directory extends StorageUnit {
 
 	private ArrayList<StorageUnit> contents = new ArrayList<StorageUnit>();
-	private Directory parentDir;
 
 	public ArrayList<StorageUnit> getDirContents() {
 		return contents;
@@ -65,12 +64,15 @@ public class Directory extends StorageUnit {
 		this.parentDir = parent;
 	}
 
-	// function to check if a sub-directory named dirName is under Directory dir.
-	// returns -1 if sub-directory named dirName is not in dir or index of sub-dir if it is
+	// function to check if a sub-directory named dirName is under Directory
+	// dir.
+	// returns -1 if sub-directory named dirName is not in dir or index of
+	// sub-dir if it is
 	public int isSubDir(String dirName) {
 		int index = -1;
 		for (int i = 0; i < contents.size(); i++) {
-			if (contents.get(i).getClass().getSimpleName().equals("Directory")) {
+			if (contents.get(i).getClass().getSimpleName()
+					.equals("Directory")) {
 				if (contents.get(i).name.equals(dirName)) {
 					index = i;
 				}
@@ -79,19 +81,19 @@ public class Directory extends StorageUnit {
 
 		return index;
 	}
-	
-	// function to check if a file named fileName is under Directory dir.
-    // returns -1 if file named dirName is not in dir or index of file if it is
-	public int containsFile(String fileName) {
-      int index = -1;
-      for (int i = 0; i < contents.size(); i++) {
-          if (contents.get(i).getClass().getSimpleName().equals("File")) {
-              if (contents.get(i).name.equals(fileName)) {
-                  index = i;
-              }
-          }
-      }
 
-      return index;
-  }
+	// function to check if a file named fileName is under Directory dir.
+	// returns -1 if file named dirName is not in dir or index of file if it is
+	public int containsFile(String fileName) {
+		int index = -1;
+		for (int i = 0; i < contents.size(); i++) {
+			if (contents.get(i).getClass().getSimpleName().equals("File")) {
+				if (contents.get(i).name.equals(fileName)) {
+					index = i;
+				}
+			}
+		}
+
+		return index;
+	}
 }

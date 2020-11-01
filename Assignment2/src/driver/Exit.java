@@ -31,11 +31,11 @@
 package driver;
 
 public class Exit extends ShellCommand {
-	
+
 	public static String getManual() {
 		return "exit \nQuit the program";
 	}
-	
+
 	public static void performOutcome(JShell shell, String[] parameters) {
 		shell.exit();
 	}

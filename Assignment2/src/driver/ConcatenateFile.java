@@ -32,7 +32,22 @@ package driver;
 
 public class ConcatenateFile extends ShellCommand {
 
+	public static String getManual() {
+		return "cat FILE1 [FILE2 ...] \n"
+				+ "Display the contents of FILE1 and other files "
+				+ "(i.e. File2 ...) concatenated in \n"
+				+ "the shell. You may want to "
+				+ "use three line breaks to separate "
+				+ "the contents of one file \n" + "from the other file.";
+	}
+
 	public static void performOutcome(JShell shell, String[] parameters) {
+		if (parameters.length < 2) {
+			PrintError.reportError(shell, "cat",
+					"Invalid number of arguments.");
+			return;
+		}
+
 		File file1;
 		File file2;
 		if (parameters.length == 2) {
@@ -42,7 +57,6 @@ public class ConcatenateFile extends ShellCommand {
 		}
 
 		// Get current directory, then check if file path specified is valid
-
 
 		// if valid, then check print contents from file
 		// else print out the error
