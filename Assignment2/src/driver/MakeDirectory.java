@@ -45,7 +45,7 @@ public class MakeDirectory extends ShellCommand {
 
 	// function to execute command for mkdir
 	public static void performOutcome(JShell shell, String[] parameters) {
-		if (parameters.length != 3) {
+		if (parameters.length == 1 || parameters.length > 3) {
 			PrintError.reportError(shell, "mkdir",
 					"Invalid number of arguments.");
 			return;

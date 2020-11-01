@@ -30,6 +30,8 @@
 
 package driver;
 
+import java.util.ArrayList;
+
 public class ConcatenateFile extends ShellCommand {
 
 	public static String getManual() {
@@ -52,15 +54,48 @@ public class ConcatenateFile extends ShellCommand {
 		File file2;
 		if (parameters.length == 2) {
 			// file path 1
+			String path [] = parameters[1].split("/");
+			catFiles(path, shell);
 		} else if (parameters.length == 3) {
-			// optional file path 2
+			// file path 1 + optional file path 2
+			String path1 [] = parameters[1].split("/");
+			catFiles(path1, shell);
+			String path2 [] = parameters[2].split("/");
+			catFiles(path2, shell);
 		}
 
-		// Get current directory, then check if file path specified is valid
+	}
 
-		// if valid, then check print contents from file
-		// else print out the error
-
+	private static void catFiles(String [] path, JShell shell) {
+		Directory currDir = shell.getCurrentDir();
+		ArrayList<StorageUnit> contents = currDir.getDirContents();
+		for (int i = 0; i < path.length; i++) {
+			if (i+1 == path.length) {
+				int fIndex = currDir.containsFile(path[i]);
+				if (fIndex == -1) {
+					PrintError.reportError(shell, "cat",
+							"Invalid File Name.");
+				} else {
+					File file = (File) contents.get(fIndex);
+					file.print();
+				}
+			} else {
+				if (path[i].equals("..") || path[i].equals(".")) {
+					if (path[i].equals("..")) {
+						currDir = currDir.getParentDir();
+					}
+				} else {
+					int index = currDir.isSubDir(path[i]);
+					if (index == -1) {
+						PrintError.reportError(shell, "cat",
+								"Invalid Directory.");
+					} else {
+						currDir = (Directory) contents.get(index);
+						contents = currDir.getDirContents();
+					}
+				}
+			}
+		}
 	}
 
 }
