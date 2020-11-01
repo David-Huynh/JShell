@@ -37,7 +37,12 @@ public class PrintWorkingDirectory extends ShellCommand {
 				+ "path).  ";
 	}
 
-	public static void performOutcome(JShell shell) {
+	public static void performOutcome(JShell shell, String[] parameters) {
+		if (parameters.length != 1) {
+			PrintError.reportError(shell, "pwd",
+					"Invalid number of arguments.");
+			return;
+		}
 
 		Directory currDir = shell.getCurrentDir(); // get current directory
 		String fullPath = "";
@@ -54,9 +59,9 @@ public class PrintWorkingDirectory extends ShellCommand {
 				currDir = currDir.getParentDir();
 			}
 
-			System.out.println(fullPath); // print absolute path
+			shell.println(fullPath); // print absolute path
 		} else {
-			System.out.println(shell.getRootDir().name);
+			shell.println(shell.getRootDir().name);
 			// print root directory name, since above prints nothing if currDir
 			// = root
 		}

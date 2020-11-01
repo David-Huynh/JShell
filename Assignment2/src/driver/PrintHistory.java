@@ -58,7 +58,11 @@ public class PrintHistory extends ShellCommand {
 	}
 
 	public static void performOutcome(JShell shell, String[] parameters) {
-		// TODO Auto-generated method stub
+		if (parameters.length > 2) {
+			PrintError.reportError(shell, "history",
+					"Invalid number of arguments.");
+			return;
+		}
 
 	}
 

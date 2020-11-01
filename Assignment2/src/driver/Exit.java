@@ -37,6 +37,11 @@ public class Exit extends ShellCommand {
 	}
 
 	public static void performOutcome(JShell shell, String[] parameters) {
+		if (parameters.length != 1) {
+			PrintError.reportError(shell, "exit",
+					"Invalid number of arguments.");
+			return;
+		}
 		shell.exit();
 	}
 

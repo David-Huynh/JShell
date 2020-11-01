@@ -48,7 +48,7 @@ public class Interpreter {
 		} else if (command.equals("ls")) {
 			ListFiles.performOutcome(shell, parameters);
 		} else if (command.equals("pwd")) {
-			PrintWorkingDirectory.performOutcome(shell);
+			PrintWorkingDirectory.performOutcome(shell, parameters);
 		} else if (command.equals("pushd")) {
 			PushDirOntoStack.performOutcome(shell, parameters);
 		} else if (command.equals("popd")) {
