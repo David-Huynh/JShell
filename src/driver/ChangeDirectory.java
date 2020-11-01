@@ -50,13 +50,20 @@ public class ChangeDirectory extends ShellCommand {
 		Directory currDir = shell.getCurrentDir();
 		String[] subDir = {};
 
+		if (parameters[1].indexOf("/") == 0) {
+			currDir = shell.getRootDir();
+			parameters[1] = parameters[1].substring(1);
+			if (parameters[1].equals("/")) {
+				shell.setCurrentDir(currDir);
+				return;
+			}
+		}
 		subDir = parameters[1].split("/");
 
 		for (int i = 0; i < subDir.length; i++) {
 			if (subDir[i].equals("..") || subDir[i].equals(".")) {
 				if (subDir[i].equals("..")) {
 					currDir = currDir.getParentDir();
-					shell.setCurrentDir(currDir);
 				}
 			} else {
 				if (currDir.isSubDir(subDir[i]) == -1) {
@@ -66,9 +73,9 @@ public class ChangeDirectory extends ShellCommand {
 				} else {
 					int index = currDir.isSubDir(subDir[i]);
 					currDir = (Directory) currDir.getDirContents().get(index);
-					shell.setCurrentDir(currDir);
 				}
 			}
+			shell.setCurrentDir(currDir);
 		}
 	}
 }
