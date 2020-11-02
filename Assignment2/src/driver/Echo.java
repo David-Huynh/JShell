@@ -97,7 +97,7 @@ public class Echo extends ShellCommand {
 		if (numArrow == 0) { // Print string to shell command
 			shell.println(parsedParams[0]);
 		}
-		if (index != 1){ //File does not exist
+		if (index != -1){ //File does not exist
 			File nf = (File) shell.getCurrentDir().getFile(index);
 			if (numArrow == 1) {// Overwrite file with string
 				nf.overwrite(parsedParams[0]);
@@ -109,8 +109,5 @@ public class Echo extends ShellCommand {
 			nf.name = parsedParams[1];
 			shell.getCurrentDir().addFile(nf);
 		}
-
-
 	}
-
 }
