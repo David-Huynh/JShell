@@ -48,6 +48,8 @@ public class Directory extends StorageUnit {
     contents.remove(fileName);
   }
 
+  StorageUnit getFile(int index){ return contents.get(index); }
+
   public String getDirName() {
     return this.name;
   }
