@@ -61,23 +61,24 @@ public class Echo extends ShellCommand {
 		String parsedParams[] = {"", ""};
 		boolean closedString = false;
 		for (int i = 1; i < parameters.length; i++) {
-			if (!closedString) {
-				if (parameters[i].charAt(0) == '>') {
+			if (!closedString) {//Checks if '>' separator has been passed
+				if (parameters[i].charAt(0) == '>') {//Checks for leading '>'
 					closedString = true;
 					if (parameters[i]
-							.charAt(parameters[i].length() - 1) != '>') {
+							.charAt(parameters[i].length() - 1) != '>') {//Checks for ending '>'
 						parsedParams[1] = parameters[i].replace(">", "");
 					}
 				} else if (parameters[i]
-						.charAt(parameters[i].length() - 1) == '>') {
+						.charAt(parameters[i].length() - 1) == '>') { //Checks for ending'>'
 					closedString = true;
 					parsedParams[0] += parameters[i].replace(">", "");
 					continue;
 				}
-				if (!closedString) {
+				if (!closedString) {//Checks if '>' has been passed
 					parsedParams[0] += parameters[i].replace(">", "");
 				}
 			} else {
+				//Adds the second part after '>' to second index
 				parsedParams[1] = parameters[i].replace(">", "");
 			}
 		}
