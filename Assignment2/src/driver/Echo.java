@@ -85,18 +85,45 @@ public class Echo extends ShellCommand {
 		return parsedParams;
 	}
 
+	private static boolean errorHandle(JShell shell, String [] parsedParams, int numArrow){
+		//Check for empty string
+		if (parsedParams[0].length() == 0){
+			shell.println("echo: no string attached; string must be surrounded by \"\"");
+			return true;
+		}
+		//Checks for string to be surrounded by "."
+		if (parsedParams[0].charAt(0) != '\"' ||
+				parsedParams[0].charAt(parsedParams[0].length()-1) !='\"'){
+			shell.println("echo: String must be surrounded by \"\"");
+			return true;
+		}
+		//Checks for empty file name
+		if (numArrow != 0){
+			if (parsedParams[1].equals("")){
+				shell.println("echo: FileName/OutFile cannot be empty");
+				return true;
+			}
+		}
+		//Check for double quotes in string
+		if (parsedParams[0].substring(1, parsedParams[0].length() - 1)
+				.contains("\"")) {
+			shell.println("echo: \" is an invalid string character");
+			return true;
+		}
+		return false;
+	}
+
 	public static void performOutcome(JShell shell, String[] parameters) {
 		int numArrow = contains(parameters, ">");
 		String[] parsedParams = parseParameters(parameters);
 		int index = shell.getCurrentDir().containsFile(parsedParams[1]);
-		//Check for double quotes in string
-		if (parsedParams[0].substring(1, parsedParams[0].length() - 1)
-				.contains("\"")) {
-			shell.println("Error: \" is an invalid string character");
+		if (errorHandle(shell, parsedParams, numArrow)) {
 			return;
 		}
+		parsedParams[0] = parsedParams[0].substring(1, parsedParams[0].length() - 1);
 		if (numArrow == 0) { // Print string to shell command
 			shell.println(parsedParams[0]);
+			return;
 		}
 		if (index != -1){ //File does not exist
 			File nf = (File) shell.getCurrentDir().getFile(index);
