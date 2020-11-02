@@ -87,7 +87,7 @@ public class Echo extends ShellCommand {
 
 	private static boolean errorHandle(JShell shell, String [] parsedParams, int numArrow){
 		//Check for empty string
-		if (parsedParams[0].length() == 0){
+		if (parsedParams[0].length() <= 1){
 			shell.println("echo: no string attached; string must be surrounded by \"\"");
 			return true;
 		}
