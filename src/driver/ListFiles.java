@@ -101,7 +101,6 @@ public class ListFiles extends ShellCommand {
               directoryIndex = currDir.isSubDir(path.get(path.size() - 1));
               fileIndex = currDir.containsFile(path.get(path.size() - 1));
 
-
               if (directoryIndex != -1) // check if parameter is a directory in current directory
               {
                 shell.println(parameters[i] + ":");
