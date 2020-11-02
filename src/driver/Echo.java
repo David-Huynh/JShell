@@ -47,10 +47,10 @@ public class Echo extends ShellCommand {
 				+ "appends to OUTFILE instead of overwrite";
 	}
 	//Counts number of '>' in parameters
-	private static int contains(String[] parameters, String keyword) {
+	private static int numArrow(String[] parameters) {
 		int counter = 0;
 		for (int i = 1; i < parameters.length; i++) {
-			if (parameters[i].contains(keyword)) {
+			if (parameters[i].contains(">")) {
 				counter += parameters[i].length();
 			}
 		}
@@ -58,7 +58,7 @@ public class Echo extends ShellCommand {
 	}
 	//Parses input parameters into 2 pieces "String" = [0] and "FileName" = [1]
 	private static String[] parseParameters(String[] parameters) {
-		String parsedParams[] = {"", ""};
+		String [] parsedParams = {"", ""};
 		boolean closedString = false;
 		for (int i = 1; i < parameters.length; i++) {
 			if (!closedString) {//Checks if '>' separator has been passed
@@ -114,7 +114,7 @@ public class Echo extends ShellCommand {
 	}
 
 	public static void performOutcome(JShell shell, String[] parameters) {
-		int numArrow = contains(parameters, ">");
+		int numArrow = numArrow(parameters);
 		String[] parsedParams = parseParameters(parameters);
 		int index = shell.getCurrentDir().containsFile(parsedParams[1]);
 		if (errorHandle(shell, parsedParams, numArrow)) {
