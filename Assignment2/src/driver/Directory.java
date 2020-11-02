@@ -48,7 +48,9 @@ public class Directory extends StorageUnit {
     contents.remove(fileName);
   }
 
-  StorageUnit getFile(int index){ return contents.get(index); }
+  StorageUnit getFile(int index) {
+    return contents.get(index);
+  }
 
   public String getDirName() {
     return this.name;
@@ -134,7 +136,8 @@ public class Directory extends StorageUnit {
         directoryIndex = startDir.isSubDir(path.get(index));
       }
     }
-    if (directoryIndex != -1) {
+    directoryIndex = startDir.getParentDir().isSubDir(startDir.name);
+    if (directoryIndex != -1 || path.size() == 1) {
       return startDir;
     } else {
       return null;
