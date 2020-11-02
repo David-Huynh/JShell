@@ -46,7 +46,7 @@ public class Echo extends ShellCommand {
 				+ "echo STRING >> OUTFILE\n"
 				+ "appends to OUTFILE instead of overwrite";
 	}
-
+	//Counts number of '>' in parameters
 	private static int contains(String[] parameters, String keyword) {
 		int counter = 0;
 		for (int i = 1; i < parameters.length; i++) {
@@ -56,6 +56,7 @@ public class Echo extends ShellCommand {
 		}
 		return counter;
 	}
+	//Parses input parameters into 2 pieces "String" = [0] and "FileName" = [1]
 	private static String[] parseParameters(String[] parameters) {
 		String parsedParams[] = {"", ""};
 		boolean closedString = false;
@@ -86,6 +87,8 @@ public class Echo extends ShellCommand {
 	public static void performOutcome(JShell shell, String[] parameters) {
 		int numArrow = contains(parameters, ">");
 		String[] parsedParams = parseParameters(parameters);
+		int index = shell.getCurrentDir().containsFile(parsedParams[1]);
+		//Check for double quotes in string
 		if (parsedParams[0].substring(1, parsedParams[0].length() - 1)
 				.contains("\"")) {
 			shell.println("Error: \" is an invalid string character");
@@ -93,11 +96,20 @@ public class Echo extends ShellCommand {
 		}
 		if (numArrow == 0) { // Print string to shell command
 			shell.println(parsedParams[0]);
-		} else if (numArrow == 1) {// Overwrite file with string
-
-		} else {// Append to file with string
-
 		}
+		if (index != 1){ //File does not exist
+			File nf = (File) shell.getCurrentDir().getFile(index);
+			if (numArrow == 1) {// Overwrite file with string
+				nf.overwrite(parsedParams[0]);
+			} else {// Append to file with string
+				nf.append(parsedParams[0]);
+			}
+		} else { //File exists
+			File nf = new File(parsedParams[0]);
+			nf.name = parsedParams[1];
+			shell.getCurrentDir().addFile(nf);
+		}
+
 
 	}
 
