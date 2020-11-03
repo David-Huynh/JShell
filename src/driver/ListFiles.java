@@ -38,10 +38,10 @@ public class ListFiles extends ShellCommand {
     return "ls [PATH ...] \nIf no paths are given, print the contents "
         + "(file or directory) of the current \ndirectory, with a new "
         + "line following each of the content (file or directory). \n"
-        + "Otherwise, for each path p, the order listed: \n    · If p "
-        + "specifies a file, print p \n    · If p specifies a "
+        + "Otherwise, for each path p, the order listed: \n    ï¿½ If p "
+        + "specifies a file, print p \n    ï¿½ If p specifies a "
         + "directory, print p, a colon, then the contents of that \n"
-        + "      directory, then an extra new line. \n    · If p does "
+        + "      directory, then an extra new line. \n    ï¿½ If p does "
         + "not exist, print a suitable message.  ";
   }
 
@@ -125,23 +125,7 @@ public class ListFiles extends ShellCommand {
     }
   }
 
-<<<<<<< .mine
-  public static void list(JShell shell, ArrayList<StorageUnit> fileList)
-  // Function used to print all files in directory
-  {
-    for (int i = 0; i < fileList.size(); i++) {
-      System.out.println(fileList.get(i).name);
-    }
-  }
-||||||| .r128
-	public static void list(JShell shell, ArrayList<StorageUnit> fileList)
-	// Function used to print all files in directory
-	{
-		for (int i = 0; i < fileList.size(); i++) {
-			System.out.println(fileList.get(i).name);
-		}
-	}
-=======
+
 	public static void list(JShell shell, ArrayList<StorageUnit> fileList)
 	// Function used to print all files in directory
 	{
@@ -149,6 +133,5 @@ public class ListFiles extends ShellCommand {
 			shell.println(fileList.get(i).name);
 		}
 	}
->>>>>>> .r129
 
 }
