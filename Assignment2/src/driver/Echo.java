@@ -139,8 +139,8 @@ public class Echo extends ShellCommand {
 				nf.append(parsedParams[0]);
 			}
 		} else { // File exists
-			File nf = new File(parsedParams[0]);
-			nf.name = parsedParams[1];
+			File nf = new File(parsedParams[1], parsedParams[0],
+					shell.getCurrentDir());
 			shell.getCurrentDir().addFile(nf);
 		}
 	}

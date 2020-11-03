@@ -38,10 +38,8 @@ public class JShell {
 	private boolean isActive; // turn this off if user wants to exit
 
 	public JShell() { // Shell instance initializer
-		this.rootDir = new Directory();
-		this.rootDir.setDirName("root");
-		this.rootDir.setParentDir(rootDir); // parent of root directory is
-											// always the root
+		this.rootDir = new Directory("root", rootDir);
+		// parent of root directory is always the root itself
 		this.currentDir = this.rootDir; // by default current directory is root
 		this.isActive = true;
 	}
@@ -79,7 +77,7 @@ public class JShell {
 		String userCommand;
 		Scanner userInput = new Scanner(System.in);
 		while (this.isActive) {
-			System.out.print(currentDir.getDirName() + ">");
+			System.out.print(currentDir.getName() + ">");
 			userCommand = userInput.nextLine();
 			Interpreter.interpret(userCommand, this);
 		}

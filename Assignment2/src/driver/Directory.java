@@ -36,6 +36,11 @@ public class Directory extends StorageUnit {
 
 	private ArrayList<StorageUnit> contents = new ArrayList<StorageUnit>();
 
+	public Directory(String name, Directory parentDir) {
+		this.name = name;
+		this.parentDir = parentDir;
+	}
+	
 	public ArrayList<StorageUnit> getDirContents() {
 		return contents;
 	}
@@ -50,22 +55,6 @@ public class Directory extends StorageUnit {
 
 	StorageUnit getFile(int index) {
 		return contents.get(index);
-	}
-
-	public String getDirName() {
-		return this.name;
-	}
-
-	public void setDirName(String name) {
-		this.name = name;
-	}
-
-	public Directory getParentDir() {
-		return parentDir;
-	}
-
-	public void setParentDir(Directory parent) {
-		this.parentDir = parent;
 	}
 
 	// function to check if a sub-directory named dirName is under Directory
@@ -141,7 +130,7 @@ public class Directory extends StorageUnit {
 				directoryIndex = startDir.isSubDir(path.get(index));
 			}
 		}
-		directoryIndex = startDir.getParentDir().isSubDir(startDir.name);
+		directoryIndex = startDir.getParentDir().isSubDir(startDir.getName());
 		if (directoryIndex != -1 || path.size() == 1) {
 			return startDir;
 		} else {
