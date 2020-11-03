@@ -34,8 +34,10 @@ public class File extends StorageUnit {
 
 	private String contents;
 
-	public File(String text) {
-		contents = text;
+	public File(String name, String text, Directory parentDir) {
+		this.name = name;
+		this.contents = text;
+		this.parentDir = parentDir;
 	}
 
 	public String getContents() {

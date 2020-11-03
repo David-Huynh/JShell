@@ -91,10 +91,8 @@ public class MakeDirectory extends ShellCommand {
 		for (int i = 0; i < dir.length; i++) {
 			if (i + 1 == dir.length) {
 				if (currDir.isSubDir(dir[i]) == -1) {
-					Directory newDir = new Directory();
-					newDir.name = dir[i];
+					Directory newDir = new Directory(dir[i], currDir);
 					currDir.addFile(newDir);
-					newDir.setParentDir(currDir);
 				} else {
 					PrintError.reportError(shell, "mkdir",
 							"Directory already exists: " + dir[i]);

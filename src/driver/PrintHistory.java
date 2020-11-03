@@ -54,7 +54,6 @@ public class PrintHistory extends ShellCommand {
 				+ "And the output will be as follows:\r\n"
 				+ "    4. fsjhdfks\r\n" + "    5. history\r\n"
 				+ "    6. history 3";
-
 	}
 
 	public static void performOutcome(JShell shell, String[] parameters) {

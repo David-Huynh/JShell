@@ -30,10 +30,27 @@
 
 package driver;
 
-public class StorageUnit { // Subclasses of this class are Files and Directories
+abstract class StorageUnit { // Subclasses of this class are Files and
+								// Directories
 
 	protected String name;
 	protected Directory parentDir;
+
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Directory getParentDir() {
+		return parentDir;
+	}
+
+	public void setParentDir(Directory parent) {
+		this.parentDir = parent;
+	}
 
 	public boolean hasForbidChar() {
 		boolean valid = false;
