@@ -12,5 +12,4 @@ Responsibilities:
 * Provide a manual for how to use this class
 
 Collaborators:
-* GetWorkingDirectory
 * Directory

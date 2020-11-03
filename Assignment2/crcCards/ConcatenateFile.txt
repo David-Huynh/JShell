@@ -9,6 +9,5 @@ Responsibilities:
 
 Collaborators:
 * PrintError
-* GetWorkingDirectory
 * Directory
 * File
