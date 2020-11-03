@@ -65,11 +65,11 @@ public class JShell {
 	public void println(String message) {
 		System.out.println(message);
 	}
-	
+
 	public void print(String message) {
 		System.out.print(message);
 	}
-	
+
 	public void printError(String errMsg) {
 		System.out.println(errMsg);
 	}

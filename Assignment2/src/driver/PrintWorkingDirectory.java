@@ -32,38 +32,39 @@ package driver;
 
 public class PrintWorkingDirectory extends ShellCommand {
 
-  public static String getManual() {
-    return "pwd \nPrint the current working directory (including the whole " + "path).  ";
-  }
+	public static String getManual() {
+		return "pwd \nPrint the current working directory (including the whole "
+				+ "path).  ";
+	}
 
-  public static void performOutcome(JShell shell, String[] parameters) {
-    if (parameters.length != 1) {
-      PrintError.reportError(shell, "pwd", "Invalid number of arguments.");
-      return;
-    }
+	public static void performOutcome(JShell shell, String[] parameters) {
+		if (parameters.length != 1) {
+			PrintError.reportError(shell, "pwd",
+					"Invalid number of arguments.");
+			return;
+		}
 
-    Directory currDir = shell.getCurrentDir(); // get current directory
-    String fullPath = "";
+		Directory currDir = shell.getCurrentDir(); // get current directory
+		String fullPath = "";
 
-    if (currDir != shell.getRootDir()) {
-      fullPath = currDir.getParentDir().name + "/" + currDir.name + fullPath; // append name of
-                                                                              // parent directory to
-                                                                              // current
-                                                                              // directory
-      currDir = currDir.getParentDir();
+		if (currDir != shell.getRootDir()) {
+			fullPath = currDir.getParentDir().name + "/" + currDir.name
+					+ fullPath;
+			// append name of parent directory to current directory
+			currDir = currDir.getParentDir();
 
-      while (currDir != shell.getRootDir()) {
-        fullPath = currDir.getParentDir().name + "/" + fullPath;
-        // keep appending parent directory until we hit root
-        currDir = currDir.getParentDir();
-      }
+			while (currDir != shell.getRootDir()) {
+				fullPath = currDir.getParentDir().name + "/" + fullPath;
+				// keep appending parent directory until we hit root
+				currDir = currDir.getParentDir();
+			}
 
-      shell.println("/" + fullPath); // print absolute path
-    } else {
-      shell.println("/" + shell.getRootDir().name);
-      // print root directory name, since above prints nothing if currDir
-      // = root
-    }
-  }
+			shell.println("/" + fullPath); // print absolute path
+		} else {
+			shell.println("/" + shell.getRootDir().name);
+			// print root directory name, since above prints nothing if currDir
+			// = root
+		}
+	}
 
 }

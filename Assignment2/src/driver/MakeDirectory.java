@@ -60,7 +60,7 @@ public class MakeDirectory extends ShellCommand {
 		if (parameters[1].indexOf("/") == 0) {
 			if (parameters[1].equals("/")) {
 				PrintError.reportError(shell, "mkdir",
-						"Directory already exits: "+parameters[1]);
+						"Directory already exits: " + parameters[1]);
 			} else {
 				currDir = shell.getRootDir();
 				parameters[1] = parameters[1].substring(1);
@@ -74,7 +74,7 @@ public class MakeDirectory extends ShellCommand {
 		if (parameters[2].indexOf("/") == 0) {
 			if (parameters[2].equals("/")) {
 				PrintError.reportError(shell, "mkdir",
-						"Directory already exits: "+parameters[1]);
+						"Directory already exits: " + parameters[1]);
 			} else {
 				currDir = shell.getRootDir();
 				parameters[2] = parameters[2].substring(1);

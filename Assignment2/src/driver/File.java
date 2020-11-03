@@ -35,23 +35,22 @@ public class File extends StorageUnit {
 	private String contents;
 
 	public File(String text) {
-	  contents = text;
+		contents = text;
 	}
-	
-	public String getContents()
-	{
-	  return this.contents;
+
+	public String getContents() {
+		return this.contents;
 	}
 
 	public void append(String text) {
-	  this.contents = this.contents + text;
+		this.contents = this.contents + text;
 	}
-	
-	public void overwrite(String text) {
-      this.contents = text;
-    }
 
-	public void print() {
-	  System.out.println(this.contents);
+	public void overwrite(String text) {
+		this.contents = text;
+	}
+
+	public void print(JShell shell) {
+		shell.println(this.contents);
 	}
 }
