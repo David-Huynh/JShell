@@ -44,7 +44,8 @@ public class Echo extends ShellCommand {
 				+ "In either case, the only "
 				+ "thing in OUTFILE should be STRING.\n"
 				+ "echo STRING >> OUTFILE\n"
-				+ "appends to OUTFILE instead of overwrite";
+				+ "Like the previous command, but"
+				+ "appends to OUTFILE instead of overwrites";
 	}
 	// Counts number of '>' in parameters
 	private static int numArrow(String[] parameters) {

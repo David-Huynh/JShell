@@ -77,7 +77,7 @@ public class JShell {
 		String userCommand;
 		Scanner userInput = new Scanner(System.in);
 		while (this.isActive) {
-			System.out.print(currentDir.getName() + ">");
+			this.print(currentDir.getName() + ">");
 			userCommand = userInput.nextLine();
 			Interpreter.interpret(userCommand, this);
 		}
