@@ -46,7 +46,7 @@ public class Echo extends ShellCommand {
 				+ "echo STRING >> OUTFILE\n"
 				+ "appends to OUTFILE instead of overwrite";
 	}
-	//Counts number of '>' in parameters
+	// Counts number of '>' in parameters
 	private static int numArrow(String[] parameters) {
 		int counter = 0;
 		for (int i = 1; i < parameters.length; i++) {
@@ -56,58 +56,63 @@ public class Echo extends ShellCommand {
 		}
 		return counter;
 	}
-	//Parses input parameters into 2 pieces "String" = [0] and "FileName" = [1]
+	// Parses input parameters into 2 pieces "String" = [0] and "FileName" = [1]
 	private static String[] parseParameters(String[] parameters) {
-		String [] parsedParams = {"", ""};
+		String[] parsedParams = {"", ""};
 		boolean closedString = false;
 		for (int i = 1; i < parameters.length; i++) {
-			if (!closedString) {//Checks if '>' separator has been passed
-				if (parameters[i].charAt(0) == '>') {//Checks for leading '>'
+			if (!closedString) {// Checks if '>' separator has been passed
+				if (parameters[i].charAt(0) == '>') {// Checks for leading '>'
 					closedString = true;
-					if (parameters[i]
-							.charAt(parameters[i].length() - 1) != '>') {//Checks for ending '>'
+					if (parameters[i] // Checks for ending '>'
+							.charAt(parameters[i].length() - 1) != '>') {
 						parsedParams[1] = parameters[i].replace(">", "");
 					}
-				} else if (parameters[i]
-						.charAt(parameters[i].length() - 1) == '>') { //Checks for ending'>'
+				} else if (parameters[i] // Checks for ending'>'
+						.charAt(parameters[i].length() - 1) == '>') {
 					closedString = true;
 					parsedParams[0] += parameters[i].replace(">", "");
 					continue;
 				}
-				if (!closedString) {//Checks if '>' has been passed
+				if (!closedString) {// Checks if '>' has been passed
 					parsedParams[0] += parameters[i].replace(">", "");
 				}
 			} else {
-				//Adds the second part after '>' to second index
+				// Adds the second part after '>' to second index
 				parsedParams[1] = parameters[i].replace(">", "");
 			}
 		}
 		return parsedParams;
 	}
 
-	private static boolean errorHandle(JShell shell, String [] parsedParams, int numArrow){
-		//Check for empty string
-		if (parsedParams[0].length() <= 1){
-			shell.println("echo: no string attached; string must be surrounded by \"\"");
+	private static boolean errorHandle(JShell shell, String[] parsedParams,
+			int numArrow) {
+		// Check for empty string
+		if (parsedParams[0].length() <= 1) {
+			PrintError.reportError(shell, "echo", "No string attached; string "
+					+ "must be surrounded by \"\"");
 			return true;
 		}
-		//Checks for string to be surrounded by "."
-		if (parsedParams[0].charAt(0) != '\"' ||
-				parsedParams[0].charAt(parsedParams[0].length()-1) !='\"'){
-			shell.println("echo: String must be surrounded by \"\"");
+		// Checks for string to be surrounded by "."
+		if (parsedParams[0].charAt(0) != '\"' || parsedParams[0]
+				.charAt(parsedParams[0].length() - 1) != '\"') {
+			PrintError.reportError(shell, "echo",
+					"String must be surrounded " + "by \"\"");
 			return true;
 		}
-		//Checks for empty file name
-		if (numArrow != 0){
-			if (parsedParams[1].equals("")){
-				shell.println("echo: FileName/OutFile cannot be empty");
+		// Checks for empty file name
+		if (numArrow != 0) {
+			if (parsedParams[1].equals("")) {
+				PrintError.reportError(shell, "echo",
+						"FileName/OutFile cannot be empty");
 				return true;
 			}
 		}
-		//Check for double quotes in string
+		// Check for double quotes in string
 		if (parsedParams[0].substring(1, parsedParams[0].length() - 1)
 				.contains("\"")) {
-			shell.println("echo: \" is an invalid string character");
+			PrintError.reportError(shell, "echo",
+					"\\\" is an invalid string character\"");
 			return true;
 		}
 		return false;
@@ -120,19 +125,20 @@ public class Echo extends ShellCommand {
 		if (errorHandle(shell, parsedParams, numArrow)) {
 			return;
 		}
-		parsedParams[0] = parsedParams[0].substring(1, parsedParams[0].length() - 1);
+		parsedParams[0] = parsedParams[0].substring(1,
+				parsedParams[0].length() - 1);
 		if (numArrow == 0) { // Print string to shell command
 			shell.println(parsedParams[0]);
 			return;
 		}
-		if (index != -1){ //File does not exist
+		if (index != -1) { // File does not exist
 			File nf = (File) shell.getCurrentDir().getFile(index);
 			if (numArrow == 1) {// Overwrite file with string
 				nf.overwrite(parsedParams[0]);
 			} else {// Append to file with string
 				nf.append(parsedParams[0]);
 			}
-		} else { //File exists
+		} else { // File exists
 			File nf = new File(parsedParams[0]);
 			nf.name = parsedParams[1];
 			shell.getCurrentDir().addFile(nf);

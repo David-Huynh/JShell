@@ -48,7 +48,7 @@ public class Manual extends ShellCommand {
 		int i;
 
 		for (i = 1; i < parameters.length; i++) {
-			String command = parameters[i]; 
+			String command = parameters[i];
 			if (command.equals("exit")) {
 				System.out.println(Exit.getManual());
 			} else if (command.equals("mkdir")) {

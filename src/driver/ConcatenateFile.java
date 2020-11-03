@@ -54,31 +54,30 @@ public class ConcatenateFile extends ShellCommand {
 		File file2;
 		if (parameters.length == 2) {
 			// file path 1
-			String path [] = parameters[1].split("/");
+			String path[] = parameters[1].split("/");
 			catFiles(path, shell);
 		} else if (parameters.length == 3) {
 			// file path 1 + optional file path 2
-			String path1 [] = parameters[1].split("/");
+			String path1[] = parameters[1].split("/");
 			catFiles(path1, shell);
-			String path2 [] = parameters[2].split("/");
+			String path2[] = parameters[2].split("/");
 			catFiles(path2, shell);
 		}
 
 	}
 
-	private static void catFiles(String [] path, JShell shell) {
+	private static void catFiles(String[] path, JShell shell) {
 		Directory currDir = shell.getCurrentDir();
 		ArrayList<StorageUnit> contents = currDir.getDirContents();
 		for (int i = 0; i < path.length; i++) {
-			if (i+1 == path.length) {
+			if (i + 1 == path.length) {
 				int fIndex = currDir.containsFile(path[i]);
 				if (fIndex == -1) {
-					PrintError.reportError(shell, "cat",
-							"Invalid File Name.");
+					PrintError.reportError(shell, "cat", "Invalid File Name.");
 					return;
 				} else {
 					File file = (File) contents.get(fIndex);
-					file.print();
+					file.print(shell);
 				}
 			} else {
 				if (path[i].equals("..") || path[i].equals(".")) {
