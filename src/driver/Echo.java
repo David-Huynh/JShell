@@ -51,8 +51,10 @@ public class Echo extends ShellCommand {
 	private static int numArrow(String[] parameters) {
 		int counter = 0;
 		for (int i = 1; i < parameters.length; i++) {
-			if (parameters[i].contains(">")) {
-				counter += parameters[i].length();
+			for (int c = 0; c < parameters[i].length()-1; c++){
+				if (parameters[i].charAt(c) == '>') {
+					counter += 1;
+				}
 			}
 		}
 		return counter;
@@ -61,6 +63,11 @@ public class Echo extends ShellCommand {
 	private static String[] parseParameters(String[] parameters) {
 		String[] parsedParams = {"", ""};
 		boolean closedString = false;
+		if (parameters[1].contains(">") &&
+				parameters[1].charAt(parameters[1].length() - 1)!='>'&&
+				parameters[1].charAt(0)!='>'){
+			return parameters[1].split(">+");
+		}
 		for (int i = 1; i < parameters.length; i++) {
 			if (!closedString) {// Checks if '>' separator has been passed
 				if (parameters[i].charAt(0) == '>') {// Checks for leading '>'
