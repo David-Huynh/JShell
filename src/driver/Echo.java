@@ -51,7 +51,7 @@ public class Echo extends ShellCommand {
 	private static int numArrow(String[] parameters) {
 		int counter = 0;
 		for (int i = 1; i < parameters.length; i++) {
-			for (int c = 0; c < parameters[i].length()-1; c++){
+			for (int c = 0; c < parameters[i].length(); c++){
 				if (parameters[i].charAt(c) == '>') {
 					counter += 1;
 				}
