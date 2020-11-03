@@ -52,11 +52,12 @@ abstract class StorageUnit { // Subclasses of this class are Files and
 		this.parentDir = parent;
 	}
 
-	public boolean hasForbidChar() {
-		boolean valid = false;
-		// Check if name contains any forbidden characters and alter valid
-		// accordingly
+	public static boolean hasForbidChar(String filename) {
+		boolean contains = false;
+		if (filename.matches(".*[/.!@#$%^&*(){}~|<>?].*")) {
+			contains = true;
+		}
 
-		return valid;
+		return contains;
 	}
 }
