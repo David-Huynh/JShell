@@ -49,24 +49,18 @@ public class ConcatenateFile extends ShellCommand {
 					"Invalid number of arguments.");
 			return;
 		}
-
-		File file1;
-		File file2;
-		if (parameters.length == 2) {
-			// file path 1
-			String path[] = parameters[1].split("/");
-			catFiles(path, shell);
-		} else if (parameters.length == 3) {
-			// file path 1 + optional file path 2
-			String path1[] = parameters[1].split("/");
-			if (!catFiles(path1, shell)) {
+		String path[] = parameters[1].split("/");
+		if (!catFiles(path, shell)) {
+			return;
+		}
+		int i;
+		for (i = 2; i < parameters.length; i++) {
+			String path2[] = parameters[i].split("/");
+			shell.println("\n");
+			if (!catFiles(path2, shell)) {
 				return;
 			}
-			System.out.println("\n\n\n");
-			String path2[] = parameters[2].split("/");
-			catFiles(path2, shell);
 		}
-
 	}
 
 	// returns if it is successful (i.e. no errors)

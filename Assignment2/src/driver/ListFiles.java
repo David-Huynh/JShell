@@ -139,7 +139,7 @@ public class ListFiles extends ShellCommand {
 	// Function used to print all files in directory
 	{
 		for (int i = 0; i < fileList.size(); i++) {
-			System.out.println(fileList.get(i).name);
+			shell.println(fileList.get(i).name);
 		}
 	}
 
