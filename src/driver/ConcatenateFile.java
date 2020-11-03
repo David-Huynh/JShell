@@ -59,14 +59,17 @@ public class ConcatenateFile extends ShellCommand {
 		} else if (parameters.length == 3) {
 			// file path 1 + optional file path 2
 			String path1[] = parameters[1].split("/");
-			catFiles(path1, shell);
+			if (!catFiles(path1, shell)) {
+				return;
+			}
 			String path2[] = parameters[2].split("/");
 			catFiles(path2, shell);
 		}
 
 	}
 
-	private static void catFiles(String[] path, JShell shell) {
+	// returns if it is successful (i.e. no errors)
+	private static boolean catFiles(String[] path, JShell shell) {
 		Directory currDir = shell.getCurrentDir();
 		ArrayList<StorageUnit> contents = currDir.getDirContents();
 		for (int i = 0; i < path.length; i++) {
@@ -74,7 +77,7 @@ public class ConcatenateFile extends ShellCommand {
 				int fIndex = currDir.containsFile(path[i]);
 				if (fIndex == -1) {
 					PrintError.reportError(shell, "cat", "Invalid File Name.");
-					return;
+					return false;
 				} else {
 					File file = (File) contents.get(fIndex);
 					file.print(shell);
@@ -89,7 +92,7 @@ public class ConcatenateFile extends ShellCommand {
 					if (index == -1) {
 						PrintError.reportError(shell, "cat",
 								"Invalid Directory.");
-						return;
+						return false;
 					} else {
 						currDir = (Directory) contents.get(index);
 						contents = currDir.getDirContents();
@@ -97,6 +100,7 @@ public class ConcatenateFile extends ShellCommand {
 				}
 			}
 		}
+		return true;
 	}
 
 }
