@@ -51,12 +51,12 @@ public class ChangeDirectory extends ShellCommand {
 		String[] subDir = {};
 
 		if (parameters[1].indexOf("/") == 0) {
-			currDir = shell.getRootDir();
-			parameters[1] = parameters[1].substring(1);
 			if (parameters[1].equals("/")) {
-				shell.setCurrentDir(currDir);
+				shell.setCurrentDir(shell.getRootDir());
 				return;
 			}
+			currDir = shell.getRootDir();
+			parameters[1] = parameters[1].substring(1);
 		}
 		subDir = parameters[1].split("/");
 
