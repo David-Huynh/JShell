@@ -38,7 +38,7 @@ public class JShell {
 	private boolean isActive; // turn this off if user wants to exit
 
 	public JShell() { // Shell instance initializer
-		this.rootDir = new Directory("root", rootDir);
+		this.rootDir = new Directory("/", rootDir);
 		// parent of root directory is always the root itself
 		this.currentDir = this.rootDir; // by default current directory is root
 		this.isActive = true;
