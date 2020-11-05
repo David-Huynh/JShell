@@ -41,13 +41,13 @@ s-7: (PrintHistory) Use test cases to ensure full functionality of the history c
 These tasks are assigned as follows:
 
 User: Collin Chan
-Tasks: o-3, p-2,
+Tasks: o-3, p-2, s-1, s-2, s-3, s-4, s-5, s-6
 
 User: Jeff He
-Tasks: 
+Tasks: r-1, r-2, r-3
 
 User: Nevin Wong
-Tasks: j-2, s-1, s-2, s-3, s-4, s-5, s-6, s-7
+Tasks: j-2, q-1, q-2, q-3, q-4
 
 User: David Huynh
-Tasks: l-2, m-4, m-7, n-3
+Tasks: l-2, m-4, m-7, n-3, q-5, r-4, s-7
