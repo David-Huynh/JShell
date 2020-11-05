@@ -33,9 +33,9 @@ s-1: (PrintHistory) Write the CRC Card for History and edit JShell's card to kee
 s-2: (PrintHistory) Write base code for History class
 s-3: (JShell) Create another private variable for JShell, its history (perhaps an ArrayList), and a getter and setter method for it
 s-4: (JShell) Whenever the user enters in a command, add this command to the end of this history variable
-s-4: (PrintHistory) Have History be able to print out contents of JShell's history, numbered
-s-5: (PrintHistory) Have History be able to print out a given number of contents of JShell's history, numbered
-s-6: (PrintHistory) Use test cases to ensure full functionality of the history command
+s-5: (PrintHistory) Have History be able to print out contents of JShell's history, numbered
+s-6: (PrintHistory) Have History be able to print out a given number of contents of JShell's history, numbered
+s-7: (PrintHistory) Use test cases to ensure full functionality of the history command
 
 
 These tasks are assigned as follows:
@@ -47,7 +47,7 @@ User: Jeff He
 Tasks: 
 
 User: Nevin Wong
-Tasks: j-2, 
+Tasks: j-2, s-1, s-2, s-3, s-4, s-5, s-6, s-7
 
 User: David Huynh
 Tasks: l-2, m-4, m-7, n-3
