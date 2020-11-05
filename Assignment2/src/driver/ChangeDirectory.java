@@ -75,7 +75,7 @@ public class ChangeDirectory extends ShellCommand {
 					currDir = (Directory) currDir.getDirContents().get(index);
 				}
 			}
-			shell.setCurrentDir(currDir);
 		}
+		shell.setCurrentDir(currDir);
 	}
 }
