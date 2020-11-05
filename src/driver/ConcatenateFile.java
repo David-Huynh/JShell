@@ -71,7 +71,7 @@ public class ConcatenateFile extends ShellCommand {
 			if (i + 1 == path.length) {
 				int fIndex = currDir.containsFile(path[i]);
 				if (fIndex == -1) {
-					PrintError.reportError(shell, "cat", "Invalid File Name.");
+					PrintError.reportError(shell, "cat", "Does not contain file: "+path[i]);
 					return false;
 				} else {
 					File file = (File) contents.get(fIndex);
