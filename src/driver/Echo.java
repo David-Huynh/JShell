@@ -30,6 +30,10 @@
 
 package driver;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Echo extends ShellCommand {
 
 	public static String getManual() {
@@ -125,14 +129,47 @@ public class Echo extends ShellCommand {
 		}
 		return false;
 	}
+	private static Directory directory(JShell shell, String filePath){
+		Directory currDir = shell.getCurrentDir();
+		String[] dir1;
 
+		if (filePath.indexOf("/") == 0) {
+			if (filePath.equals("/")) {
+				PrintError.reportError(shell, "echo",
+						"filename must be provided" + filePath);
+			} else {
+				currDir = shell.getRootDir();
+				filePath = filePath.substring(1);
+			}
+		}
+		dir1 = filePath.split("/");
+		ArrayList<String> list = new ArrayList<>();
+		for (int i = 0; i < dir1.length - 1; i++){
+			list.add(dir1[i]);
+			list.get(i);
+		}
+		Directory dir = currDir.cycleDir(list, -1, currDir, shell);//Doesn't return null for invalid path
+		if (dir == null){
+			PrintError.reportError(shell, "echo", "directory does not exist");
+			return null;
+		}else{
+			return dir;
+		}
+	}
 	public static void performOutcome(JShell shell, String[] parameters) {
 		int numArrow = numArrow(parameters);
 		String[] parsedParams = parseParameters(parameters);
-		int index = shell.getCurrentDir().containsFile(parsedParams[1]);
+		Directory dir = directory(shell, parsedParams[1]);
+		String fileName = parsedParams[1].split("/")[parsedParams[1].split("/").length-1];
+
+		if (dir == null){
+			return;
+		}
+		int index = dir.containsFile(fileName);
 		if (errorHandle(shell, parsedParams, numArrow)) {
 			return;
 		}
+
 		parsedParams[0] = parsedParams[0].substring(1,
 				parsedParams[0].length() - 1);
 		if (numArrow == 0) { // Print string to shell command
@@ -140,16 +177,15 @@ public class Echo extends ShellCommand {
 			return;
 		}
 		if (index != -1) { // File does not exist
-			File nf = (File) shell.getCurrentDir().getFile(index);
+			File nf = (File) dir.getFile(index);
 			if (numArrow == 1) {// Overwrite file with string
-				nf.overwrite(parsedParams[0]);
+				nf.overwrite(fileName);
 			} else {// Append to file with string
-				nf.append(parsedParams[0]);
+				nf.append(fileName);
 			}
 		} else { // File exists
-			File nf = new File(parsedParams[1], parsedParams[0],
-					shell.getCurrentDir());
-			shell.getCurrentDir().addFile(nf);
+			File nf = new File(fileName, parsedParams[0], dir);
+			dir.addFile(nf);
 		}
 	}
 }
