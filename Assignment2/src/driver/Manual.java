@@ -30,12 +30,32 @@
 
 package driver;
 
+/**
+ * The Manual command prints documentation for specific commands so a user knows
+ * how to use them.
+ */
+
 public class Manual extends ShellCommand {
 
+	/**
+	 * This is quite meta, provides the manual for how to use this command
+	 * 
+	 * @return The manual
+	 */
 	public static String getManual() { // Well this is quite meta
 		return "man CMD [CMD2 …]\n" + "Print documentation for CMD(s)";
 	}
 
+	/**
+	 * Tell the shell to print the desired manuals for a given number of
+	 * commands.
+	 * 
+	 * @param shell
+	 *            The JShell the command is to be performed on
+	 * @param parameters
+	 *            The parameters from the interpreter the command is to work
+	 *            with
+	 */
 	public static void performOutcome(JShell shell, String[] parameters) {
 		if (parameters.length < 2) {
 			PrintError.reportError(shell, "man",

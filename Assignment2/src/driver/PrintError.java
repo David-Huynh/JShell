@@ -30,12 +30,34 @@
 
 package driver;
 
+/**
+ * PrintError is used by commands to print any error messages on JShell's
+ * command line and any errors thrown by the operating system.
+ */
 public class PrintError {
 
+	/**
+	 * Reports an error message for a JShell to print
+	 * 
+	 * @param shell
+	 *            The specified instance of JShell
+	 * @param errMsg
+	 *            The error message to be reported
+	 */
 	public static void reportError(JShell shell, String errMsg) {
 		shell.printError(errMsg);
 	}
 
+	/**
+	 * Reports an error message from a command for a JShell to print
+	 * 
+	 * @param shell
+	 *            The specified instance of JShell
+	 * @param cmd
+	 *            The name of the command that encountered the error
+	 * @param errMsg
+	 *            The error message to be reported
+	 */
 	public static void reportError(JShell shell, String cmd, String errMsg) {
 		shell.printError(cmd + ": " + errMsg);
 	}
