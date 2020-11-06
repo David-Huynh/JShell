@@ -30,11 +30,52 @@
 
 package driver;
 
+import java.util.Arrays;
+
 public class Interpreter {
+
+	public static String[] splitCmdIntoParams(String userCommand) {
+		String[] parameters = new String[0];
+		int i;
+		boolean quoteMode = false;
+		String currString = "";
+		for (i = 0; i < userCommand.length(); i++) {
+			if (quoteMode) {
+				if (userCommand.charAt(i) == '"') {
+					currString = currString + userCommand.charAt(i);
+					quoteMode = false;
+				} else {
+					currString = currString + userCommand.charAt(i);
+				}
+			} else {
+				if (userCommand.charAt(i) == '"') {
+					quoteMode = true;
+					currString = currString + userCommand.charAt(i);
+				} else if (userCommand.charAt(i) != ' ') {
+					currString = currString + userCommand.charAt(i);
+				} else if (userCommand.charAt(i) == ' ' && currString != "") {
+					parameters = Arrays.copyOf(parameters,
+							parameters.length + 1);
+					parameters[parameters.length - 1] = currString;
+					currString = "";
+				}
+			}
+		}
+		if (currString != "") {
+			parameters = Arrays.copyOf(parameters, parameters.length + 1);
+			parameters[parameters.length - 1] = currString;
+			currString = "";
+		}
+		//for (String parameter : parameters) {
+		//	System.out.println(parameter);
+		//} FOR TESTING
+		return parameters;
+	}
 
 	public static void interpret(String userCommand, JShell shell) {
 		// Parse the userCommand into a String and a list of parameters
-		String parameters[] = userCommand.strip().split(" +");
+		// String parameters[] = userCommand.strip().split(" +");
+		String parameters[] = Interpreter.splitCmdIntoParams(userCommand);
 		String command = parameters[0]; // The first word is the command
 		if (command.equals("exit")) {
 			Exit.performOutcome(shell, parameters);
