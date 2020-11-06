@@ -41,8 +41,8 @@ public class Interpreter {
 
 	/**
 	 * Splits a given user command into an array of strings. Phrases written in
-	 * quotes ("") will remain exactly as is, otherwise spaces will be used to
-	 * split the command.
+	 * quotes ("") will remain exactly as is, otherwise any spaces will be
+	 * interpreted as a gap in between parameters.
 	 * 
 	 * @param userCommand
 	 *            A command the user has input into the JShell
