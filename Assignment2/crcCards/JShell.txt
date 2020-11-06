@@ -7,6 +7,7 @@ Responsibilities:
 * Send entered commands for Interpreter to interpret
 * Has a specific root directory area the user works in
 * Keep track of a current directory somewhere in root
+* Keep track of a directory stack
 * Start up when prompted
 * Exit when prompted
 * Print specific lines to the interface when prompted
