@@ -59,9 +59,9 @@ public class PrintWorkingDirectory extends ShellCommand {
 				currDir = currDir.getParentDir();
 			}
 
-			shell.println("/" + fullPath); // print absolute path
+			shell.println(fullPath.substring(1)); // print absolute path
 		} else {
-			shell.println("/" + shell.getRootDir().name);
+			shell.println(shell.getRootDir().name);
 			// print root directory name, since above prints nothing if currDir
 			// = root
 		}
