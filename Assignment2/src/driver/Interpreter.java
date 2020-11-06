@@ -34,6 +34,15 @@ import java.util.Arrays;
 
 public class Interpreter {
 
+	/**
+	 * Splits a given user command into an array of strings. Phrases written in
+	 * quotes ("") will remain exactly as is, otherwise spaces will be used to
+	 * split the command.
+	 * 
+	 * @param userCommand
+	 *            A command the user has input into the JShell
+	 * @return The array of strings ready to be passed on to a ShellCommand
+	 */
 	public static String[] splitCmdIntoParams(String userCommand) {
 		String[] parameters = new String[0];
 		int i;
@@ -66,12 +75,18 @@ public class Interpreter {
 			parameters[parameters.length - 1] = currString;
 			currString = "";
 		}
-		//for (String parameter : parameters) {
-		//	System.out.println(parameter);
-		//} FOR TESTING
 		return parameters;
 	}
 
+	/**
+	 * Calls the appropriate commands to carry out the user's desired outcomes
+	 * according to a given command
+	 * 
+	 * @param userCommand
+	 *            A command the user has input into the JShell
+	 * @param shell
+	 *            The specific instance of the JShell the user is using
+	 */
 	public static void interpret(String userCommand, JShell shell) {
 		// Parse the userCommand into a String and a list of parameters
 		// String parameters[] = userCommand.strip().split(" +");

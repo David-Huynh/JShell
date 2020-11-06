@@ -34,11 +34,18 @@ import java.util.Stack;
 
 public class JShell {
 
-	private Directory rootDir; // root directory stores everything
+	private Directory rootDir;
+	/** root directory stores everything */
 	private Directory currentDir;
-	private boolean isActive; // turn this off if user wants to exit
+	/** current directory user is working in */
+	private boolean isActive;
+	/** turned off when user wishes to exit */
 	private Stack<Directory> dirStack;
+	/** directory stack of the shell */
 
+	/**
+	 * Initializes an instance of the JShell, initializes all private variables
+	 */
 	public JShell() { // Shell instance initializer
 		this.rootDir = new Directory("/", null);
 		this.rootDir.setParentDir(rootDir);// parent of root directory is always
@@ -48,40 +55,84 @@ public class JShell {
 		this.isActive = true;
 	}
 
+	/**
+	 * Public getter method for the current directory
+	 * 
+	 * @return The current directory of the shell
+	 */
 	public Directory getCurrentDir() {
 		return this.currentDir;
 	}
 
+	/**
+	 * Public setter method for the current directory
+	 * 
+	 * @param currentDir
+	 *            The given directory to be the new current directory
+	 */
 	public void setCurrentDir(Directory currentDir) {
 		this.currentDir = currentDir;
 	}
 
+	/**
+	 * Public getter method for the root directory
+	 * 
+	 * @return The root directory of the shell
+	 */
 	public Directory getRootDir() {
 		return this.rootDir;
 	}
-	
+
+	/**
+	 * Public getter method for the directory stack
+	 * 
+	 * @return The directory stack of the shell
+	 */
 	public Stack<Directory> getDirStack() {
 		return this.dirStack;
 	}
 
+	/**
+	 * Public exit method which the ShellCommand Exit uses
+	 */
 	public void exit() {
 		this.isActive = false;
 	}
 
+	/**
+	 * Prints a given message as a line on the shell
+	 * 
+	 * @param message
+	 *            The message to be printed as a line
+	 */
 	public void println(String message) {
 		System.out.println(message);
 	}
 
+	/**
+	 * Prints a given message as a on the shell
+	 * 
+	 * @param message
+	 *            The message to be printed
+	 */
 	public void print(String message) {
 		System.out.print(message);
 	}
 
+	/**
+	 * Prints a given error message on the shell
+	 * 
+	 * @param errMsg
+	 *            The error message to be printed
+	 */
 	public void printError(String errMsg) {
 		System.out.println(errMsg);
 	}
 
-	public void run() { // continually prompts the user for input and sends to
-						// Interpreter
+	/**
+	 * Continually prompts the user for input and sends to Interpreter
+	 */
+	public void run() {
 		String userCommand;
 		Scanner userInput = new Scanner(System.in);
 		while (this.isActive) {
@@ -92,6 +143,9 @@ public class JShell {
 		userInput.close();
 	}
 
+	/**
+	 * Creates a new instance of the JShell and runs it
+	 */
 	public static void main(String[] args) {
 		JShell shell = new JShell();
 		shell.run();
