@@ -32,6 +32,11 @@ package driver;
 
 import java.util.Arrays;
 
+/**
+ * The Interpreter interprets user commands from the JShell to perform the
+ * user's desired outcomes
+ */
+
 public class Interpreter {
 
 	/**

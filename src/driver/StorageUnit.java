@@ -30,34 +30,69 @@
 
 package driver;
 
-abstract class StorageUnit { // Subclasses of this class are Files and
-								// Directories
+/**
+ * A StorageUnit stores data and lives in a JShell's storage system. Subclasses
+ * of StorageUnit are File and Directory.
+ */
+
+abstract class StorageUnit {
 
 	protected String name;
+	/** The name that the StorageUnit is identified by */
 	protected Directory parentDir;
+	/** The directory the StorageUnit lives in */
 
+	/**
+	 * Public getter method for the name
+	 * 
+	 * @return The name of the StorageUnit
+	 */
 	public String getName() {
 		return this.name;
 	}
 
+	/**
+	 * Public setter method for the namme
+	 * 
+	 * @param name
+	 *            The name to be changed to
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * Public getter method for the parent directory
+	 * 
+	 * @return The StorageUnit's location
+	 */
 	public Directory getParentDir() {
 		return parentDir;
 	}
 
+	/**
+	 * Public setter method for the parent directory
+	 * 
+	 * @param parent
+	 *            The new location of the StorageUnit
+	 */
 	public void setParentDir(Directory parent) {
 		this.parentDir = parent;
 	}
 
+	/**
+	 * Checks if a string has any of the characters not allowed in the name of a
+	 * StorageUnit
+	 * 
+	 * @param filename
+	 *            The string to be checked for forbidden characters
+	 * @return If the name does indeed have problematic characters
+	 */
 	public static boolean hasForbidChar(String filename) {
 		boolean contains = false;
 		if (filename.matches(".*[/.!@#$%^&*(){}~|<>?].*")) {
 			contains = true;
 		}
-
 		return contains;
 	}
 }

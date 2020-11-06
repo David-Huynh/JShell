@@ -30,12 +30,32 @@
 
 package driver;
 
+/**
+ * A ShellCommand performs a specific user-induced command. If the command
+ * cannot be carried out for any reason, errors are printed to the JShell. A
+ * manual is also provided on how to use specific classes.
+ */
+
 public class ShellCommand {
 
+	/**
+	 * Provides the manual for how to use this command
+	 * 
+	 * @return The manual
+	 */
 	public static String getManual() {
 		return "";
 	}
 
+	/**
+	 * Perform the outcome of this command
+	 * 
+	 * @param shell
+	 *            The JShell the command is to be performed on
+	 * @param parameters
+	 *            The parameters from the interpreter the command is to work
+	 *            with
+	 */
 	public static void performOutcome(JShell shell, String[] parameters) {
 	}
 
