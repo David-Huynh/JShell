@@ -42,11 +42,8 @@ public class Manual extends ShellCommand {
 					"Invalid number of arguments.");
 			return;
 		}
-
 		shell.println("");
-
 		int i;
-
 		for (i = 1; i < parameters.length; i++) {
 			String command = parameters[i];
 			if (command.equals("exit")) {
@@ -77,7 +74,6 @@ public class Manual extends ShellCommand {
 				shell.println("");
 				return;
 			}
-
 			shell.println("");
 		}
 	}

@@ -5,6 +5,7 @@ Subclasses (if any):
 Responsibilities:
 * Push a Directory onto JShell's directory stack
 * Change JShell's current directory to a different one
+* Differentiate between a full path or a path relative to current directory
 * Report any errors that occur
 * Provide a manual for how to use this class
 

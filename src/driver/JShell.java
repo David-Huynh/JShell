@@ -30,17 +30,21 @@
 package driver;
 
 import java.util.Scanner;
+import java.util.Stack;
 
 public class JShell {
 
 	private Directory rootDir; // root directory stores everything
 	private Directory currentDir;
 	private boolean isActive; // turn this off if user wants to exit
+	private Stack<Directory> dirStack;
 
 	public JShell() { // Shell instance initializer
-		this.rootDir = new Directory("/", rootDir);
-		this.rootDir.setParentDir(rootDir);// parent of root directory is always the root itself
+		this.rootDir = new Directory("/", null);
+		this.rootDir.setParentDir(rootDir);// parent of root directory is always
+											// the root itself
 		this.currentDir = this.rootDir; // by default current directory is root
+		this.dirStack = new Stack<Directory>();
 		this.isActive = true;
 	}
 
@@ -55,8 +59,12 @@ public class JShell {
 	public Directory getRootDir() {
 		return this.rootDir;
 	}
+	
+	public Stack<Directory> getDirStack() {
+		return this.dirStack;
+	}
 
-	public void exit() { // Exit class calls this
+	public void exit() {
 		this.isActive = false;
 	}
 
