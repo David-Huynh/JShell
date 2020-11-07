@@ -131,8 +131,6 @@ public class Echo extends ShellCommand {
 	}
 	private static Directory directory(JShell shell, String filePath){
 		Directory currDir = shell.getCurrentDir();
-		String[] dir1;
-
 		if (filePath.indexOf("/") == 0) {
 			if (filePath.equals("/")) {
 				PrintError.reportError(shell, "echo",
@@ -142,13 +140,8 @@ public class Echo extends ShellCommand {
 				filePath = filePath.substring(1);
 			}
 		}
-		dir1 = filePath.split("/");
-		ArrayList<String> list = new ArrayList<>();
-		for (int i = 0; i < dir1.length - 1; i++){
-			list.add(dir1[i]);
-			list.get(i);
-		}
-		Directory dir = currDir.cycleDir(list, -1, currDir, shell);//Doesn't return null for invalid path
+		Path newPath = new Path(filePath);
+		Directory dir = newPath.cyclePath(0, currDir, shell);//Doesn't return null for invalid path
 		if (dir == null){
 			PrintError.reportError(shell, "echo", "directory does not exist");
 			return null;
@@ -161,7 +154,6 @@ public class Echo extends ShellCommand {
 		String[] parsedParams = parseParameters(parameters);
 		Directory dir = directory(shell, parsedParams[1]);
 		String fileName = parsedParams[1].split("/")[parsedParams[1].split("/").length-1];
-
 		if (dir == null){
 			return;
 		}
@@ -169,7 +161,6 @@ public class Echo extends ShellCommand {
 		if (errorHandle(shell, parsedParams, numArrow)) {
 			return;
 		}
-
 		parsedParams[0] = parsedParams[0].substring(1,
 				parsedParams[0].length() - 1);
 		if (numArrow == 0) { // Print string to shell command
