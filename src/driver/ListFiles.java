@@ -113,8 +113,7 @@ public class ListFiles extends ShellCommand {
 					} else {
 						if (currDir.getDirContents().get(indicator).getClass()
 								.getSimpleName().equals("File")) {
-							shell.println(path.getPathElements()[path
-									.getPathElements().length - 1]);
+							shell.println(path.getPath());
 						} else {
 							shell.println(parameters[i] + ":");
 							list(shell, ((Directory) currDir.getDirContents()
