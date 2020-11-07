@@ -30,8 +30,18 @@
 
 package driver;
 
+/**
+ * The ChangeDirectory command changes the JShell's current directory, allowing
+ * the user to work in any directory they wish
+ */
+
 public class ChangeDirectory extends ShellCommand {
 
+	/**
+	 * Provides the manual for how to use this command
+	 * 
+	 * @return The manual
+	 */
 	public static String getManual() {
 		return "cd DIR \nChange directory to DIR, which may be relative to the "
 				+ "current directory or \nmay be a full path. As with Unix, .. "
@@ -40,7 +50,15 @@ public class ChangeDirectory extends ShellCommand {
 				+ "foot of \nthe file system is a single slash: /.  ";
 	}
 
-	// function to execute command for cd
+	/**
+	 * Tell the JShell to change its current directory.
+	 * 
+	 * @param shell
+	 *            The JShell the command is to be performed on
+	 * @param parameters
+	 *            The parameters from the interpreter the command is to work
+	 *            with
+	 */
 	public static void performOutcome(JShell shell, String[] parameters) {
 		if (parameters.length != 2) {
 			PrintError.reportError(shell, "cd", "Invalid number of arguments.");

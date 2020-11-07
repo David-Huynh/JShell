@@ -49,7 +49,7 @@ public class PrintError {
 	}
 
 	/**
-	 * Reports an error message from a command for a JShell to print
+	 * Reports an error message from a specific command for a JShell to print
 	 * 
 	 * @param shell
 	 *            The specified instance of JShell

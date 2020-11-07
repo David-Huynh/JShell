@@ -32,8 +32,19 @@ package driver;
 
 import java.util.ArrayList;
 
+/**
+ * The ConcatenateFile command is used to print the contents of one or more
+ * Files to the shell's command line, so the user can find out what is in
+ * specific files.
+ */
+
 public class ConcatenateFile extends ShellCommand {
 
+	/**
+	 * Provides the manual for how to use this command
+	 * 
+	 * @return The manual
+	 */
 	public static String getManual() {
 		return "cat FILE1 [FILE2 ...] \n"
 				+ "Display the contents of FILE1 and other files "
@@ -43,6 +54,15 @@ public class ConcatenateFile extends ShellCommand {
 				+ "the contents of one file \n" + "from the other file.";
 	}
 
+	/**
+	 * Tell the JShell to print the contents of one or more files.
+	 * 
+	 * @param shell
+	 *            The JShell the command is to be performed on
+	 * @param parameters
+	 *            The parameters from the interpreter the command is to work
+	 *            with
+	 */
 	public static void performOutcome(JShell shell, String[] parameters) {
 		if (parameters.length < 2) {
 			PrintError.reportError(shell, "cat",
@@ -71,7 +91,8 @@ public class ConcatenateFile extends ShellCommand {
 			if (i + 1 == path.length) {
 				int fIndex = currDir.containsFile(path[i]);
 				if (fIndex == -1) {
-					PrintError.reportError(shell, "cat", "Does not contain file: "+path[i]);
+					PrintError.reportError(shell, "cat",
+							"Does not contain file: " + path[i]);
 					return false;
 				} else {
 					File file = (File) contents.get(fIndex);
