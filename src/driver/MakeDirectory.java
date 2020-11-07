@@ -30,8 +30,18 @@
 
 package driver;
 
+/**
+ * The MakeDirectory command is used by the user to make two new directories in
+ * the file system.
+ */
+
 public class MakeDirectory extends ShellCommand {
 
+	/**
+	 * Provides the manual for how to use this command
+	 * 
+	 * @return The manual
+	 */
 	public static String getManual() {
 		return "mkdir DIR1 DIR2 \nThis command takes in two arguments only. "
 				+ "Create directories, "
@@ -43,7 +53,16 @@ public class MakeDirectory extends ShellCommand {
 				+ "specific to DIR2.";
 	}
 
-	// function to execute command for mkdir
+	/**
+	 * Tell the JShell to make two new directories accoriding to the user's
+	 * specifications.
+	 * 
+	 * @param shell
+	 *            The JShell the command is to be performed on
+	 * @param parameters
+	 *            The parameters from the interpreter the command is to work
+	 *            with
+	 */
 	public static void performOutcome(JShell shell, String[] parameters) {
 		if (parameters.length != 3) {
 			PrintError.reportError(shell, "mkdir",
@@ -84,8 +103,17 @@ public class MakeDirectory extends ShellCommand {
 		mDir2 = makeDir(shell, currDir, dir2);
 	}
 
-	// function to check for valid paths and create directory when path is
-	// valid, the function returns whether it is successful.
+	/**
+	 * Checks for valid paths and creates the directory when the path is valid.
+	 * 
+	 * @param shell
+	 *            The JShell whose file system to work in
+	 * @param currDir
+	 *            The current directory
+	 * @param dir
+	 *            An array of names of directories to create
+	 * @return Whether creation is successful
+	 */
 	private static boolean makeDir(JShell shell, Directory currDir,
 			String[] dir) {
 		for (int i = 0; i < dir.length; i++) {
@@ -96,7 +124,8 @@ public class MakeDirectory extends ShellCommand {
 						currDir.addFile(newDir);
 					} else {
 						PrintError.reportError(shell, "mkdir",
-								"Directory contains forbidden character(s): " + dir[i]);
+								"Directory contains forbidden character(s): "
+										+ dir[i]);
 						return false;
 					}
 				} else {

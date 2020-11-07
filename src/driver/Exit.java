@@ -30,12 +30,30 @@
 
 package driver;
 
+/**
+ * The Exit command is used by the user to terminate the shell.
+ */
+
 public class Exit extends ShellCommand {
 
+	/**
+	 * Provides the manual for how to use this command
+	 * 
+	 * @return The manual
+	 */
 	public static String getManual() {
 		return "exit \nQuit the program";
 	}
 
+	/**
+	 * Tell the JShell it's time to terminate
+	 * 
+	 * @param shell
+	 *            The JShell the command is to be performed on
+	 * @param parameters
+	 *            The parameters from the interpreter the command is to work
+	 *            with
+	 */
 	public static void performOutcome(JShell shell, String[] parameters) {
 		if (parameters.length != 1) {
 			PrintError.reportError(shell, "exit",

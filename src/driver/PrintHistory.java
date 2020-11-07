@@ -30,8 +30,18 @@
 
 package driver;
 
+/**
+ * The PrintHistory command is used by the user to print a number of the most
+ * recent commands they have input.
+ */
+
 public class PrintHistory extends ShellCommand {
 
+	/**
+	 * Provides the manual for how to use this command
+	 * 
+	 * @return The manual
+	 */
 	public static String getManual() {
 		return "history [number] \n" + "This command will print out recent "
 				+ "commands, one command per " + "line. i.e. \r\n"
@@ -56,6 +66,16 @@ public class PrintHistory extends ShellCommand {
 				+ "    6. history 3";
 	}
 
+	/**
+	 * Tell the JShell to print a number of the most recent commands they have
+	 * input
+	 * 
+	 * @param shell
+	 *            The JShell the command is to be performed on
+	 * @param parameters
+	 *            The parameters from the interpreter the command is to work
+	 *            with
+	 */
 	public static void performOutcome(JShell shell, String[] parameters) {
 		if (parameters.length > 2) {
 			PrintError.reportError(shell, "history",

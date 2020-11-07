@@ -30,8 +30,18 @@
 
 package driver;
 
+/**
+ * The PushDirOntoStack command saves the current directory by pushing it onto a
+ * directory stack and changes the new current directory to user-specified one.
+ */
+
 public class PushDirOntoStack extends ShellCommand {
 
+	/**
+	 * Provides the manual for how to use this command
+	 * 
+	 * @return The manual
+	 */
 	public static String getManual() {
 		return "pushd DIR \nSaves the current working directory by pushing "
 				+ "onto directory stack and then \n"
@@ -47,6 +57,16 @@ public class PushDirOntoStack extends ShellCommand {
 				+ "commands.";
 	}
 
+	/**
+	 * Tell the JShell to push the current directory into its directory stack
+	 * and change its current directory
+	 * 
+	 * @param shell
+	 *            The JShell the command is to be performed on
+	 * @param parameters
+	 *            The parameters from the interpreter the command is to work
+	 *            with
+	 */
 	public static void performOutcome(JShell shell, String[] parameters) {
 		if (parameters.length != 2) {
 			PrintError.reportError(shell, "pushd",
