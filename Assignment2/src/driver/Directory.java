@@ -32,119 +32,190 @@ package driver;
 
 import java.util.ArrayList;
 
+/**
+ * A Directory is a type of StorageUnit (similar to a folder in a computer's
+ * file system) that holds a collection of other StorageUnits.
+ */
+
 public class Directory extends StorageUnit {
 
-  private ArrayList<StorageUnit> contents = new ArrayList<StorageUnit>();
+	/**
+	 * An ArrayList containing all the contents of the Directory, similar to the
+	 * contents of a computer's folder
+	 */
+	private ArrayList<StorageUnit> contents = new ArrayList<StorageUnit>();
 
-  public Directory(String name, Directory parentDir) {
-    this.name = name;
-    this.parentDir = parentDir;
-  }
+	/**
+	 * Initializes a Directory with the given name in a given location
+	 * 
+	 * @param name
+	 *            The name to be given to the Directory
+	 * @param parentDir
+	 *            The location the Directory will live in
+	 */
+	public Directory(String name, Directory parentDir) {
+		this.name = name;
+		this.parentDir = parentDir;
+	}
 
-  public ArrayList<StorageUnit> getDirContents() {
-    return contents;
-  }
+	/**
+	 * Public getter method for the Directory's contents
+	 * 
+	 * @return The Directory's contents
+	 */
+	public ArrayList<StorageUnit> getDirContents() {
+		return contents;
+	}
 
-  public void addFile(StorageUnit fileName) {
-    contents.add(fileName);
-  }
+	/**
+	 * Adds a StorageUnit to the Directory
+	 * 
+	 * @param fileName
+	 *            The StorageUnit to be added
+	 */
+	public void addFile(StorageUnit fileName) {
+		contents.add(fileName);
+	}
 
-  public void delFile(StorageUnit fileName) {
-    contents.remove(fileName);
-  }
+	/**
+	 * Deletes a StorageUnit from the Directory
+	 * 
+	 * @param fileName
+	 *            The StorageUnit to be added
+	 */
+	public void delFile(StorageUnit fileName) {
+		contents.remove(fileName);
+	}
 
-  StorageUnit getFile(int index) {
-    return contents.get(index);
-  }
+	/**
+	 * Gets a StorageUnit of a given index in the Directory
+	 * 
+	 * @param index
+	 *            The desired index
+	 * @return The StorageUnit in that index
+	 */
+	StorageUnit getFile(int index) {
+		return contents.get(index);
+	}
 
-  // function to check if a sub-directory named dirName is under Directory
-  // dir.
-  // returns -1 if sub-directory named dirName is not in dir or index of
-  // sub-dir if it is
-  public int isSubDir(String dirName) {
-    int index = -1;
-    for (int i = 0; i < contents.size(); i++) {
-      if (contents.get(i).getClass().getSimpleName().equals("Directory")) {
-        if (contents.get(i).name.equals(dirName)) {
-          index = i;
-        }
-      }
-    }
+	/**
+	 * Checks if a Directory with a specific name is in the Directory's
+	 * contents.
+	 * 
+	 * @param dirName
+	 *            The name of the Directory to be checked if it is in the
+	 *            Directory
+	 * @return -1 if sub-directory named dirName is not in the Directory or
+	 *         index of the sub-directory if it is
+	 */
+	public int isSubDir(String dirName) {
+		int index = -1;
+		for (int i = 0; i < contents.size(); i++) {
+			if (contents.get(i).getClass().getSimpleName()
+					.equals("Directory")) {
+				if (contents.get(i).name.equals(dirName)) {
+					index = i;
+				}
+			}
+		}
+		return index;
+	}
 
-    return index;
-  }
+	/**
+	 * Checks if a File with a specific name is in the Directory's contents.
+	 * 
+	 * @param fileName
+	 *            The name of the File to be checked if it is in the Directory
+	 * @return -1 if sub-directory named fileName is not in the Directory or
+	 *         index of the sub-directory if it is
+	 */
+	public int containsFile(String fileName) {
+		int index = -1;
+		for (int i = 0; i < contents.size(); i++) {
+			if (contents.get(i).getClass().getSimpleName().equals("File")) {
+				if (contents.get(i).name.equals(fileName)) {
+					index = i;
+				}
+			}
+		}
+		return index;
+	}
 
-  // function to check if a file named fileName is under Directory dir.
-  // returns -1 if file named dirName is not in dir or index of file if it is
-  public int containsFile(String fileName) {
-    int index = -1;
-    for (int i = 0; i < contents.size(); i++) {
-      if (contents.get(i).getClass().getSimpleName().equals("File")) {
-        if (contents.get(i).name.equals(fileName)) {
-          index = i;
-        }
-      }
-    }
+	/**
+	 * Cycles through a path to see if the path is valid up to, but not
+	 * including the path.size() - finalIndex - 1 index of the path
+	 * 
+	 * @param path
+	 *            A string representation of the path to be checked
+	 * @param finalIndex
+	 *            The final index of the path to be searched
+	 * @param startDir
+	 *            The start directory of the path
+	 * @param shell
+	 *            The JShell to perform in
+	 * @return null, if path is invalid, final Directory/path checked by the
+	 *         function if valid
+	 */
+	public static Directory cycleDir(ArrayList<String> path, int finalIndex,
+			Directory startDir, JShell shell) {
+		int index = 0;
+		int directoryIndex = -1;
 
-    return index;
-  }
+		if (path.get(index).equals("..") || path.get(index).equals(".")) {
+			if (path.get(index).equals("..")) {
+				directoryIndex = -2;
+			} else {
+				directoryIndex = -3;
+			}
+		} else {
+			directoryIndex = startDir.isSubDir(path.get(index));
+		}
 
-  // function cycles through a path to see if the path is valid up to but not
-  // including the
-  // path.size() - finalIndex - 1 index of the path, returns null if path
-  // invalid, final
-  // directory/path checked by the function if valid
-  public static Directory cycleDir(ArrayList<String> path, int finalIndex, Directory startDir, JShell shell) {
-    int index = 0;
-    int directoryIndex = -1;
+		while (directoryIndex != -1 && index < path.size() - finalIndex - 1) {
+			if (directoryIndex == -2) {
+				startDir = startDir.getParentDir();
+			} else if (directoryIndex == -3) {
 
-    if (path.get(index).equals("..") || path.get(index).equals(".")) {
-      if (path.get(index).equals("..")) {
-        directoryIndex = -2;
-      } else {
-        directoryIndex = -3;
-      }
-    } else {
-      directoryIndex = startDir.isSubDir(path.get(index));
-    }
+			} else {
+				startDir = (Directory) startDir.getDirContents()
+						.get(directoryIndex);
+			}
+			index++;
+			if (path.get(index).equals("..") || path.get(index).equals(".")) {
+				if (path.get(index).equals("..")) {
+					directoryIndex = -2;
+				} else {
+					directoryIndex = -3;
+				}
+			} else {
+				directoryIndex = startDir.isSubDir(path.get(index));
+			}
+		}
+		if (startDir != shell.getRootDir()) {
+			directoryIndex = startDir.getParentDir()
+					.isSubDir(startDir.getName());
+		}
+		if (directoryIndex != -1 || path.size() == 1) {
+			return startDir;
+		} else {
+			return null;
+		}
+	}
 
-    while (directoryIndex != -1 && index < path.size() - finalIndex - 1) {
-      if (directoryIndex == -2) {
-        startDir = startDir.getParentDir();
-      } else if (directoryIndex == -3) {
+	/**
+	 * Splits a string representation of a path into an ArrayList of strings
+	 * 
+	 * @param path
+	 *            The string representation of a path
+	 * @return The ArrayList of strings
+	 */
+	public static ArrayList<String> seperatePath(String path) {
+		String[] pathArray = path.split("/");
+		ArrayList<String> pathList = new ArrayList<String>();
 
-      } else {
-        startDir = (Directory) startDir.getDirContents().get(directoryIndex);
-      }
-      index++;
-      if (path.get(index).equals("..") || path.get(index).equals(".")) {
-        if (path.get(index).equals("..")) {
-          directoryIndex = -2;
-        } else {
-          directoryIndex = -3;
-        }
-      } else {
-        directoryIndex = startDir.isSubDir(path.get(index));
-      }
-    }
-    if(startDir != shell.getRootDir()) {
-      directoryIndex = startDir.getParentDir().isSubDir(startDir.getName());
-    }
-    if (directoryIndex != -1 || path.size() == 1) {
-      return startDir;
-    } else {
-      return null;
-    }
-  }
-
-  public static ArrayList<String> seperatePath(String path) {
-    String[] pathArray = path.split("/");
-    ArrayList<String> pathList = new ArrayList<String>();
-
-    for (int i = 0; i < pathArray.length; i++) {
-      pathList.add(pathArray[i]);
-    }
-
-    return pathList;
-  }
+		for (int i = 0; i < pathArray.length; i++) {
+			pathList.add(pathArray[i]);
+		}
+		return pathList;
+	}
 }
