@@ -73,8 +73,8 @@ public class PushDirOntoStack extends ShellCommand {
 					"Invalid number of arguments.");
 			return;
 		}
-		shell.getDirStack().add(shell.getCurrentDir());
-
+		
+		Directory prevCurrDir = shell.getCurrentDir();
 		Directory currDir = shell.getCurrentDir();
 		String[] subDir = {};
 
@@ -105,5 +105,6 @@ public class PushDirOntoStack extends ShellCommand {
 			}
 		}
 		shell.setCurrentDir(currDir);
+		shell.getDirStack().add(prevCurrDir);
 	}
 }
