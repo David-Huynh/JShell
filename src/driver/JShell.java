@@ -39,12 +39,12 @@ import java.util.Stack;
  */
 
 public class JShell {
-	
+
 	/** Root directory stores everything */
-	private Directory rootDir;
+	private Storage rootDir;
 	/** Current directory user is working in */
 	private Directory currentDir;
-	/** Turned off when user wishes to exit */
+	/** Whether the JShell is active, turned off if the user wishes to exit */
 	private boolean isActive;
 	/** Directory stack of the shell */
 	private Stack<Directory> dirStack;
@@ -53,9 +53,7 @@ public class JShell {
 	 * Initializes an instance of the JShell, initializes all private variables
 	 */
 	public JShell() {
-		this.rootDir = new Directory("/", null);
-		this.rootDir.setParentDir(rootDir);// parent of root directory is always
-											// the root itself
+		this.rootDir = Storage.createNewStorage();
 		this.currentDir = this.rootDir; // by default current directory is root
 		this.dirStack = new Stack<Directory>();
 		this.isActive = true;
