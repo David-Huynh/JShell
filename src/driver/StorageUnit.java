@@ -90,7 +90,7 @@ abstract class StorageUnit {
 	 */
 	public static boolean hasForbidChar(String filename) {
 		boolean contains = false;
-		if (filename.matches(".*[/.!@#$%^&*(){}~|<>?].*")) {
+		if (filename.matches(" .*[/.!@#$%^&*(){}~|<>?].*")) {
 			contains = true;
 		}
 		return contains;
