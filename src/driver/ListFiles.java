@@ -49,71 +49,61 @@ public class ListFiles extends ShellCommand {
 
     Directory currDir = shell.getCurrentDir();
     ArrayList<StorageUnit> fileList = currDir.getDirContents();
-    int directoryIndex = -1;
-    int fileIndex = -1;
-
-    ArrayList<String> path = new ArrayList<String>();
+    Path path;
+    int indicator; // indicates validity of final element in path
 
     if (parameters.length == 1) {// Case 1: no parameters, list files of current directory
       list(shell, fileList);
     } else {
       for (int i = 1; i < parameters.length; i++) {// Case 2: >= 1 parameters go through all
-        path = Directory.seperatePath(parameters[i]); // separate path into its directories
+        path = new Path(parameters[i]); // separate path into its directories
         if (parameters[i].equals("/")) { // path is root
           shell.println(parameters[i] + ":");
-          list(shell,shell.getRootDir().getDirContents());
+          list(shell, shell.getRootDir().getDirContents());
           continue;
         }
-        if (parameters[i].startsWith("/")) { // path is absolute
+        if (path.isAbsolute()) { // path is absolute
           currDir = shell.getRootDir();
-          path.remove(0); // remove the empty string
         }
 
-        currDir = Directory.cycleDir(path, 0, currDir, shell);
+        currDir = path.cyclePath(0, currDir, shell);
 
         if (currDir == null) {
-          PrintError.reportError(shell, "ls",
-              "Cannot access '" + parameters[i] + "', no such file or directory.");
+          PrintError.reportError(shell, "ls", "Cannot access '" + parameters[i]
+              + "', no such file or directory.");
           return;
         } else {
-          if (path.get(path.size() - 1).equals("..") || path.get(path.size() - 1).equals(".")) {
-            if (path.get(path.size() - 1).equals("..")) {
-              currDir = currDir.getParentDir();
-              shell.println(parameters[i] + ":");
-              list(shell, currDir.getDirContents());
-            } else if (path.get(path.size() - 1).equals(".")) {
-              shell.println(parameters[i] + ":");
-              list(shell, currDir.getDirContents());
-            }
+          indicator = path.determineFinalElement(currDir);
+          if (indicator == -1) {
+            PrintError.reportError(shell, "ls", "Cannot access '"
+                + parameters[i] + "', no such file or directory.");
+            return;
+          } else if (indicator == -2) {
+            currDir = currDir.getParentDir();
+            shell.println(parameters[i] + ":");
+            list(shell, currDir.getDirContents());
+          } else if (indicator == -3) {
+            shell.println(parameters[i] + ":");
+            list(shell, currDir.getDirContents());
           } else {
-            directoryIndex = currDir.isSubDir(path.get(path.size() - 1));
-            fileIndex = currDir.containsFile(path.get(path.size() - 1));
-
-            if (directoryIndex != -1) { // final element in path is directory
+            if (currDir.getDirContents().get(indicator).getClass()
+                .getSimpleName().equals("File")) {
+              shell.println(
+                  path.getPathElements()[path.getPathElements().length - 1]);
+            } else {
               shell.println(parameters[i] + ":");
-              list(shell,
-                  ((Directory) currDir.getDirContents().get(directoryIndex)).getDirContents());
-            } else if (fileIndex != -1) { // final element in path is file
-              shell.println(path.get(path.size() - 1));
-            } else // parameter is not in current directory
-            {
-              PrintError.reportError(shell, "ls",
-                  "Cannot access '" + parameters[i] + "', no such file or" + " directory.");
-              return;
+              list(shell, ((Directory) currDir.getDirContents().get(indicator))
+                  .getDirContents());
             }
           }
         }
+        currDir = shell.getCurrentDir(); // reset for next parameter
       }
-      currDir = shell.getCurrentDir(); // reset for next parameter
-      directoryIndex = -1;
-      fileIndex = -1;
     }
   }
 
-
-  public static void list(JShell shell, ArrayList<StorageUnit> fileList)
+  public static void list(JShell shell, ArrayList<StorageUnit> fileList) {
   // Function used to print all files in directory
-  {
     for (int i = 0; i < fileList.size(); i++) {
       shell.println(fileList.get(i).name);
     }
