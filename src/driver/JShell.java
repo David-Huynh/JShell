@@ -32,21 +32,27 @@ package driver;
 import java.util.Scanner;
 import java.util.Stack;
 
-public class JShell {
+/**
+ * JShell is an interactive Unix-like shell that allows a user to use ten
+ * different commands to manipulate a virtual file system containing files and
+ * directories.
+ */
 
+public class JShell {
+	
+	/** Root directory stores everything */
 	private Directory rootDir;
-	/** root directory stores everything */
+	/** Current directory user is working in */
 	private Directory currentDir;
-	/** current directory user is working in */
+	/** Turned off when user wishes to exit */
 	private boolean isActive;
-	/** turned off when user wishes to exit */
+	/** Directory stack of the shell */
 	private Stack<Directory> dirStack;
-	/** directory stack of the shell */
 
 	/**
 	 * Initializes an instance of the JShell, initializes all private variables
 	 */
-	public JShell() { // Shell instance initializer
+	public JShell() {
 		this.rootDir = new Directory("/", null);
 		this.rootDir.setParentDir(rootDir);// parent of root directory is always
 											// the root itself

@@ -42,7 +42,7 @@ public class Manual extends ShellCommand {
 	 * 
 	 * @return The manual
 	 */
-	public static String getManual() { // Well this is quite meta
+	public static String getManual() {
 		return "man CMD [CMD2 …]\n" + "Print documentation for CMD(s)";
 	}
 

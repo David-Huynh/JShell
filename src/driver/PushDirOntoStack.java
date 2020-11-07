@@ -54,7 +54,7 @@ public class PushDirOntoStack extends ShellCommand {
 			return;
 		}
 		shell.getDirStack().add(shell.getCurrentDir());
-		
+
 		Directory currDir = shell.getCurrentDir();
 		String[] subDir = {};
 

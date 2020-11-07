@@ -36,11 +36,11 @@ package driver;
  */
 
 abstract class StorageUnit {
-
-	protected String name;
+	
 	/** The name that the StorageUnit is identified by */
-	protected Directory parentDir;
+	protected String name;
 	/** The directory the StorageUnit lives in */
+	protected Directory parentDir;
 
 	/**
 	 * Public getter method for the name
