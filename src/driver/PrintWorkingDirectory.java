@@ -63,22 +63,10 @@ public class PrintWorkingDirectory extends ShellCommand {
 					"Invalid number of arguments.");
 			return;
 		}
-		Directory currDir = shell.getCurrentDir(); // get current directory
-		String fullPath = "/";
-
-		if (currDir != shell.getRootDir()) {
-			fullPath = currDir.getParentDir().name + "/" + currDir.name
-					+ fullPath;
-			// append name of parent directory to current directory
-			currDir = currDir.getParentDir();
-
-			while (currDir != shell.getRootDir()) {
-				fullPath = currDir.getParentDir().name + "/" + fullPath;
-				// keep appending parent directory until we hit root
-				currDir = currDir.getParentDir();
-			}
-
-			shell.println(fullPath.substring(1)); // print absolute path
-		}
+		
+		Path absPath = shell.getCurrentDir().getFullPath(shell);
+		
+		shell.println(absPath.getPath());
+		
 	}
 }
