@@ -172,9 +172,9 @@ public class Echo extends ShellCommand {
 		if (index != -1) { // File does not exist
 			File nf = (File) dir.getFile(index);
 			if (numArrow == 1) {// Overwrite file with string
-				nf.overwrite(fileName);
+				nf.overwrite(parsedParams[0]);
 			} else {// Append to file with string
-				nf.append(fileName);
+				nf.append(parsedParams[0]);
 			}
 		} else { // File exists
 			if (StorageUnit.hasForbidChar(fileName)) {
