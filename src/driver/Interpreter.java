@@ -30,6 +30,8 @@
 
 package driver;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Arrays;
 
 /**
@@ -85,7 +87,8 @@ public class Interpreter {
 
 	/**
 	 * Calls the appropriate commands to carry out the user's desired outcomes
-	 * according to a given command
+	 * according to a given command, according to the JShell's command to Class
+	 * HashMap
 	 * 
 	 * @param userCommand
 	 *            A command the user has input into the JShell
@@ -97,28 +100,20 @@ public class Interpreter {
 		// String parameters[] = userCommand.strip().split(" +");
 		String parameters[] = Interpreter.splitCmdIntoParams(userCommand);
 		String command = parameters[0]; // The first word is the command
-		if (command.equals("exit")) {
-			Exit.performOutcome(shell, parameters);
-		} else if (command.equals("mkdir")) {
-			MakeDirectory.performOutcome(shell, parameters);
-		} else if (command.equals("cd")) {
-			ChangeDirectory.performOutcome(shell, parameters);
-		} else if (command.equals("ls")) {
-			ListFiles.performOutcome(shell, parameters);
-		} else if (command.equals("pwd")) {
-			PrintWorkingDirectory.performOutcome(shell, parameters);
-		} else if (command.equals("pushd")) {
-			PushDirOntoStack.performOutcome(shell, parameters);
-		} else if (command.equals("popd")) {
-			PopDirFromStack.performOutcome(shell, parameters);
-		} else if (command.equals("history")) {
-			PrintHistory.performOutcome(shell, parameters);
-		} else if (command.equals("cat")) {
-			ConcatenateFile.performOutcome(shell, parameters);
-		} else if (command.equals("echo")) {
-			Echo.performOutcome(shell, parameters);
-		} else if (command.equals("man")) {
-			Manual.performOutcome(shell, parameters);
+		if (shell.getCmdToClass().containsKey(command)) {
+			try {
+				Method perform = shell.getCmdToClass().get(command)
+						.getDeclaredMethod("performOutcome", shell.getClass(),
+								String[].class);
+				try {
+					perform.invoke(null, shell, parameters);
+				} catch (IllegalAccessException | IllegalArgumentException
+						| InvocationTargetException e) {
+					e.printStackTrace();
+				}
+			} catch (NoSuchMethodException | SecurityException e) {
+				e.printStackTrace();
+			}
 		} else {
 			PrintError.reportError(shell,
 					"Error: " + command + " is not a valid command.");

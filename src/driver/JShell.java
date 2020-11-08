@@ -29,6 +29,7 @@
 // *********************************************************
 package driver;
 
+import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Stack;
 
@@ -48,6 +49,11 @@ public class JShell {
 	private boolean isActive;
 	/** Directory stack of the shell */
 	private Stack<Directory> dirStack;
+	/**
+	 * HashMap that maps commands to the Class that represents it, e.g. ls maps
+	 * to ListFiles
+	 */
+	private HashMap<String, Class> cmdToClass;
 
 	/**
 	 * Initializes an instance of the JShell, initializes all private variables
@@ -57,6 +63,34 @@ public class JShell {
 		this.currentDir = this.rootDir; // by default current directory is root
 		this.dirStack = new Stack<Directory>();
 		this.isActive = true;
+		this.cmdToClass = new HashMap<String, Class>();
+		this.populateCmdToClass();
+	}
+
+	/**
+	 * Helper method for JShell initializer, populates the JShell's command to
+	 * Class HashMap
+	 */
+	private void populateCmdToClass() {
+		try {
+			this.cmdToClass.put("exit", Class.forName("driver.Exit"));
+			this.cmdToClass.put("mkdir", Class.forName("driver.MakeDirectory"));
+			this.cmdToClass.put("cd", Class.forName("driver.ChangeDirectory"));
+			this.cmdToClass.put("ls", Class.forName("driver.ListFiles"));
+			this.cmdToClass.put("pwd",
+					Class.forName("driver.PrintWorkingDirectory"));
+			this.cmdToClass.put("pushd",
+					Class.forName("driver.PushDirOntoStack"));
+			this.cmdToClass.put("popd",
+					Class.forName("driver.PopDirFromStack"));
+			this.cmdToClass.put("history",
+					Class.forName("driver.PrintHistory"));
+			this.cmdToClass.put("cat", Class.forName("driver.ConcatenateFile"));
+			this.cmdToClass.put("echo", Class.forName("driver.Echo"));
+			this.cmdToClass.put("man", Class.forName("driver.Manual"));
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -94,6 +128,15 @@ public class JShell {
 	 */
 	public Stack<Directory> getDirStack() {
 		return this.dirStack;
+	}
+	
+	/**
+	 * Public getter method for the command to Class HashMap
+	 * 
+	 * @return The command to Class HashMap
+	 */
+	public HashMap<String, Class> getCmdToClass() {
+		return this.cmdToClass;
 	}
 
 	/**
