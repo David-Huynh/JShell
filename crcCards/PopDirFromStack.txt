@@ -4,10 +4,11 @@ Subclasses (if any):
 
 Responsibilities:
 * Pop a Directory from JShell's directory stack
-* Change JShell's current directory this Directory
+* Change JShell's current directory to this Directory
 * Report any errors that occur
 * Provide a manual for how to use this class
 
 Collaborators:
 * Directory
 * JShell
+* PrintError

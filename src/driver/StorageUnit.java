@@ -92,7 +92,7 @@ abstract class StorageUnit {
 			}
 		}
 		if (!pathString.equals("/")) {
-			return new Path(pathString.substring(1)); // print absolute path
+			return new Path(pathString.substring(1)); // return absolute path
 		} else {
 			return new Path(pathString);
 		}
