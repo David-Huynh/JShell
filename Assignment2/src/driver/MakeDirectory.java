@@ -119,13 +119,13 @@ public class MakeDirectory extends ShellCommand {
 		for (int i = 0; i < dir.length; i++) {
 			if (i + 1 == dir.length) {
 				if (currDir.isSubDir(dir[i]) == -1) {
-					if (!Directory.hasForbidChar(dir[i])) {
+					if (!StorageUnit.hasForbidChar(dir[i])) {
 						Directory newDir = new Directory(dir[i], currDir);
 						currDir.addFile(newDir);
 					} else {
 						PrintError.reportError(shell, "mkdir",
-								"Directory contains forbidden character(s): "
-										+ dir[i]);
+								"Directory name contains forbidden "
+										+ "character(s): " + dir[i]);
 						return false;
 					}
 				} else {
