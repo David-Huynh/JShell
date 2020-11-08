@@ -60,7 +60,7 @@ public class JShell {
 	 */
 	public JShell() {
 		this.rootDir = Storage.createNewStorage();
-		this.currentDir = this.rootDir; // by default current directory is root
+		this.currentDir = this.rootDir.getRoot(); // by default current directory is root
 		this.dirStack = new Stack<Directory>();
 		this.isActive = true;
 		this.cmdToClass = new HashMap<String, Class>();
@@ -118,7 +118,7 @@ public class JShell {
 	 * @return The root directory of the shell
 	 */
 	public Directory getRootDir() {
-		return this.rootDir;
+		return this.rootDir.getRoot();
 	}
 
 	/**
