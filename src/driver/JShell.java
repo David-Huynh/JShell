@@ -34,7 +34,7 @@ import java.util.Scanner;
 import java.util.Stack;
 
 /**
- * JShell is an interactive Unix-like shell that allows a user to use ten
+ * JShell is an interactive Unix-like shell that allows a user to use eleven
  * different commands to manipulate a virtual file system containing files and
  * directories.
  */
@@ -72,7 +72,7 @@ public class JShell {
 	 * Class HashMap
 	 */
 	private void populateCmdToClass() {
-		try {
+		try { // Would need to update only this when there come new commands
 			this.cmdToClass.put("exit", Class.forName("driver.Exit"));
 			this.cmdToClass.put("mkdir", Class.forName("driver.MakeDirectory"));
 			this.cmdToClass.put("cd", Class.forName("driver.ChangeDirectory"));

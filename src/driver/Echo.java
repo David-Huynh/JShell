@@ -47,15 +47,14 @@ public class Echo extends ShellCommand {
 				+ "the old contents if OUTFILE already exists.\n"
 				+ "In either case, the only "
 				+ "thing in OUTFILE should be STRING.\n"
-				+ "echo STRING >> OUTFILE\n"
-				+ "Like the previous command, but"
+				+ "echo STRING >> OUTFILE\n" + "Like the previous command, but"
 				+ "appends to OUTFILE instead of overwrites";
 	}
 	// Counts number of '>' in parameters
 	private static int numArrow(String[] parameters) {
 		int counter = 0;
 		for (int i = 1; i < parameters.length; i++) {
-			for (int c = 0; c < parameters[i].length(); c++){
+			for (int c = 0; c < parameters[i].length(); c++) {
 				if (parameters[i].charAt(c) == '>') {
 					counter += 1;
 				}
@@ -67,9 +66,9 @@ public class Echo extends ShellCommand {
 	private static String[] parseParameters(String[] parameters) {
 		String[] parsedParams = {"", ""};
 		boolean closedString = false;
-		if (parameters[1].contains(">") &&
-				parameters[1].charAt(parameters[1].length() - 1)!='>'&&
-				parameters[1].charAt(0)!='>'){
+		if (parameters[1].contains(">")
+				&& parameters[1].charAt(parameters[1].length() - 1) != '>'
+				&& parameters[1].charAt(0) != '>') {
 			return parameters[1].split(">+");
 		}
 		for (int i = 1; i < parameters.length; i++) {
@@ -129,7 +128,7 @@ public class Echo extends ShellCommand {
 		}
 		return false;
 	}
-	private static Directory directory(JShell shell, String filePath){
+	private static Directory directory(JShell shell, String filePath) {
 		Directory currDir = shell.getCurrentDir();
 		if (filePath.indexOf("/") == 0) {
 			if (filePath.equals("/")) {
@@ -141,11 +140,13 @@ public class Echo extends ShellCommand {
 			}
 		}
 		Path newPath = new Path(filePath);
-		Directory dir = newPath.cyclePath(0, currDir, shell);//Doesn't return null for invalid path
-		if (dir == null){
+		Directory dir = newPath.cyclePath(0, currDir, shell);// Doesn't return
+																// null for
+																// invalid path
+		if (dir == null) {
 			PrintError.reportError(shell, "echo", "directory does not exist");
 			return null;
-		}else{
+		} else {
 			return dir;
 		}
 	}
@@ -153,8 +154,9 @@ public class Echo extends ShellCommand {
 		int numArrow = numArrow(parameters);
 		String[] parsedParams = parseParameters(parameters);
 		Directory dir = directory(shell, parsedParams[1]);
-		String fileName = parsedParams[1].split("/")[parsedParams[1].split("/").length-1];
-		if (dir == null){
+		String fileName = parsedParams[1]
+				.split("/")[parsedParams[1].split("/").length - 1];
+		if (dir == null) {
 			return;
 		}
 		int index = dir.containsFile(fileName);
@@ -175,6 +177,12 @@ public class Echo extends ShellCommand {
 				nf.append(fileName);
 			}
 		} else { // File exists
+			if (StorageUnit.hasForbidChar(fileName)) {
+				PrintError.reportError(shell, "echo",
+						"File name contains forbidden character(s): "
+								+ fileName);
+				return;
+			}
 			File nf = new File(fileName, parsedParams[0], dir);
 			dir.addFile(nf);
 		}
