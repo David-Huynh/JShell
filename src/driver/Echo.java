@@ -151,11 +151,8 @@ public class Echo extends ShellCommand {
 			}
 		}
 		Path newPath = new Path(filePath);
-		Directory dir = newPath.cyclePath(0, currDir, shell);// Doesn't return
-																// null for
-																// invalid path
+		Directory dir = newPath.cyclePath(0, currDir, shell);
 		if (dir == null) {
-			PrintError.reportError(shell, "echo", "directory does not exist");
 			return null;
 		} else {
 			return dir;
@@ -168,6 +165,7 @@ public class Echo extends ShellCommand {
 		String fileName = parsedParams[1]
 				.split("/")[parsedParams[1].split("/").length - 1];
 		if (dir == null) {
+			PrintError.reportError(shell, "echo", "directory does not exist");
 			return;
 		}
 		int index = dir.containsFile(fileName);
