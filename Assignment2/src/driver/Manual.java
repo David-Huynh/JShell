@@ -30,6 +30,9 @@
 
 package driver;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 /**
  * The Manual command prints documentation for specific commands so a user knows
  * how to use them.
@@ -66,28 +69,20 @@ public class Manual extends ShellCommand {
 		int i;
 		for (i = 1; i < parameters.length; i++) {
 			String command = parameters[i];
-			if (command.equals("exit")) {
-				System.out.println(Exit.getManual());
-			} else if (command.equals("mkdir")) {
-				System.out.println(MakeDirectory.getManual());
-			} else if (command.equals("cd")) {
-				System.out.println(ChangeDirectory.getManual());
-			} else if (command.equals("ls")) {
-				System.out.println(ListFiles.getManual());
-			} else if (command.equals("pwd")) {
-				System.out.println(PrintWorkingDirectory.getManual());
-			} else if (command.equals("pushd")) {
-				System.out.println(PushDirOntoStack.getManual());
-			} else if (command.equals("popd")) {
-				System.out.println(PopDirFromStack.getManual());
-			} else if (command.equals("history")) {
-				System.out.println(PrintHistory.getManual());
-			} else if (command.equals("cat")) {
-				System.out.println(ConcatenateFile.getManual());
-			} else if (command.equals("echo")) {
-				System.out.println(Echo.getManual());
-			} else if (command.equals("man")) {
-				System.out.println(Manual.getManual());
+			if (shell.getCmdToClass().containsKey(command)) {
+				try {
+					Method getMan = shell.getCmdToClass().get(command)
+							.getDeclaredMethod("getManual");
+					try {
+						String manual = (String) getMan.invoke(null);
+						shell.println(manual);
+					} catch (IllegalAccessException | IllegalArgumentException
+							| InvocationTargetException e) {
+						e.printStackTrace();
+					}
+				} catch (NoSuchMethodException | SecurityException e) {
+					e.printStackTrace();
+				}
 			} else {
 				PrintError.reportError(shell, "man",
 						command + " is not a valid command.");
