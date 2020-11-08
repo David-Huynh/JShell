@@ -5,8 +5,11 @@ package driver;
  * shell. i.e., it is the Directory in which all existing JShells work in.
  */
 
-public class Storage extends Directory {
+public class Storage {
 
+	/** The root directory of the storage system*/
+	private Directory root;
+	
 	/** The one and only reference to the Storage system */
 	private static Storage onlyReference = null;
 
@@ -15,9 +18,19 @@ public class Storage extends Directory {
 	 * created
 	 */
 	private Storage(String name, Directory parentDir) {
-		super(name, parentDir);
+		this.root = new Directory("/", null);
+		this.root.setParentDir(this.root);
 	}
 
+	/**
+	 * Public getter method for the root directory.
+	 * 
+	 * @return The root directory of the storage system
+	 */
+	public Directory getRoot() {
+		return this.root;
+	}
+	
 	/**
 	 * Get the only instance of Storage, creates it it if it doesn't exist
 	 * 
@@ -27,7 +40,6 @@ public class Storage extends Directory {
 	public static Storage createNewStorage() {
 		if (onlyReference == null) {
 			onlyReference = new Storage("/", null);
-			onlyReference.setParentDir(onlyReference);
 			// parent of root directory is always the root itself
 		}
 		// Singleton Design Pattern is used to ensure only ONE Storage is
