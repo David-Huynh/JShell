@@ -126,6 +126,17 @@ public class Echo extends ShellCommand {
 					"\\\" is an invalid string character\"");
 			return true;
 		}
+		if (StorageUnit.hasForbidChar(parsedParams[0])){
+			PrintError.reportError(shell,"echo",
+					"String contains forbidden characters " + parsedParams[0]);
+			return true;
+		}
+		if (StorageUnit.hasForbidChar(parsedParams[1])) {
+			PrintError.reportError(shell, "echo",
+					"File name contains forbidden character(s): "
+							+ parsedParams[1]);
+			return true;
+		}
 		return false;
 	}
 	private static Directory directory(JShell shell, String filePath) {
@@ -177,12 +188,6 @@ public class Echo extends ShellCommand {
 				nf.append(parsedParams[0]);
 			}
 		} else { // File exists
-			if (StorageUnit.hasForbidChar(fileName)) {
-				PrintError.reportError(shell, "echo",
-						"File name contains forbidden character(s): "
-								+ fileName);
-				return;
-			}
 			File nf = new File(fileName, parsedParams[0], dir);
 			dir.addFile(nf);
 		}
