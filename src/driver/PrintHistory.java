@@ -30,6 +30,8 @@
 
 package driver;
 
+import java.util.ArrayList;
+
 /**
  * The PrintHistory command is used by the user to print a number of the most
  * recent commands they have input.
@@ -82,17 +84,31 @@ public class PrintHistory extends ShellCommand {
 					"Invalid number of arguments.");
 			return;
 		}
-		int counter;
-		try {
-			counter = Integer.parseInt(parameters[1]);
-
-		} catch (Exception e) {
-			PrintError.reportError(shell, "history",
-					"Invalid number.");
-			return;
+		ArrayList<String> his = shell.getComHis();
+		int counter = 0;
+		int i = 0;
+		int num = 1;
+		if (parameters.length == 2) {
+			try {
+				counter = Integer.parseInt(parameters[1]);
+			} catch (Exception e) {
+				PrintError.reportError(shell, "history",
+						"Invalid number.");
+				return;
+			}
+			if (counter > his.size() || counter < 0) {
+				PrintError.reportError(shell, "history",
+						"Number specified is not possible.");
+				return;
+			}
+			i = his.size()-counter;
+			num = his.size()-counter+1;
 		}
-
-
+		while (i < his.size()) {
+			System.out.println(num+". "+his.get(i));
+			num++;
+			i++;
+		}
 	}
 
 }
