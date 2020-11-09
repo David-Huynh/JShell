@@ -7,9 +7,9 @@ package driver;
 
 public class Storage {
 
-	/** The root directory of the storage system*/
+	/** The root directory of the storage system */
 	private Directory root;
-	
+
 	/** The one and only reference to the Storage system */
 	private static Storage onlyReference = null;
 
@@ -20,6 +20,7 @@ public class Storage {
 	private Storage(String name, Directory parentDir) {
 		this.root = new Directory("/", null);
 		this.root.setParentDir(this.root);
+		// parent of root directory is always the root itself
 	}
 
 	/**
@@ -30,17 +31,16 @@ public class Storage {
 	public Directory getRoot() {
 		return this.root;
 	}
-	
+
 	/**
 	 * Get the only instance of Storage, creates it it if it doesn't exist
 	 * 
 	 * @return A newly created Storage if there is none yet, and returns the
-	 * only instance of it if there already is one
+	 *         only instance of it if there already is one
 	 */
 	public static Storage createNewStorage() {
 		if (onlyReference == null) {
 			onlyReference = new Storage("/", null);
-			// parent of root directory is always the root itself
 		}
 		// Singleton Design Pattern is used to ensure only ONE Storage is
 		// created

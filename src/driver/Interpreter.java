@@ -93,7 +93,7 @@ public class Interpreter {
 	 * @param userCommand
 	 *            A command the user has input into the JShell
 	 * @param shell
-	 *            The specific instance of the JShell the user is using
+	 *            The specific instance of JShell the user is using
 	 */
 	public static void interpret(String userCommand, JShell shell) {
 		// Parse the userCommand into a String and a list of parameters
