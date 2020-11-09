@@ -82,7 +82,7 @@ public class Echo extends ShellCommand {
 	}
 
 	/**
-	 * Parses input parameters into 2 pieces "String" = [0] and "FileName" = [1]
+	 * Parses input parameters into 2 pieces "String" = [0] and "FilePath+Name" = [1]
 	 * 
 	 * @param parameters
 	 *            The parameters to be parsed
@@ -122,7 +122,7 @@ public class Echo extends ShellCommand {
 	}
 
 	/**
-	 * 
+	 * Takes in parameters and check if they are formatted correctly
 	 * 
 	 * @param shell
 	 * @param parsedParams
@@ -169,13 +169,13 @@ public class Echo extends ShellCommand {
 	}
 
 	/**
-	 * 
+	 * Cycles through the path given and returns the end directory of the path
 	 * 
 	 * @param shell
 	 * @param filePath
-	 * @return
+	 * @return The end directory of the path
 	 */
-	private static Directory directory(JShell shell, String filePath) {
+	private static Directory cycleDir(JShell shell, String filePath) {
 		Directory currDir = shell.getCurrentDir();
 		if (filePath.indexOf("/") == 0) {
 			if (filePath.equals("/")) {
@@ -214,7 +214,7 @@ public class Echo extends ShellCommand {
 			return;
 		}
 		String[] parsedParams = parseParameters(parameters);
-		Directory dir = directory(shell, parsedParams[1]);
+		Directory dir = cycleDir(shell, parsedParams[1]);
 		String fileName = parsedParams[1]
 				.split("/")[parsedParams[1].split("/").length - 1];
 		if (dir == null) {
