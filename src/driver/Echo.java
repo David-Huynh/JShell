@@ -78,7 +78,8 @@ public class Echo extends ShellCommand {
 	}
 
 	/**
-	 * Parses input parameters into 2 pieces "String" = [0] and "FilePath+Name" = [1]
+	 * Parses input parameters into 2 pieces "String" = [0] and "FilePath+Name"
+	 * = [1]
 	 * 
 	 * @param parameters
 	 *            The parameters to be parsed
@@ -118,12 +119,15 @@ public class Echo extends ShellCommand {
 	}
 
 	/**
-	 * Takes in parameters to check if they are formatted correctly
-	 * Prints an error message if they are returns otherwise
+	 * Takes in parameters to check if they are formatted correctly Prints an
+	 * error message if they are returns otherwise
 	 * 
-	 * @param shell The JShell that is in use
-	 * @param parsedParams The params returned by parseParameters
-	 * @param numArrow The number of ">"
+	 * @param shell
+	 *            The JShell that is in use
+	 * @param parsedParams
+	 *            The params returned by parseParameters
+	 * @param numArrow
+	 *            The number of ">"
 	 * @return true if there is an error in the parameters and false otherwise
 	 */
 	private static boolean errorHandle(JShell shell, String[] parsedParams,
@@ -163,8 +167,10 @@ public class Echo extends ShellCommand {
 	/**
 	 * Cycles through the path given and returns the end directory of the path
 	 * 
-	 * @param shell the JShell that is in use
-	 * @param filePath the filePath provided
+	 * @param shell
+	 *            The JShell that is in use
+	 * @param filePath
+	 *            The file path provided
 	 * @return The end directory of the path
 	 */
 	private static Directory cycleDir(JShell shell, String filePath) {
@@ -178,10 +184,11 @@ public class Echo extends ShellCommand {
 				filePath = filePath.substring(1);
 			}
 		}
-		if (StorageUnit.hasForbidChar(filePath.split("/")[filePath.split("/").length - 1])){
+		if (StorageUnit.hasForbidChar(
+				filePath.split("/")[filePath.split("/").length - 1])) {
 			PrintError.reportError(shell, "echo",
-					"File name contains forbidden character(s): "
-							+ filePath.split("/")[filePath.split("/").length - 1]);
+					"File name contains forbidden character(s): " + filePath
+							.split("/")[filePath.split("/").length - 1]);
 			return null;
 		}
 		Path newPath = new Path(filePath);

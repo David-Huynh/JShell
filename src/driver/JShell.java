@@ -51,7 +51,7 @@ public class JShell {
 	/** Directory stack of the shell */
 	private Stack<Directory> dirStack;
 	/**
-	 * HashMap that maps commands to the Class that represents it, e.g. ls maps
+	 * HashMap that maps commands to the Class that represents it e.g. ls maps
 	 * to ListFiles
 	 */
 	private HashMap<String, Class> cmdToClass;
@@ -210,7 +210,11 @@ public class JShell {
 			this.print(currentDir.getName() + ">");
 			userCommand = userInput.nextLine();
 			addCom(userCommand);
-			Interpreter.interpret(userCommand, this);
+			if (userCommand.strip() == "") {
+				PrintError.reportError(this, "Error: no command entered.");
+			} else {
+				Interpreter.interpret(userCommand, this);
+			}
 		}
 		userInput.close();
 	}

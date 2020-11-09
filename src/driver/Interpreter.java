@@ -96,8 +96,6 @@ public class Interpreter {
 	 *            The specific instance of JShell the user is using
 	 */
 	public static void interpret(String userCommand, JShell shell) {
-		// Parse the userCommand into a String and a list of parameters
-		// String parameters[] = userCommand.strip().split(" +");
 		String parameters[] = Interpreter.splitCmdIntoParams(userCommand);
 		String command = parameters[0]; // The first word is the command
 		if (shell.getCmdToClass().containsKey(command)) {
