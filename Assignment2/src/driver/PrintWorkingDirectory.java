@@ -63,10 +63,10 @@ public class PrintWorkingDirectory extends ShellCommand {
 					"Invalid number of arguments.");
 			return;
 		}
-		
+
 		Path absPath = shell.getCurrentDir().getFullPath(shell);
-		
+
 		shell.println(absPath.getPath());
-		
+
 	}
 }

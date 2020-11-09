@@ -83,7 +83,15 @@ public class ConcatenateFile extends ShellCommand {
 		}
 	}
 
-	// returns if it is successful (i.e. no errors)
+	/**
+	 * Concatenates files in a given path to a directory
+	 * 
+	 * @param path
+	 *            The path to the directory
+	 * @param shell
+	 *            The JShell in use
+	 * @return Whether it was successful, i.e. no errors
+	 */
 	private static boolean catFiles(String[] path, JShell shell) {
 		Directory currDir = shell.getCurrentDir();
 		ArrayList<StorageUnit> contents = currDir.getDirContents();

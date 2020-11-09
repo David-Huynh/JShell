@@ -92,8 +92,7 @@ public class PrintHistory extends ShellCommand {
 			try {
 				counter = Integer.parseInt(parameters[1]);
 			} catch (Exception e) {
-				PrintError.reportError(shell, "history",
-						"Invalid number.");
+				PrintError.reportError(shell, "history", "Invalid number.");
 				return;
 			}
 			if (counter > his.size() || counter < 0) {
@@ -101,11 +100,11 @@ public class PrintHistory extends ShellCommand {
 						"Number specified is not possible.");
 				return;
 			}
-			i = his.size()-counter;
-			num = his.size()-counter+1;
+			i = his.size() - counter;
+			num = his.size() - counter + 1;
 		}
 		while (i < his.size()) {
-			System.out.println(num+". "+his.get(i));
+			System.out.println(num + ". " + his.get(i));
 			num++;
 			i++;
 		}
