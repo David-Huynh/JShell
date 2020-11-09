@@ -122,12 +122,13 @@ public class Echo extends ShellCommand {
 	}
 
 	/**
-	 * Takes in parameters and check if they are formatted correctly
+	 * Takes in parameters to check if they are formatted correctly
+	 * Prints an error message if they are returns otherwise
 	 * 
-	 * @param shell
-	 * @param parsedParams
-	 * @param numArrow
-	 * @return
+	 * @param shell The JShell that is in use
+	 * @param parsedParams The params returned by parseParameters
+	 * @param numArrow The number of ">"
+	 * @return true if there is an error in the parameters and false otherwise
 	 */
 	private static boolean errorHandle(JShell shell, String[] parsedParams,
 			int numArrow) {
@@ -171,8 +172,8 @@ public class Echo extends ShellCommand {
 	/**
 	 * Cycles through the path given and returns the end directory of the path
 	 * 
-	 * @param shell
-	 * @param filePath
+	 * @param shell the JShell that is in use
+	 * @param filePath the filePath provided
 	 * @return The end directory of the path
 	 */
 	private static Directory cycleDir(JShell shell, String filePath) {
@@ -188,11 +189,7 @@ public class Echo extends ShellCommand {
 		}
 		Path newPath = new Path(filePath);
 		Directory dir = newPath.cyclePath(0, currDir, shell);
-		if (dir == null) {
-			return null;
-		} else {
-			return dir;
-		}
+		return dir;
 	}
 
 	/**
