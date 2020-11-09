@@ -29,6 +29,7 @@
 // *********************************************************
 package driver;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Stack;
@@ -54,6 +55,8 @@ public class JShell {
 	 * to ListFiles
 	 */
 	private HashMap<String, Class> cmdToClass;
+	/** ArrayList that stores the history of commands */
+	private ArrayList<String> comHis = new ArrayList<String>();
 
 	/**
 	 * Initializes an instance of the JShell, initializes all private variables
@@ -137,6 +140,23 @@ public class JShell {
 	 */
 	public HashMap<String, Class> getCmdToClass() {
 		return this.cmdToClass;
+	}
+
+	/**
+	 * Public getter method for the history of commands
+	 *
+	 * @return The ArrayList of the history of commands
+	 */
+	public ArrayList<String> getComHis() {
+		return this.comHis;
+	}
+
+	/**
+	 * Public setter method for appending to the history
+	 * of commands
+	 */
+	public void addCom(String command) {
+		this.comHis.add(command);
 	}
 
 	/**
