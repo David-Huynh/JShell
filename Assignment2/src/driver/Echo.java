@@ -156,12 +156,7 @@ public class Echo extends ShellCommand {
 					"\\\" is an invalid string character\"");
 			return true;
 		}
-		if (StorageUnit.hasForbidChar(parsedParams[1])) {
-			PrintError.reportError(shell, "echo",
-					"File name contains forbidden character(s): "
-							+ parsedParams[1]);
-			return true;
-		}
+
 		return false;
 	}
 
@@ -182,6 +177,12 @@ public class Echo extends ShellCommand {
 				currDir = shell.getRootDir();
 				filePath = filePath.substring(1);
 			}
+		}
+		if (StorageUnit.hasForbidChar(filePath.split("/")[filePath.split("/").length - 1])){
+			PrintError.reportError(shell, "echo",
+					"File name contains forbidden character(s): "
+							+ filePath.split("/")[filePath.split("/").length - 1]);
+			return null;
 		}
 		Path newPath = new Path(filePath);
 		return newPath.cyclePath(0, currDir, shell);
