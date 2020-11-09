@@ -76,7 +76,7 @@ public class ConcatenateFile extends ShellCommand {
 		int i;
 		for (i = 2; i < parameters.length; i++) {
 			String path2[] = parameters[i].split("/");
-			shell.println("\n\n\n");
+			shell.print("\n\n\n");
 			if (!catFiles(path2, shell)) {
 				return;
 			}

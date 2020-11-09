@@ -82,6 +82,16 @@ public class PrintHistory extends ShellCommand {
 					"Invalid number of arguments.");
 			return;
 		}
+		int counter;
+		try {
+			counter = Integer.parseInt(parameters[1]);
+
+		} catch (Exception e) {
+			PrintError.reportError(shell, "history",
+					"Invalid number.");
+			return;
+		}
+
 
 	}
 
