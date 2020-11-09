@@ -160,6 +160,10 @@ public class Echo extends ShellCommand {
 	}
 	public static void performOutcome(JShell shell, String[] parameters) {
 		int numArrow = numArrow(parameters);
+		if (parameters.length <= 1 || parameters.length > 4){
+			PrintError.reportError(shell, "echo", "invalid number of parameters");
+			return;
+		}
 		String[] parsedParams = parseParameters(parameters);
 		Directory dir = directory(shell, parsedParams[1]);
 		String fileName = parsedParams[1]
