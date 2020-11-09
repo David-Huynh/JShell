@@ -205,6 +205,7 @@ public class JShell {
 		while (this.isActive) {
 			this.print(currentDir.getName() + ">");
 			userCommand = userInput.nextLine();
+			addCom(userCommand);
 			Interpreter.interpret(userCommand, this);
 		}
 		userInput.close();
