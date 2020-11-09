@@ -184,8 +184,7 @@ public class Echo extends ShellCommand {
 			}
 		}
 		Path newPath = new Path(filePath);
-		Directory dir = newPath.cyclePath(0, currDir, shell);
-		return dir;
+		return newPath.cyclePath(0, currDir, shell);
 	}
 
 	/**
