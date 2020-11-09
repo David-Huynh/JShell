@@ -63,7 +63,8 @@ public class JShell {
 	 */
 	public JShell() {
 		this.rootDir = Storage.createNewStorage();
-		this.currentDir = this.rootDir.getRoot(); // by default current directory is root
+		this.currentDir = this.rootDir.getRoot(); // by default current
+													// directory is root
 		this.dirStack = new Stack<Directory>();
 		this.isActive = true;
 		this.cmdToClass = new HashMap<String, Class>();
@@ -118,7 +119,8 @@ public class JShell {
 	/**
 	 * Public getter method for the root directory
 	 * 
-	 * @return The root directory of the shell
+	 * @return The root directory of the shell that lives in the single instance
+	 *         of Storage
 	 */
 	public Directory getRootDir() {
 		return this.rootDir.getRoot();
@@ -132,7 +134,7 @@ public class JShell {
 	public Stack<Directory> getDirStack() {
 		return this.dirStack;
 	}
-	
+
 	/**
 	 * Public getter method for the command to Class HashMap
 	 * 
@@ -152,8 +154,10 @@ public class JShell {
 	}
 
 	/**
-	 * Public setter method for appending to the history
-	 * of commands
+	 * Public setter method for appending to the history of commands
+	 * 
+	 * @param command
+	 *            The command to be added
 	 */
 	public void addCom(String command) {
 		this.comHis.add(command);

@@ -34,8 +34,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * The Echo command is used by the user mainly to manipulate a File's contents
+ * by overwriting them or appending to them. It can also print user input
+ * strings to their JShell.
+ */
+
 public class Echo extends ShellCommand {
 
+	/**
+	 * Provides the manual for how to use this command
+	 * 
+	 * @return The manual
+	 */
 	public static String getManual() {
 		return "echo STRING [> OUTFILE]\n"
 				+ "If OUTFILE is not provided, print STRING on the shell.\n"
@@ -50,7 +61,14 @@ public class Echo extends ShellCommand {
 				+ "echo STRING >> OUTFILE\n" + "Like the previous command, but"
 				+ "appends to OUTFILE instead of overwrites";
 	}
-	// Counts number of '>' in parameters
+
+	/**
+	 * Counts number of '>' in parameters
+	 * 
+	 * @param parameters
+	 *            The parameters to be checked
+	 * @return The number of instances of '>'
+	 */
 	private static int numArrow(String[] parameters) {
 		int counter = 0;
 		for (int i = 1; i < parameters.length; i++) {
@@ -62,7 +80,14 @@ public class Echo extends ShellCommand {
 		}
 		return counter;
 	}
-	// Parses input parameters into 2 pieces "String" = [0] and "FileName" = [1]
+
+	/**
+	 * Parses input parameters into 2 pieces "String" = [0] and "FileName" = [1]
+	 * 
+	 * @param parameters
+	 *            The parameters to be parsed
+	 * @return The parameters, now parsed
+	 */
 	private static String[] parseParameters(String[] parameters) {
 		String[] parsedParams = {"", ""};
 		boolean closedString = false;
@@ -96,6 +121,14 @@ public class Echo extends ShellCommand {
 		return parsedParams;
 	}
 
+	/**
+	 * 
+	 * 
+	 * @param shell
+	 * @param parsedParams
+	 * @param numArrow
+	 * @return
+	 */
 	private static boolean errorHandle(JShell shell, String[] parsedParams,
 			int numArrow) {
 		// Check for empty string
@@ -126,11 +159,6 @@ public class Echo extends ShellCommand {
 					"\\\" is an invalid string character\"");
 			return true;
 		}
-		if (StorageUnit.hasForbidChar(parsedParams[0])){
-			PrintError.reportError(shell,"echo",
-					"String contains forbidden characters " + parsedParams[0]);
-			return true;
-		}
 		if (StorageUnit.hasForbidChar(parsedParams[1])) {
 			PrintError.reportError(shell, "echo",
 					"File name contains forbidden character(s): "
@@ -139,6 +167,14 @@ public class Echo extends ShellCommand {
 		}
 		return false;
 	}
+
+	/**
+	 * 
+	 * 
+	 * @param shell
+	 * @param filePath
+	 * @return
+	 */
 	private static Directory directory(JShell shell, String filePath) {
 		Directory currDir = shell.getCurrentDir();
 		if (filePath.indexOf("/") == 0) {
@@ -158,10 +194,23 @@ public class Echo extends ShellCommand {
 			return dir;
 		}
 	}
+
+	/**
+	 * Tell the JShell to either print a given string to the command line,
+	 * overwrite a specific file in Storage or append to a specific file in
+	 * Storage.
+	 * 
+	 * @param shell
+	 *            The JShell the command is to be performed on
+	 * @param parameters
+	 *            The parameters from the interpreter the command is to work
+	 *            with
+	 */
 	public static void performOutcome(JShell shell, String[] parameters) {
 		int numArrow = numArrow(parameters);
-		if (parameters.length <= 1 || parameters.length > 4){
-			PrintError.reportError(shell, "echo", "invalid number of parameters");
+		if (parameters.length <= 1 || parameters.length > 4) {
+			PrintError.reportError(shell, "echo",
+					"invalid number of parameters");
 			return;
 		}
 		String[] parsedParams = parseParameters(parameters);
