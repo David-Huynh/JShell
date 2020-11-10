@@ -208,7 +208,7 @@ public class Echo extends ShellCommand {
 	 */
 	public static void performOutcome(JShell shell, String[] parameters) {
 		int numArrow = numArrow(parameters);
-		if (parameters.length <= 1 || parameters.length > 4) {
+		if (parameters.length <= 1 || parameters.length > 5) {
 			PrintError.reportError(shell, "echo",
 					"invalid number of parameters");
 			return;
