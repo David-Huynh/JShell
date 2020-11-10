@@ -69,14 +69,12 @@ public class MakeDirectory extends ShellCommand {
 					"Invalid number of arguments.");
 			return;
 		}
-
 		Directory currDir = shell.getCurrentDir();
 		String[] dir1 = {};
 		String[] dir2 = {};
 		boolean mDir1;
 		boolean mDir2;
-
-		if (parameters[1].indexOf("/") == 0) {
+		if (parameters[1].indexOf("/") == 0) { // checking if it's an absolute path
 			if (parameters[1].equals("/")) {
 				PrintError.reportError(shell, "mkdir",
 						"Directory already exits: " + parameters[1]);
@@ -87,7 +85,7 @@ public class MakeDirectory extends ShellCommand {
 		}
 		dir1 = parameters[1].split("/");
 		mDir1 = makeDir(shell, currDir, dir1);
-		if (!mDir1) {
+		if (!mDir1) { // checking if making the 1st directory was successful
 			return;
 		}
 		if (parameters[2].indexOf("/") == 0) {

@@ -71,7 +71,6 @@ public class ConcatenateFile extends ShellCommand {
 		}
 		Path p = new Path("");
 		Directory cDir = shell.getCurrentDir();
-
 		//for loop to loop through all the file paths specified
 		for (int i = 1; i < parameters.length; i++) {
 			p.setPath(parameters[i]);
@@ -83,7 +82,6 @@ public class ConcatenateFile extends ShellCommand {
 			}
 			String [] elements = p.getPathElements();
 			Directory parent = p.cyclePath(0, cDir, shell);
-
 			// checks if the path is valid
 			if (parent == null) {
 				PrintError.reportError(shell, "cat",
@@ -97,7 +95,6 @@ public class ConcatenateFile extends ShellCommand {
 				}
 			}
 			catFiles(p, parent, shell);
-
 			// print line break
 			if (i+1 != parameters.length) {
 				System.out.print("\n\n\n");
@@ -117,9 +114,8 @@ public class ConcatenateFile extends ShellCommand {
 	 */
 	private static void catFiles(Path path, Directory cDir ,JShell shell) {
 		String [] pElements = path.getPathElements();
-
 		ArrayList<StorageUnit> contents = cDir.getDirContents();
-
+		// checking if file is valid under the Directory cDir
 		int fIndex = cDir.containsFile(pElements[pElements.length-1]);
 		if (fIndex == -1) {
 			PrintError.reportError(shell, "cat",
@@ -128,7 +124,7 @@ public class ConcatenateFile extends ShellCommand {
 		}
 		if (contents.get(fIndex).getClass().getSimpleName().equals("File")) {
 			File file = (File) contents.get(fIndex);
-			file.print(shell);
+			file.print(shell); // printing contents of file
 		} else {
 			PrintError.reportError(shell, "cat",
 					"Invalid file path specified: " + path.getPath());

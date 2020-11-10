@@ -89,8 +89,7 @@ public class PrintHistory extends ShellCommand {
 		int i = 0;
 		int num = 1;
 		if (parameters.length == 2) {
-			// try-catch to find
-			try {
+			try { // try-catch to get the number of required commands
 				counter = Integer.parseInt(parameters[1]);
 			} catch (Exception e) {
 				PrintError.reportError(shell, "history", "Invalid number.");
@@ -104,7 +103,7 @@ public class PrintHistory extends ShellCommand {
 			i = his.size() - counter;
 			num = his.size() - counter + 1;
 		}
-		while (i < his.size()) {
+		while (i < his.size()) { // printing commands
 			shell.println(num + ". " + his.get(i));
 			num++;
 			i++;
