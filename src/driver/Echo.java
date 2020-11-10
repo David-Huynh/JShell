@@ -92,13 +92,19 @@ public class Echo extends ShellCommand {
 	 * @return The parameters, now parsed
 	 */
 	private static String[] parseParameters(String[] parameters) {
+		if (parameters.length == 2){
+			return new String[]{parameters[1], ""};
+		}
+		if (parameters.length == 4){
+			return new String[]{parameters[1], parameters[3]};
+		}
 		for (int i = 1; i < parameters.length; ){
-			if (parameters[i].charAt(parameters[i].length() - 1) == '>'){
+			if (parameters[i].charAt(parameters[i].length() - 1) == '>' && i == 1){
 				parameters[i] = parameters[i].substring(0,parameters[i].length() - 1);
 				if(parameters[i].length()==0){
 					i++;
 				}
-			} else if (parameters[i].charAt(0) == '>'){
+			} else if (parameters[i].charAt(0) == '>' && i == 2){
 				parameters[i] = parameters[i].substring(1);
 				if(parameters[i].length()==0){
 					i++;
@@ -106,9 +112,6 @@ public class Echo extends ShellCommand {
 			} else{
 				i++;
 			}
-		}
-		if (parameters.length == 4){
-			return new String[]{parameters[1], parameters[3]};
 		}
 		return new String[]{parameters[1], parameters[2]};
 	}
@@ -148,11 +151,17 @@ public class Echo extends ShellCommand {
 				return true;
 			}
 		}
+		if (parsedParams[0].charAt(parsedParams[0].length() - 1) == '\"'
+				&& parsedParams[1].charAt(0)== '\"'){
+			PrintError.reportError(shell,"echo",
+					"\" is an invalid string character");
+			return true;
+		}
 		// Check for double quotes in string
 		if (parsedParams[0].substring(1, parsedParams[0].length() - 1)
 				.contains("\"")) {
 			PrintError.reportError(shell, "echo",
-					"\\\" is an invalid string character\"");
+					"\" is an invalid string character");
 			return true;
 		}
 
