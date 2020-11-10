@@ -89,6 +89,7 @@ public class PrintHistory extends ShellCommand {
 		int i = 0;
 		int num = 1;
 		if (parameters.length == 2) {
+			// try-catch to find
 			try {
 				counter = Integer.parseInt(parameters[1]);
 			} catch (Exception e) {

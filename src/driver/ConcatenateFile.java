@@ -78,14 +78,26 @@ public class ConcatenateFile extends ShellCommand {
 			// checks if the path is an absolute path
 			if (p.isAbsolute()) {
 				cDir = shell.getRootDir();
+			} else {
+				cDir = shell.getCurrentDir();
 			}
+			String [] elements = p.getPathElements();
+			Directory parent = p.cyclePath(0, cDir, shell);
+
 			// checks if the path is valid
-			if (p.cyclePath(-1, cDir, shell) == null) {
+			if (parent == null) {
 				PrintError.reportError(shell, "cat",
 						"Invalid file path specified: " + p.getPath());
 				return;
+			} else {
+				if (parent.containsFile(elements[elements.length-1]) == -1) {
+					PrintError.reportError(shell, "cat",
+							"File does not exist: " + elements[elements.length-1]);
+					return;
+				}
 			}
-			catFiles(p, cDir, shell);
+			catFiles(p, parent, shell);
+
 			// print line break
 			if (i+1 != parameters.length) {
 				System.out.print("\n\n\n");
@@ -106,12 +118,21 @@ public class ConcatenateFile extends ShellCommand {
 	private static void catFiles(Path path, Directory cDir ,JShell shell) {
 		String [] pElements = path.getPathElements();
 
-		Directory dir = path.cyclePath(pElements.length-1, cDir, shell);
-		ArrayList<StorageUnit> contents = dir.getDirContents();
+		ArrayList<StorageUnit> contents = cDir.getDirContents();
 
-		int fIndex = dir.containsFile(pElements[pElements.length-1]);
-		File file = (File) contents.get(fIndex);
-		file.print(shell);
-
+		int fIndex = cDir.containsFile(pElements[pElements.length-1]);
+		if (fIndex == -1) {
+			PrintError.reportError(shell, "cat",
+					"Invalid file path specified: " + path.getPath());
+			return;
+		}
+		if (contents.get(fIndex).getClass().getSimpleName().equals("File")) {
+			File file = (File) contents.get(fIndex);
+			file.print(shell);
+		} else {
+			PrintError.reportError(shell, "cat",
+					"Invalid file path specified: " + path.getPath());
+			return;
+		}
 	}
 }

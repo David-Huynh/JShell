@@ -126,8 +126,8 @@ public class Directory extends StorageUnit {
 	 * 
 	 * @param fileName
 	 *            The name of the File to be checked if it is in the Directory
-	 * @return -1 if sub-directory named fileName is not in the Directory or
-	 *         index of the sub-directory if it is
+	 * @return -1 if file named fileName is not in the Directory or
+	 *         index of the file if it is
 	 */
 	public int containsFile(String fileName) {
 		int index = -1;
