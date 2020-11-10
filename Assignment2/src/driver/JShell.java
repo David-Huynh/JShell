@@ -56,7 +56,7 @@ public class JShell {
 	 */
 	private HashMap<String, Class> cmdToClass;
 	/** ArrayList that stores the history of commands */
-	private ArrayList<String> comHis = new ArrayList<String>();
+	private ArrayList<String> comHis;
 
 	/**
 	 * Initializes an instance of the JShell, initializes all private variables
@@ -69,6 +69,7 @@ public class JShell {
 		this.isActive = true;
 		this.cmdToClass = new HashMap<String, Class>();
 		this.populateCmdToClass();
+		this.comHis = new ArrayList<String>();
 	}
 
 	/**

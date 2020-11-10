@@ -38,7 +38,7 @@ import java.util.ArrayList;
  */
 
 public class PrintHistory extends ShellCommand {
-
+	
 	/**
 	 * Provides the manual for how to use this command
 	 * 
@@ -104,7 +104,7 @@ public class PrintHistory extends ShellCommand {
 			num = his.size() - counter + 1;
 		}
 		while (i < his.size()) {
-			System.out.println(num + ". " + his.get(i));
+			shell.println(num + ". " + his.get(i));
 			num++;
 			i++;
 		}
