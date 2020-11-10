@@ -1,10 +1,9 @@
 Class name: Directory
-Parent class (if any): 
+Parent class (if any): StorageUnit
 Subclasses (if any): 
 
 Responsibilities:
 * Keeps track of a collection that contains Files and other Directories
 
 Collaborators:
-* File
-* Directory
+* JShell
