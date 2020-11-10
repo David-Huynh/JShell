@@ -69,16 +69,26 @@ public class ConcatenateFile extends ShellCommand {
 					"Invalid number of arguments.");
 			return;
 		}
-		String path[] = parameters[1].split("/");
-		if (!catFiles(path, shell)) {
-			return;
-		}
-		int i;
-		for (i = 2; i < parameters.length; i++) {
-			String path2[] = parameters[i].split("/");
-			shell.print("\n\n\n");
-			if (!catFiles(path2, shell)) {
+		Path p = new Path("");
+		Directory cDir = shell.getCurrentDir();
+
+		//for loop to loop through all the file paths specified
+		for (int i = 1; i < parameters.length; i++) {
+			p.setPath(parameters[i]);
+			// checks if the path is an absolute path
+			if (p.isAbsolute()) {
+				cDir = shell.getRootDir();
+			}
+			// checks if the path is valid
+			if (p.cyclePath(-1, cDir, shell) == null) {
+				PrintError.reportError(shell, "cat",
+						"Invalid file path specified: " + p.getPath());
 				return;
+			}
+			catFiles(p, cDir, shell);
+			// print line break
+			if (i+1 != parameters.length) {
+				System.out.print("\n\n\n");
 			}
 		}
 	}
@@ -87,44 +97,21 @@ public class ConcatenateFile extends ShellCommand {
 	 * Concatenates files in a given path to a directory
 	 * 
 	 * @param path
-	 *            The path to the directory
+	 *            The (valid) path to the directory
+	 * @param cDir
+	 *            The current directory
 	 * @param shell
 	 *            The JShell in use
-	 * @return Whether it was successful, i.e. no errors
 	 */
-	private static boolean catFiles(String[] path, JShell shell) {
-		Directory currDir = shell.getCurrentDir();
-		ArrayList<StorageUnit> contents = currDir.getDirContents();
-		for (int i = 0; i < path.length; i++) {
-			if (i + 1 == path.length) {
-				int fIndex = currDir.containsFile(path[i]);
-				if (fIndex == -1) {
-					PrintError.reportError(shell, "cat",
-							"Does not contain file: " + path[i]);
-					return false;
-				} else {
-					File file = (File) contents.get(fIndex);
-					file.print(shell);
-				}
-			} else {
-				if (path[i].equals("..") || path[i].equals(".")) {
-					if (path[i].equals("..")) {
-						currDir = currDir.getParentDir();
-					}
-				} else {
-					int index = currDir.isSubDir(path[i]);
-					if (index == -1) {
-						PrintError.reportError(shell, "cat",
-								"Invalid Directory.");
-						return false;
-					} else {
-						currDir = (Directory) contents.get(index);
-						contents = currDir.getDirContents();
-					}
-				}
-			}
-		}
-		return true;
-	}
+	private static void catFiles(Path path, Directory cDir ,JShell shell) {
+		String [] pElements = path.getPathElements();
 
+		Directory dir = path.cyclePath(pElements.length-1, cDir, shell);
+		ArrayList<StorageUnit> contents = dir.getDirContents();
+
+		int fIndex = dir.containsFile(pElements[pElements.length-1]);
+		File file = (File) contents.get(fIndex);
+		file.print(shell);
+
+	}
 }
