@@ -67,10 +67,16 @@ public class Echo extends ShellCommand {
 	 */
 	private static int numArrow(String[] parameters) {
 		int counter = 0;
+		boolean passedQuote = false;
 		for (int i = 1; i < parameters.length; i++) {
 			for (int c = 0; c < parameters[i].length(); c++) {
-				if (parameters[i].charAt(c) == '>') {
-					counter += 1;
+				if (parameters[i].charAt(c)=='\"' && c != 0){
+					passedQuote = true;
+				}
+				if (passedQuote){
+					if (parameters[i].charAt(c) == '>') {
+						counter += 1;
+					}
 				}
 			}
 		}
@@ -86,36 +92,25 @@ public class Echo extends ShellCommand {
 	 * @return The parameters, now parsed
 	 */
 	private static String[] parseParameters(String[] parameters) {
-		String[] parsedParams = {"", ""};
-		boolean closedString = false;
-		if (parameters[1].contains(">")
-				&& parameters[1].charAt(parameters[1].length() - 1) != '>'
-				&& parameters[1].charAt(0) != '>') {
-			return parameters[1].split(">+");
-		}
-		for (int i = 1; i < parameters.length; i++) {
-			if (!closedString) {// Checks if '>' separator has been passed
-				if (parameters[i].charAt(0) == '>') {// Checks for leading '>'
-					closedString = true;
-					if (parameters[i] // Checks for ending '>'
-							.charAt(parameters[i].length() - 1) != '>') {
-						parsedParams[1] = parameters[i].replace(">", "");
-					}
-				} else if (parameters[i] // Checks for ending'>'
-						.charAt(parameters[i].length() - 1) == '>') {
-					closedString = true;
-					parsedParams[0] += parameters[i].replace(">", "");
-					continue;
+		for (int i = 1; i < parameters.length; ){
+			if (parameters[i].charAt(parameters[i].length() - 1) == '>'){
+				parameters[i] = parameters[i].substring(0,parameters[i].length() - 1);
+				if(parameters[i].length()==0){
+					i++;
 				}
-				if (!closedString) {// Checks if '>' has been passed
-					parsedParams[0] += parameters[i].replace(">", "");
+			} else if (parameters[i].charAt(0) == '>'){
+				parameters[i] = parameters[i].substring(1);
+				if(parameters[i].length()==0){
+					i++;
 				}
-			} else {
-				// Adds the second part after '>' to second index
-				parsedParams[1] = parameters[i].replace(">", "");
+			} else{
+				i++;
 			}
 		}
-		return parsedParams;
+		if (parameters.length == 4){
+			return new String[]{parameters[1], parameters[3]};
+		}
+		return new String[]{parameters[1], parameters[2]};
 	}
 
 	/**
