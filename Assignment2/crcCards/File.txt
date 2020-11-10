@@ -4,7 +4,7 @@ Subclasses (if any):
 
 Responsibilities:
 * Stores certain data/information
-* Be able to print data/information to command line
+* Tell JShell to print data/information to command line
 * Be able to have data/information added to it
 * Be able to have that data/information overwritten
 * Provide that data/information if required
