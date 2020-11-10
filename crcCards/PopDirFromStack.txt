@@ -11,4 +11,4 @@ Responsibilities:
 Collaborators:
 * Directory
 * JShell
-* PrintError
+* Path

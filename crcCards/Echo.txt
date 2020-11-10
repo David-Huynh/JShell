@@ -3,12 +3,13 @@ Parent class (if any):
 Subclasses (if any): 
 
 Responsibilities:
-* Overwrite given file with a given string of characters using CreateTextFile
+* Tell JShell to print a string to its command line
+* Overwrite given file with a given string of characters
 * Append given file's contents with a given string of characters
 * Prompt error if file is inaccessible
 * Provide a manual for how to use this class
 
 Collaborators:
-* CreateTextFile
-* PrintError
 * File
+* JShell
+* Path

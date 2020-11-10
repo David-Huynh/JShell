@@ -4,6 +4,8 @@ Subclasses (if any):
 
 Responsibilities:
 * Interpret user commands and call the appropriate command with the interpreted user arguments to perform the desired outcomes
+* Report an error if a command is unrecognized
 
 Collaborators:
 * ShellCommand
+* PrintError
