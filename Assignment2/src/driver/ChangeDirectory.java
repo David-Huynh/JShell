@@ -64,11 +64,9 @@ public class ChangeDirectory extends ShellCommand {
 			PrintError.reportError(shell, "cd", "Invalid number of arguments.");
 			return;
 		}
-
 		Directory currDir = shell.getCurrentDir();
 		String[] subDir = {};
-
-		if (parameters[1].indexOf("/") == 0) {
+		if (parameters[1].indexOf("/") == 0) { // checks if its path is absolute
 			if (parameters[1].equals("/")) {
 				shell.setCurrentDir(shell.getRootDir());
 				return;
@@ -76,8 +74,7 @@ public class ChangeDirectory extends ShellCommand {
 			currDir = shell.getRootDir();
 			parameters[1] = parameters[1].substring(1);
 		}
-		subDir = parameters[1].split("/");
-
+		subDir = parameters[1].split("/"); // getting the sub-dir names in path
 		for (int i = 0; i < subDir.length; i++) {
 			if (subDir[i].equals("..") || subDir[i].equals(".")) {
 				if (subDir[i].equals("..")) {
@@ -94,7 +91,7 @@ public class ChangeDirectory extends ShellCommand {
 				}
 			}
 		}
-		shell.setCurrentDir(currDir);
+		shell.setCurrentDir(currDir); // setting the current dir in shell for reference
 	}
 }
 

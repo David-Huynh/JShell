@@ -111,6 +111,7 @@ public class Directory extends StorageUnit {
 	public int isSubDir(String dirName) {
 		int index = -1;
 		for (int i = 0; i < contents.size(); i++) {
+			// checks if the element is of type Directory
 			if (contents.get(i).getClass().getSimpleName()
 					.equals("Directory")) {
 				if (contents.get(i).name.equals(dirName)) {
@@ -132,6 +133,7 @@ public class Directory extends StorageUnit {
 	public int containsFile(String fileName) {
 		int index = -1;
 		for (int i = 0; i < contents.size(); i++) {
+			// checks if the element is of type File
 			if (contents.get(i).getClass().getSimpleName().equals("File")) {
 				if (contents.get(i).name.equals(fileName)) {
 					index = i;
