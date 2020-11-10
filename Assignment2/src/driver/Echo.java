@@ -129,7 +129,11 @@ public class Echo extends ShellCommand {
 	 * @return true if there is an error in the parameters and false otherwise
 	 */
 	private static boolean errorHandle(JShell shell, String[] parsedParams,
-			int numArrow) {
+			int numArrow, Directory dir) {
+		if (dir == null){
+			PrintError.reportError(shell, "echo", "directory does not exist");
+			return true;
+		}
 		// Check for empty string
 		if (parsedParams[0].length() <= 1) {
 			PrintError.reportError(shell, "echo", "No string attached; string "
@@ -151,11 +155,14 @@ public class Echo extends ShellCommand {
 				return true;
 			}
 		}
-		if (parsedParams[0].charAt(parsedParams[0].length() - 1) == '\"'
-				&& parsedParams[1].charAt(0)== '\"'){
-			PrintError.reportError(shell,"echo",
-					"\" is an invalid string character");
-			return true;
+		//Check for string split up
+		if (parsedParams[1].length()!=0){
+			if (parsedParams[0].charAt(parsedParams[0].length() - 1) == '\"'
+					&& parsedParams[1].charAt(0)== '\"'){
+				PrintError.reportError(shell,"echo",
+						"\" is an invalid string character");
+				return true;
+			}
 		}
 		// Check for double quotes in string
 		if (parsedParams[0].substring(1, parsedParams[0].length() - 1)
@@ -164,7 +171,6 @@ public class Echo extends ShellCommand {
 					"\" is an invalid string character");
 			return true;
 		}
-
 		return false;
 	}
 
@@ -191,7 +197,7 @@ public class Echo extends ShellCommand {
 		if (StorageUnit.hasForbidChar(
 				filePath.split("/")[filePath.split("/").length - 1])) {
 			PrintError.reportError(shell, "echo",
-					"File name contains forbidden character(s): " + filePath
+					"Path contains forbidden character(s): " + filePath
 							.split("/")[filePath.split("/").length - 1]);
 			return null;
 		}
@@ -211,26 +217,27 @@ public class Echo extends ShellCommand {
 	 *            with
 	 */
 	public static void performOutcome(JShell shell, String[] parameters) {
-		int numArrow = numArrow(parameters);
-		if (parameters.length <= 1 || parameters.length > 5) {
+		if (parameters.length <= 1 || parameters.length >= 5) {
 			PrintError.reportError(shell, "echo",
 					"invalid number of parameters");
 			return;
 		}
+
+		int numArrow = numArrow(parameters);
 		String[] parsedParams = parseParameters(parameters);
 		Directory dir = cycleDir(shell, parsedParams[1]);
 		String fileName = parsedParams[1]
 				.split("/")[parsedParams[1].split("/").length - 1];
-		if (dir == null) {
-			PrintError.reportError(shell, "echo", "directory does not exist");
+		if (errorHandle(shell, parsedParams, numArrow, dir)) {
 			return;
 		}
 		int index = dir.containsFile(fileName);
-		if (errorHandle(shell, parsedParams, numArrow)) {
-			return;
-		}
+
+
+
 		parsedParams[0] = parsedParams[0].substring(1,
 				parsedParams[0].length() - 1);
+
 		if (numArrow == 0) { // Print string to shell command
 			shell.println(parsedParams[0]);
 			return;
