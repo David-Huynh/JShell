@@ -112,8 +112,6 @@ public class Path {
 	 * 
 	 * The index of startDir.name in this.path.getPathElements() < finalIndex
 	 * 
-	 * @param path
-	 *            A string representation of the path to be checked
 	 * @param finalIndex
 	 *            The end index of the path that will not be checked
 	 * @param startDir
@@ -204,6 +202,11 @@ public class Path {
 		return directoryIndex;
 	}
 
+	/**
+	 * Determines if the Path is absolute
+	 * 
+	 * @return True if absolute, False otherwise
+	 */
 	public boolean determineAbsolute() {
 		if (this.path.startsWith("/")) {
 			return true;
