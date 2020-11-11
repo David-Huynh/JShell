@@ -71,7 +71,7 @@ public class ConcatenateFile extends ShellCommand {
 		}
 		Path p = new Path("");
 		Directory cDir = shell.getCurrentDir();
-		//for loop to loop through all the file paths specified
+		// for loop to loop through all the file paths specified
 		for (int i = 1; i < parameters.length; i++) {
 			p.setPath(parameters[i]);
 			// checks if the path is an absolute path
@@ -80,7 +80,7 @@ public class ConcatenateFile extends ShellCommand {
 			} else {
 				cDir = shell.getCurrentDir();
 			}
-			String [] elements = p.getPathElements();
+			String[] elements = p.getPathElements();
 			Directory parent = p.cyclePath(0, cDir, shell);
 			// checks if the path is valid
 			if (parent == null) {
@@ -88,15 +88,15 @@ public class ConcatenateFile extends ShellCommand {
 						"Invalid file path specified: " + p.getPath());
 				return;
 			} else {
-				if (parent.containsFile(elements[elements.length-1]) == -1) {
-					PrintError.reportError(shell, "cat",
-							"File does not exist: " + elements[elements.length-1]);
+				if (parent.containsFile(elements[elements.length - 1]) == -1) {
+					PrintError.reportError(shell, "cat", "File does not exist: "
+							+ elements[elements.length - 1]);
 					return;
 				}
 			}
 			catFiles(p, parent, shell);
 			// print line break
-			if (i+1 != parameters.length) {
+			if (i + 1 != parameters.length) {
 				System.out.print("\n\n\n");
 			}
 		}
@@ -112,11 +112,11 @@ public class ConcatenateFile extends ShellCommand {
 	 * @param shell
 	 *            The JShell in use
 	 */
-	private static void catFiles(Path path, Directory cDir ,JShell shell) {
-		String [] pElements = path.getPathElements();
+	private static void catFiles(Path path, Directory cDir, JShell shell) {
+		String[] pElements = path.getPathElements();
 		ArrayList<StorageUnit> contents = cDir.getDirContents();
 		// checking if file is valid under the Directory cDir
-		int fIndex = cDir.containsFile(pElements[pElements.length-1]);
+		int fIndex = cDir.containsFile(pElements[pElements.length - 1]);
 		if (fIndex == -1) {
 			PrintError.reportError(shell, "cat",
 					"Invalid file path specified: " + path.getPath());

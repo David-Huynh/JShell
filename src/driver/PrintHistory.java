@@ -38,7 +38,7 @@ import java.util.ArrayList;
  */
 
 public class PrintHistory extends ShellCommand {
-	
+
 	/**
 	 * Provides the manual for how to use this command
 	 * 
