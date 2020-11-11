@@ -74,7 +74,8 @@ public class MakeDirectory extends ShellCommand {
 		String[] dir2 = {};
 		boolean mDir1;
 		boolean mDir2;
-		if (parameters[1].indexOf("/") == 0) { // checking if it's an absolute path
+		if (parameters[1].indexOf("/") == 0) { // checking if it's an absolute
+												// path
 			if (parameters[1].equals("/")) {
 				PrintError.reportError(shell, "mkdir",
 						"Directory already exits: " + parameters[1]);

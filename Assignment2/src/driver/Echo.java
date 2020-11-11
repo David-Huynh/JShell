@@ -70,10 +70,10 @@ public class Echo extends ShellCommand {
 		boolean passedQuote = false;
 		for (int i = 1; i < parameters.length; i++) {
 			for (int c = 0; c < parameters[i].length(); c++) {
-				if (parameters[i].charAt(c)=='\"' && c != 0){
+				if (parameters[i].charAt(c) == '\"' && c != 0) {
 					passedQuote = true;
 				}
-				if (passedQuote){
+				if (passedQuote) {
 					if (parameters[i].charAt(c) == '>') {
 						counter += 1;
 					}
@@ -92,24 +92,26 @@ public class Echo extends ShellCommand {
 	 * @return The parameters, now parsed
 	 */
 	private static String[] parseParameters(String[] parameters) {
-		if (parameters.length == 2){
+		if (parameters.length == 2) {
 			return new String[]{parameters[1], ""};
 		}
-		if (parameters.length == 4){
+		if (parameters.length == 4) {
 			return new String[]{parameters[1], parameters[3]};
 		}
-		for (int i = 1; i < parameters.length; ){
-			if (parameters[i].charAt(parameters[i].length() - 1) == '>' && i == 1){
-				parameters[i] = parameters[i].substring(0,parameters[i].length() - 1);
-				if(parameters[i].length()==0){
+		for (int i = 1; i < parameters.length;) {
+			if (parameters[i].charAt(parameters[i].length() - 1) == '>'
+					&& i == 1) {
+				parameters[i] = parameters[i].substring(0,
+						parameters[i].length() - 1);
+				if (parameters[i].length() == 0) {
 					i++;
 				}
-			} else if (parameters[i].charAt(0) == '>' && i == 2){
+			} else if (parameters[i].charAt(0) == '>' && i == 2) {
 				parameters[i] = parameters[i].substring(1);
-				if(parameters[i].length()==0){
+				if (parameters[i].length() == 0) {
 					i++;
 				}
-			} else{
+			} else {
 				i++;
 			}
 		}
@@ -130,7 +132,7 @@ public class Echo extends ShellCommand {
 	 */
 	private static boolean errorHandle(JShell shell, String[] parsedParams,
 			int numArrow, Directory dir) {
-		if (dir == null){
+		if (dir == null) {
 			PrintError.reportError(shell, "echo", "directory does not exist");
 			return true;
 		}
@@ -155,11 +157,11 @@ public class Echo extends ShellCommand {
 				return true;
 			}
 		}
-		//Check for string split up
-		if (parsedParams[1].length()!=0){
+		// Check for string split up
+		if (parsedParams[1].length() != 0) {
 			if (parsedParams[0].charAt(parsedParams[0].length() - 1) == '\"'
-					&& parsedParams[1].charAt(0)== '\"'){
-				PrintError.reportError(shell,"echo",
+					&& parsedParams[1].charAt(0) == '\"') {
+				PrintError.reportError(shell, "echo",
 						"\" is an invalid string character");
 				return true;
 			}
@@ -232,8 +234,6 @@ public class Echo extends ShellCommand {
 			return;
 		}
 		int index = dir.containsFile(fileName);
-
-
 
 		parsedParams[0] = parsedParams[0].substring(1,
 				parsedParams[0].length() - 1);

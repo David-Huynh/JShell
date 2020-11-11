@@ -91,8 +91,7 @@ public class ChangeDirectory extends ShellCommand {
 				}
 			}
 		}
-		shell.setCurrentDir(currDir); // setting the current dir in shell for reference
+		shell.setCurrentDir(currDir); // setting the current dir in shell for
+										// reference
 	}
 }
-
-
