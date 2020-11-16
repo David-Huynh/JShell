@@ -8,7 +8,8 @@ c) As a user, I want to move a specific file or directory in storage to a new di
 d) As a user, I want to print to the shell documentation for a only a single certain command, so I know how to use it.
 e) As a user, I want to save the entire state of my JShell onto my computer, so I may boot it back up if I want to use it again.
 f) As a user, I want to load a previous version of JShell back up, so I can continue working where I left off.
-g) As a user, I want the shell to print error messages whenever I cannot perform a desired task so I know what went wrong.
+g) As a user, I want to be able to display the entire storage system as a tree on the shell.
+h) As a user, I want the shell to print error messages whenever I cannot perform a desired task so I know what went wrong.
 
 Specific tasks to be accomplished:
 a-1: (MakeDirectory) Modify MakeDirectory so that it takes any number of paths instead of only two
@@ -28,12 +29,16 @@ f-2: (LoadJShell) Have LoadJShell be able to load a previous JShell instance and
 f-3: (LoadJShell) Disallow the user from calling LoadJShell when they have already typed ANY command in that's not loadJShell
 f-4: (LoadJShell) Test SaveJShell and LoadJShell out on own computer to see if it successfully works, i.e. everything from the history to the same storage system is stored and is the same
 f-5: (LoadJShell) Use JUnit testing to ensure full functionality of the LoadJShell command
-g-1: (PrintError) Think of all possible errors any of the commands can encounter from MakeDirectory and account for them in the class and write error messages
-g-1: (PrintError) Think of all possible errors any of the commands can encounter from ListFiles and account for them in the class and write error messages
-g-1: (PrintError) Think of all possible errors any of the commands can encounter from Remove and account for them in the class and write error messages
-g-1: (PrintError) Think of all possible errors any of the commands can encounter from Manual and account for them in the class and write error messages
-g-1: (PrintError) Think of all possible errors any of the commands can encounter from SaveJShell and account for them in the class and write error messages
-g-1: (PrintError) Think of all possible errors any of the commands can encounter from LoadJShell and account for them in the class and write error messages
+g-1: (Tree) Create base code for Tree class
+g-2: (Tree) Write code to display the entire storage system as a tree onto the shell using recursion
+g-3: (Tree) Use JUnit testing to ensure full functionality of Tree
+h-1: (PrintError) Think of all possible errors MakeDirectory can encounter, account for them in the class and write error messages
+h-2: (PrintError) Think of all possible errors ListFiles can encounter, account for them in the class and write error messages
+h-3: (PrintError) Think of all possible errors Remove can encounter, account for them in the class and write error messages
+h-4: (PrintError) Think of all possible errors Manual can encounter, account for them in the class and write error messages
+h-5: (PrintError) Think of all possible errors SaveJShell can encounter, account for them in the class and write error messages
+h-6: (PrintError) Think of all possible errors LoadJShell can encounter, account for them in the class and write error messages
+h-7: (PrintError) Think of all possible errors Tree can encounter, account for them in the class and write error messages
 
 These tasks are assigned as follows:
 
