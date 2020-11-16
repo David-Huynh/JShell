@@ -4,11 +4,12 @@ November 16 to November 22
 User Stories from Product Backlog that we will address in this sprint:
 a) As a user, I want to create any number of new directories in storage at a time, so I may use them for storage in the future.
 b) As a user, I want to the shell to list all the contents of any subdirectory of a specific directory, so I know each and every file and folder that lives in this directory.
-c) As a user, I want to move a specific file or directory in storage to a new directory in storage, so I may move content around.
+c) As a user, As a user, I want to delete a specific directory in storage, and everything inside it, so I can remove a directory I no longer want.
 d) As a user, I want to print to the shell documentation for a only a single certain command, so I know how to use it.
 e) As a user, I want to save the entire state of my JShell onto my computer, so I may boot it back up if I want to use it again.
 f) As a user, I want to load a previous version of JShell back up, so I can continue working where I left off.
-g) As a user, I want to be able to display the entire storage system as a tree on the shell.
+g) As a user, I want to display the entire storage system as a tree on the shell.
+h) As a user, I want to move a specific file or directory in storage to a new directory in storage, so I may move content around.
 h) As a user, I want the shell to print error messages whenever I cannot perform a desired task so I know what went wrong.
 
 Specific tasks to be accomplished:
@@ -32,13 +33,17 @@ f-5: (LoadJShell) Use JUnit testing to ensure full functionality of the LoadJShe
 g-1: (Tree) Create base code for Tree class
 g-2: (Tree) Write code to display the entire storage system as a tree onto the shell using recursion
 g-3: (Tree) Use JUnit testing to ensure full functionality of Tree
-h-1: (PrintError) Think of all possible errors MakeDirectory can encounter, account for them in the class and write error messages
-h-2: (PrintError) Think of all possible errors ListFiles can encounter, account for them in the class and write error messages
-h-3: (PrintError) Think of all possible errors Remove can encounter, account for them in the class and write error messages
-h-4: (PrintError) Think of all possible errors Manual can encounter, account for them in the class and write error messages
-h-5: (PrintError) Think of all possible errors SaveJShell can encounter, account for them in the class and write error messages
-h-6: (PrintError) Think of all possible errors LoadJShell can encounter, account for them in the class and write error messages
-h-7: (PrintError) Think of all possible errors Tree can encounter, account for them in the class and write error messages
+h-1: (Move) Create base code for Move class
+h-2: (Move) Write code that lets the Move command move a directory/file from one path to another (the latter must be a directory)
+h-3: (Move) Use JUnit testing to ensure full functionality of Move
+g-1: (PrintError) Think of all possible errors MakeDirectory can encounter, account for them in the class and write error messages
+g-2: (PrintError) Think of all possible errors ListFiles can encounter, account for them in the class and write error messages
+g-3: (PrintError) Think of all possible errors Remove can encounter, account for them in the class and write error messages
+g-4: (PrintError) Think of all possible errors Manual can encounter, account for them in the class and write error messages
+g-5: (PrintError) Think of all possible errors SaveJShell can encounter, account for them in the class and write error messages
+g-6: (PrintError) Think of all possible errors LoadJShell can encounter, account for them in the class and write error messages
+g-7: (PrintError) Think of all possible errors Tree can encounter, account for them in the class and write error messages
+g-8: (PrintError) Think of all possible errors Move can encounter, account for them in the class and write error messages
 
 These tasks are assigned as follows:
 
