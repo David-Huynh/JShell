@@ -1,0 +1,50 @@
+November 16 to November 22
+
+
+User Stories from Product Backlog that we will address in this sprint:
+a) As a user, I want to create any number of new directories in storage at a time, so I may use them for storage in the future.
+b) As a user, I want to the shell to list all the contents of any subdirectory of a specific directory, so I know each and every file and folder that lives in this directory.
+c) As a user, I want to move a specific file or directory in storage to a new directory in storage, so I may move content around.
+d) As a user, I want to print to the shell documentation for a only a single certain command, so I know how to use it.
+e) As a user, I want to save the entire state of my JShell onto my computer, so I may boot it back up if I want to use it again.
+f) As a user, I want to load a previous version of JShell back up, so I can continue working where I left off.
+g) As a user, I want the shell to print error messages whenever I cannot perform a desired task so I know what went wrong.
+
+Specific tasks to be accomplished:
+a-1: (MakeDirectory) Modify MakeDirectory so that it takes any number of paths instead of only two
+a-2: (MakeDirectory) Use JUnit testing to ensure full functionality of MakeDirectory
+b-1: (ListFiles) Modify ListFiles using recursion so that it is able to list all contents of any child directory of the directory when -R is the second parameter
+b-2: (ListFiles) Use JUnit testing to ensure full functionality of ListFiles
+c-1: (Remove) Create base code for Remove class
+c-2: (Remove) Have remove be able to remove a given directory (and recursively, all of its contents) in storage system
+c-3: (Remove) Use JUnit testing to ensure full functionality of Remove
+d-1: (Manual) Modify Manual class to only take a single command
+d-2: (Manual) Use JUnit testing to ensure full functionality of Manual
+e-1: (SaveJShell) Create base code for SaveJShell class
+e-2: (SaveJShell) Have SaveJShell be able to save both the JShell instance and the Storage when the user wants
+e-3: (SaveJShell) Use JUnit testing to ensure full functionality of SaveJShell command
+f-1: (LoadJShell) Create base code for LoadJShell class
+f-2: (LoadJShell) Have LoadJShell be able to load a previous JShell instance and the same Storage when the user wants
+f-3: (LoadJShell) Disallow the user from calling LoadJShell when they have already typed ANY command in that's not loadJShell
+f-4: (LoadJShell) Test SaveJShell and LoadJShell out on own computer to see if it successfully works, i.e. everything from the history to the same storage system is stored and is the same
+f-5: (LoadJShell) Use JUnit testing to ensure full functionality of the LoadJShell command
+g-1: (PrintError) Think of all possible errors any of the commands can encounter from MakeDirectory and account for them in the class and write error messages
+g-1: (PrintError) Think of all possible errors any of the commands can encounter from ListFiles and account for them in the class and write error messages
+g-1: (PrintError) Think of all possible errors any of the commands can encounter from Remove and account for them in the class and write error messages
+g-1: (PrintError) Think of all possible errors any of the commands can encounter from Manual and account for them in the class and write error messages
+g-1: (PrintError) Think of all possible errors any of the commands can encounter from SaveJShell and account for them in the class and write error messages
+g-1: (PrintError) Think of all possible errors any of the commands can encounter from LoadJShell and account for them in the class and write error messages
+
+These tasks are assigned as follows:
+
+User: Collin Chan
+Tasks:
+
+User: Jeff He
+Tasks:
+
+User: Nevin Wong
+Tasks:
+
+User: David Huynh
+Tasks:
