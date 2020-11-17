@@ -35,7 +35,9 @@ g-2: (Tree) Write code to display the entire storage system as a tree onto the s
 g-3: (Tree) Use JUnit testing to ensure full functionality of Tree
 h-1: (Move) Create base code for Move class
 h-2: (Move) Write code that lets the Move command move a directory/file from one path to another (the latter must be a directory)
-h-3: (Move) Use JUnit testing to ensure full functionality of Move
+h-4: (Copy) Create base code for Copy class
+h-5: (Copy) Write code just like Move, but don't delete the old directory/file
+h-6: (Copy) Use JUnit testing to ensure full functionality of both Move and Copy
 i-1: (PrintError) Think of all possible errors MakeDirectory can encounter, account for them in the class and write error messages
 i-2: (PrintError) Think of all possible errors ListFiles can encounter, account for them in the class and write error messages
 i-3: (PrintError) Think of all possible errors Remove can encounter, account for them in the class and write error messages
@@ -43,12 +45,12 @@ i-4: (PrintError) Think of all possible errors Manual can encounter, account for
 i-5: (PrintError) Think of all possible errors SaveJShell can encounter, account for them in the class and write error messages
 i-6: (PrintError) Think of all possible errors LoadJShell can encounter, account for them in the class and write error messages
 i-7: (PrintError) Think of all possible errors Tree can encounter, account for them in the class and write error messages
-i-8: (PrintError) Think of all possible errors Move can encounter, account for them in the class and write error messages
+i-8: (PrintError) Think of all possible errors Move or Copy can encounter, account for them in the class and write error messages
 
 These tasks are assigned as follows:
 
 User: Collin Chan
-Tasks: a-1, a-2, i-1, h-1, h-2, h-3, i-8
+Tasks: a-1, a-2, i-1, h-1, h-2, h-3, h-4, h-5, h-6, i-8
 
 User: Jeff He
 Tasks: b-1, b-2, i-2, c-1, c-2, c-3, i-3
