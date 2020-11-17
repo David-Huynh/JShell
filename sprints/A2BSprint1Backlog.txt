@@ -10,7 +10,9 @@ e) As a user, I want to save the entire state of my JShell onto my computer, so 
 f) As a user, I want to load a previous version of JShell back up, so I can continue working where I left off.
 g) As a user, I want to display the entire storage system as a tree on the shell.
 h) As a user, I want to move a specific file or directory in storage to a new directory in storage, so I may move content around.
-i) As a user, I want the shell to print error messages whenever I cannot perform a desired task so I know what went wrong.
+i) As a user, I want to search (in a number of given paths) for a file with a specific name and print where they are to the shell, so I know if they exist and where.
+j) As a user, I want to search (in a number of given paths) for a directory with a specific name and print where they are to the shell, so I know if they exist and where.
+k) As a user, I want the shell to print error messages whenever I cannot perform a desired task so I know what went wrong.
 
 Specific tasks to be accomplished:
 a-1: (MakeDirectory) Modify MakeDirectory so that it takes any number of paths instead of only two
@@ -38,25 +40,30 @@ h-2: (Move) Write code that lets the Move command move a directory/file from one
 h-3: (Copy) Create base code for Copy class
 h-4: (Copy) Write code just like Move, but don't delete the old directory/file
 h-5: (Copy) Use JUnit testing to ensure full functionality of both Move and Copy
-i-1: (PrintError) Think of all possible errors MakeDirectory can encounter, account for them in the class and write error messages
-i-2: (PrintError) Think of all possible errors ListFiles can encounter, account for them in the class and write error messages
-i-3: (PrintError) Think of all possible errors Remove can encounter, account for them in the class and write error messages
-i-4: (PrintError) Think of all possible errors Manual can encounter, account for them in the class and write error messages
-i-5: (PrintError) Think of all possible errors SaveJShell can encounter, account for them in the class and write error messages
-i-6: (PrintError) Think of all possible errors LoadJShell can encounter, account for them in the class and write error messages
-i-7: (PrintError) Think of all possible errors Tree can encounter, account for them in the class and write error messages
-i-8: (PrintError) Think of all possible errors Move or Copy can encounter, account for them in the class and write error messages
+i-1: (Search) Create base code for Search class
+i-2: (Search) Have the Search command be able to search for a file with a specific name in a number of given paths
+j-1: (Search) Have the Search command be able to search for a directory with a specific name in a number of given paths
+j-2: (Search) Use JUnit testing to ensure full functionality of Search
+k-1: (PrintError) Think of all possible errors MakeDirectory can encounter, account for them in the class and write error messages
+k-2: (PrintError) Think of all possible errors ListFiles can encounter, account for them in the class and write error messages
+k-3: (PrintError) Think of all possible errors Remove can encounter, account for them in the class and write error messages
+k-4: (PrintError) Think of all possible errors Manual can encounter, account for them in the class and write error messages
+k-5: (PrintError) Think of all possible errors SaveJShell can encounter, account for them in the class and write error messages
+k-6: (PrintError) Think of all possible errors LoadJShell can encounter, account for them in the class and write error messages
+k-7: (PrintError) Think of all possible errors Tree can encounter, account for them in the class and write error messages
+k-8: (PrintError) Think of all possible errors Move or Copy can encounter, account for them in the class and write error messages
+k-9: (PrintError) Think of all possible errors Search can encounter, account fo them in the class and write error messages
 
 These tasks are assigned as follows:
 
 User: Collin Chan
-Tasks: a-1, a-2, i-1
+Tasks: a-1, a-2, k-1, i-1, i-2, j-1, j-2, k-9
 
 User: Jeff He
-Tasks: b-1, b-2, i-2, c-1, c-2, c-3, i-3, h-1, h-2, h-3, h-4, h-5, h-6, i-8
+Tasks: b-1, b-2, k-2, c-1, c-2, c-3, k-3, h-1, h-2, h-3, h-4, h-5, h-6, k-8
 
 User: Nevin Wong
-Tasks: d-1, d-2, i-4, g-1, g-2, g-3, i-7
+Tasks: d-1, d-2, k-4, g-1, g-2, g-3, k-7
 
 User: David Huynh
-Tasks: e-1, e-2, e-3, i-5, f-1, f-2, f-3, f-4, f-5, i-6
+Tasks: e-1, e-2, e-3, k-5, f-1, f-2, f-3, f-4, f-5, k-6
