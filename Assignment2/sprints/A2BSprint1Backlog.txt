@@ -10,7 +10,7 @@ e) As a user, I want to save the entire state of my JShell onto my computer, so 
 f) As a user, I want to load a previous version of JShell back up, so I can continue working where I left off.
 g) As a user, I want to display the entire storage system as a tree on the shell.
 h) As a user, I want to move a specific file or directory in storage to a new directory in storage, so I may move content around.
-h) As a user, I want the shell to print error messages whenever I cannot perform a desired task so I know what went wrong.
+i) As a user, I want the shell to print error messages whenever I cannot perform a desired task so I know what went wrong.
 
 Specific tasks to be accomplished:
 a-1: (MakeDirectory) Modify MakeDirectory so that it takes any number of paths instead of only two
@@ -36,25 +36,25 @@ g-3: (Tree) Use JUnit testing to ensure full functionality of Tree
 h-1: (Move) Create base code for Move class
 h-2: (Move) Write code that lets the Move command move a directory/file from one path to another (the latter must be a directory)
 h-3: (Move) Use JUnit testing to ensure full functionality of Move
-g-1: (PrintError) Think of all possible errors MakeDirectory can encounter, account for them in the class and write error messages
-g-2: (PrintError) Think of all possible errors ListFiles can encounter, account for them in the class and write error messages
-g-3: (PrintError) Think of all possible errors Remove can encounter, account for them in the class and write error messages
-g-4: (PrintError) Think of all possible errors Manual can encounter, account for them in the class and write error messages
-g-5: (PrintError) Think of all possible errors SaveJShell can encounter, account for them in the class and write error messages
-g-6: (PrintError) Think of all possible errors LoadJShell can encounter, account for them in the class and write error messages
-g-7: (PrintError) Think of all possible errors Tree can encounter, account for them in the class and write error messages
-g-8: (PrintError) Think of all possible errors Move can encounter, account for them in the class and write error messages
+i-1: (PrintError) Think of all possible errors MakeDirectory can encounter, account for them in the class and write error messages
+i-2: (PrintError) Think of all possible errors ListFiles can encounter, account for them in the class and write error messages
+i-3: (PrintError) Think of all possible errors Remove can encounter, account for them in the class and write error messages
+i-4: (PrintError) Think of all possible errors Manual can encounter, account for them in the class and write error messages
+i-5: (PrintError) Think of all possible errors SaveJShell can encounter, account for them in the class and write error messages
+i-6: (PrintError) Think of all possible errors LoadJShell can encounter, account for them in the class and write error messages
+i-7: (PrintError) Think of all possible errors Tree can encounter, account for them in the class and write error messages
+i-8: (PrintError) Think of all possible errors Move can encounter, account for them in the class and write error messages
 
 These tasks are assigned as follows:
 
 User: Collin Chan
-Tasks:
+Tasks: a-1, a-2, i-1, h-1, h-2, h-3, i-8
 
 User: Jeff He
-Tasks:
+Tasks: b-1, b-2, i-2, c-1, c-2, c-3, i-3
 
 User: Nevin Wong
-Tasks:
+Tasks: d-1, d-2, i-4, g-1, g-2, g-3, i-7
 
 User: David Huynh
-Tasks:
+Tasks: e-1, e-2, e-3, i-5, f-1, f-2, f-3, f-4, f-5, i-6
