@@ -93,6 +93,7 @@ public class JShell {
 			this.cmdToClass.put("cat", Class.forName("driver.ConcatenateFile"));
 			this.cmdToClass.put("echo", Class.forName("driver.Echo"));
 			this.cmdToClass.put("man", Class.forName("driver.Manual"));
+			this.cmdToClass.put("search", Class.forName("driver.Search"));
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
