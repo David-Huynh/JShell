@@ -39,7 +39,7 @@ public class MakeDirectory extends ShellCommand {
 
 	/**
 	 * Provides the manual for how to use this command
-	 * 
+	 *
 	 * @return The manual
 	 */
 	public static String getManual() {
@@ -54,102 +54,57 @@ public class MakeDirectory extends ShellCommand {
 	}
 
 	/**
-	 * Tell the JShell to make two new directories accoriding to the user's
-	 * specifications.
-	 * 
-	 * @param shell
-	 *            The JShell the command is to be performed on
-	 * @param parameters
-	 *            The parameters from the interpreter the command is to work
-	 *            with
+	 * Tell the JShell to make two new directories accoriding to the user's specifications.
+	 *
+	 * @param shell      The JShell the command is to be performed on
+	 * @param parameters The parameters from the interpreter the command is to work with
 	 */
 	public static void performOutcome(JShell shell, String[] parameters) {
-		if (parameters.length != 3) {
+		if (parameters.length < 2) {
 			PrintError.reportError(shell, "mkdir",
 					"Invalid number of arguments.");
 			return;
 		}
-		Directory currDir = shell.getCurrentDir();
-		String[] dir1 = {};
-		String[] dir2 = {};
-		boolean mDir1;
-		boolean mDir2;
-		if (parameters[1].indexOf("/") == 0) { // checking if it's an absolute
-												// path
-			if (parameters[1].equals("/")) {
-				PrintError.reportError(shell, "mkdir",
-						"Directory already exits: " + parameters[1]);
-			} else {
+		Directory currDir;
+		Path path = new Path("");
+		for (int i = 1; i < parameters.length; i++) {
+			path.setPath(parameters[i]);
+			String[] elements = path.getPathElements();
+			if (path.isAbsolute()) {
 				currDir = shell.getRootDir();
-				parameters[1] = parameters[1].substring(1);
-			}
-		}
-		dir1 = parameters[1].split("/");
-		mDir1 = makeDir(shell, currDir, dir1);
-		if (!mDir1) { // checking if making the 1st directory was successful
-			return;
-		}
-		if (parameters[2].indexOf("/") == 0) {
-			if (parameters[2].equals("/")) {
-				PrintError.reportError(shell, "mkdir",
-						"Directory already exits: " + parameters[1]);
 			} else {
-				currDir = shell.getRootDir();
-				parameters[2] = parameters[2].substring(1);
+				currDir = shell.getCurrentDir();
 			}
-		}
-		dir2 = parameters[2].split("/");
-		mDir2 = makeDir(shell, currDir, dir2);
-	}
-
-	/**
-	 * Checks for valid paths and creates the directory when the path is valid.
-	 * 
-	 * @param shell
-	 *            The JShell whose file system to work in
-	 * @param currDir
-	 *            The current directory
-	 * @param dir
-	 *            An array of names of directories to create
-	 * @return Whether creation is successful
-	 */
-	private static boolean makeDir(JShell shell, Directory currDir,
-			String[] dir) {
-		for (int i = 0; i < dir.length; i++) {
-			if (i + 1 == dir.length) {
-				if (currDir.isSubDir(dir[i]) == -1) {
-					if (!StorageUnit.hasForbidChar(dir[i])) {
-						Directory newDir = new Directory(dir[i], currDir);
-						currDir.addFile(newDir);
-					} else {
-						PrintError.reportError(shell, "mkdir",
-								"Directory name contains forbidden "
-										+ "character(s): " + dir[i]);
-						return false;
-					}
-				} else {
+			Directory parent = path.cyclePath(0, currDir, shell);
+			if (parent == null) {
+				PrintError.reportError(shell, "mkdir",
+						"Directory does not exits: " + parameters[i]);
+				return;
+			} else {
+				if (path.getPath().equals("/")) {
 					PrintError.reportError(shell, "mkdir",
-							"Directory already exists: " + dir[i]);
-					return false;
-				}
-			} else {
-				if (dir[i].equals("..") || dir[i].equals(".")) {
-					if (dir[i].equals("..")) {
-						currDir = currDir.getParentDir();
-					}
+							"Root directory already exits!");
+					return;
 				} else {
-					if (currDir.isSubDir(dir[i]) == -1) {
-						PrintError.reportError(shell, "mkdir",
-								"No such directory: " + dir[i]);
-						return false;
+					if (parent.isSubDir(elements[elements.length - 1]) == -1) {
+						//create dir
+						if (!StorageUnit.hasForbidChar(elements[elements.length - 1])) {
+							Directory newDir = new Directory(elements[elements.length - 1], parent);
+							parent.addFile(newDir);
+						} else {
+							PrintError.reportError(shell, "mkdir",
+									"Directory name contains forbidden "
+											+ "character(s): " + elements[elements.length - 1]);
+							return;
+						}
 					} else {
-						int index = currDir.isSubDir(dir[i]);
-						currDir = (Directory) currDir.getDirContents()
-								.get(index);
+						PrintError.reportError(shell, "mkdir",
+								"Directory already exits: " + parameters[i]);
+						return;
 					}
 				}
 			}
+
 		}
-		return true;
 	}
 }
