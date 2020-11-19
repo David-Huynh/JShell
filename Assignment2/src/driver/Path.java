@@ -221,8 +221,8 @@ public class Path {
 	 * 
 	 * @param directory
 	 *            The directory where the final element should be stored
-	 * @return indicator, which is -1, if final element doesn't exist, -3 if
-	 *         final element is directory.getParentDir(), -2 if final element is
+	 * @return indicator, which is -1, if final element doesn't exist, -2 if
+	 *         final element is directory.getParentDir(), -3 if final element is
 	 *         directory, otherwise the index of the final element within
 	 *         directory.getDirContents()
 	 */
