@@ -34,8 +34,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
- * The Manual command prints documentation for specific commands so a user knows
- * how to use them.
+ * The Manual command prints documentation for one specific command so a user
+ * knows how to use it.
  */
 
 public class Manual extends ShellCommand {
@@ -50,8 +50,7 @@ public class Manual extends ShellCommand {
 	}
 
 	/**
-	 * Tell the shell to print the desired manuals for a given number of
-	 * commands.
+	 * Tell the shell to print the desired manual for a given command
 	 * 
 	 * @param shell
 	 *            The JShell the command is to be performed on
@@ -60,36 +59,31 @@ public class Manual extends ShellCommand {
 	 *            with
 	 */
 	public static void performOutcome(JShell shell, String[] parameters) {
-		if (parameters.length < 2) {
+		if (parameters.length != 2) {
 			PrintError.reportError(shell, "man",
 					"Invalid number of arguments.");
 			return;
 		}
-		shell.println("");
 		int i;
-		for (i = 1; i < parameters.length; i++) {
-			String command = parameters[i];
-			if (shell.getCmdToClass().containsKey(command)) {
+		String command = parameters[1];
+		if (shell.getCmdToClass().containsKey(command)) {
+			try {
+				Method getMan = shell.getCmdToClass().get(command)
+						.getDeclaredMethod("getManual");
 				try {
-					Method getMan = shell.getCmdToClass().get(command)
-							.getDeclaredMethod("getManual");
-					try {
-						String manual = (String) getMan.invoke(null);
-						shell.println(manual);
-					} catch (IllegalAccessException | IllegalArgumentException
-							| InvocationTargetException e) {
-						e.printStackTrace();
-					}
-				} catch (NoSuchMethodException | SecurityException e) {
+					String manual = (String) getMan.invoke(null);
+					shell.println(manual);
+				} catch (IllegalAccessException | IllegalArgumentException
+						| InvocationTargetException e) {
 					e.printStackTrace();
 				}
-			} else {
-				PrintError.reportError(shell, "man",
-						command + " is not a valid command.");
-				shell.println("");
-				return;
+			} catch (NoSuchMethodException | SecurityException e) {
+				e.printStackTrace();
 			}
-			shell.println("");
+		} else {
+			PrintError.reportError(shell, "man",
+					command + " is not a valid command.");
+			return;
 		}
 	}
 }

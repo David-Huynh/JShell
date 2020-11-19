@@ -72,7 +72,7 @@ public class JShell implements Serializable {
 		this.populateCmdToClass();
 		this.comHis = new ArrayList<String>();
 	}
-	public void updateShell (JShell newShell){
+	public void updateShell(JShell newShell) {
 		this.rootDir = newShell.rootDir;
 		this.currentDir = newShell.currentDir;
 		this.dirStack = newShell.dirStack;
@@ -100,8 +100,10 @@ public class JShell implements Serializable {
 			this.cmdToClass.put("cat", Class.forName("driver.ConcatenateFile"));
 			this.cmdToClass.put("echo", Class.forName("driver.Echo"));
 			this.cmdToClass.put("man", Class.forName("driver.Manual"));
-			this.cmdToClass.put("saveJShell", Class.forName("driver.SaveJShell"));
-			this.cmdToClass.put("loadJShell", Class.forName("driver.LoadJShell"));
+			this.cmdToClass.put("saveJShell",
+					Class.forName("driver.SaveJShell"));
+			this.cmdToClass.put("loadJShell",
+					Class.forName("driver.LoadJShell"));
 			this.cmdToClass.put("search", Class.forName("driver.Search"));
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
