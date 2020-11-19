@@ -1,0 +1,12 @@
+Class name: Tree
+Parent class (if any): ShellCommand
+Subclasses (if any): 
+
+Responsibilities:
+* Tell the shell to print the entire file system as a tree
+* Provide a manual for how to use this class
+* Report errors to be printed by the shell
+
+Collaborators:
+* JShell
+* StorageUnit
