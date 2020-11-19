@@ -228,9 +228,14 @@ public class Path {
 	 */
 	public int determineFinalElement(Directory directory) {
 		String[] pathElements = this.getPathElements();
-		int finalIndex = pathElements.length - 1;
 		int indicator;
-
+		int finalIndex;
+		if(pathElements.length != 0) {
+		  finalIndex = pathElements.length - 1;
+		}
+		else {
+		  return -3;
+		}
 		indicator = determinePathElement(directory, finalIndex);
 		if (indicator != -1) {
 			return indicator;
