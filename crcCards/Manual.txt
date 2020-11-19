@@ -3,9 +3,9 @@ Parent class (if any): ShellCommand
 Subclasses (if any): 
 
 Responsibilities:
-* Tell the shell to print certain manuals for certain commands (including this one)
+* Tell the shell to print certain manuals for any command (including this one)
 * Provide a manual for how to use this class
-* Report an error if a command given doesn't exist
+* Report an error if the command given doesn't exist
 
 Collaborators:
 * JShell
