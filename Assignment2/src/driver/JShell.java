@@ -29,6 +29,7 @@
 // *********************************************************
 package driver;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -40,14 +41,14 @@ import java.util.Stack;
  * directories.
  */
 
-public class JShell {
+public class JShell implements Serializable {
 
 	/** Root directory stores everything */
 	private Storage rootDir;
 	/** Current directory user is working in */
 	private Directory currentDir;
 	/** Whether the JShell is active, turned off if the user wishes to exit */
-	private boolean isActive;
+	private transient boolean isActive;
 	/** Directory stack of the shell */
 	private Stack<Directory> dirStack;
 	/**
@@ -71,7 +72,13 @@ public class JShell {
 		this.populateCmdToClass();
 		this.comHis = new ArrayList<String>();
 	}
-
+	public void updateShell (JShell newShell){
+		this.rootDir = newShell.rootDir;
+		this.currentDir = newShell.currentDir;
+		this.dirStack = newShell.dirStack;
+		this.cmdToClass = newShell.cmdToClass;
+		this.comHis = newShell.comHis;
+	}
 	/**
 	 * Helper method for JShell initializer, populates the JShell's command to
 	 * Class HashMap
@@ -93,6 +100,8 @@ public class JShell {
 			this.cmdToClass.put("cat", Class.forName("driver.ConcatenateFile"));
 			this.cmdToClass.put("echo", Class.forName("driver.Echo"));
 			this.cmdToClass.put("man", Class.forName("driver.Manual"));
+			this.cmdToClass.put("saveJShell", Class.forName("driver.SaveJShell"));
+			this.cmdToClass.put("loadJShell", Class.forName("driver.LoadJShell"));
 			this.cmdToClass.put("search", Class.forName("driver.Search"));
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();

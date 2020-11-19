@@ -1,11 +1,13 @@
 package driver;
 
+import java.io.Serializable;
+
 /**
  * Storage is similar to a computer's file system, or root directory of a Unix
  * shell. i.e., it is the Directory in which all existing JShells work in.
  */
 
-public class Storage {
+public class Storage implements Serializable {
 
 	/** The root directory of the storage system */
 	private Directory root;
