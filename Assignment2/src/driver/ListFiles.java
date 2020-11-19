@@ -81,11 +81,6 @@ public class ListFiles extends ShellCommand {
 															// through all
 				path = new Path(parameters[i]); // separate path into its
 												// directories
-				if (parameters[i].equals("/")) { // path is root
-					shell.println(parameters[i] + ":");
-					list(shell, shell.getRootDir().getDirContents());
-					continue;
-				}
 				if (path.isAbsolute()) { // path is absolute
 					currDir = shell.getRootDir();
 				}
