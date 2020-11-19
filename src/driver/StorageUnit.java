@@ -30,12 +30,14 @@
 
 package driver;
 
+import java.io.Serializable;
+
 /**
  * A StorageUnit stores data and lives in a JShell's storage system. Subclasses
  * of StorageUnit are File and Directory.
  */
 
-abstract class StorageUnit {
+abstract class StorageUnit implements Serializable {
 
 	/** The name that the StorageUnit is identified by */
 	protected String name;

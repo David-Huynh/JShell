@@ -30,6 +30,7 @@
 
 package driver;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -37,7 +38,7 @@ import java.util.ArrayList;
  * file system) that holds a collection of other StorageUnits.
  */
 
-public class Directory extends StorageUnit {
+public class Directory extends StorageUnit implements Serializable {
 
 	/**
 	 * An ArrayList containing all the contents of the Directory, similar to the
