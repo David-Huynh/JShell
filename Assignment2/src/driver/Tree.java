@@ -15,6 +15,32 @@ public class Tree extends ShellCommand {
 	}
 
 	/**
+	 * Recursive helper function for performOutcome that prints a StorageUnit as
+	 * a tree. A number of tabs is indented before, which is the level of the
+	 * StorageUnit in the storage system.
+	 * 
+	 * @param shell
+	 *            The JShell the command is to be performed on
+	 * @param toPrint
+	 *            The StorageUnit to print out as a tree
+	 * @param depth
+	 *            The depth of the StorageUnit in the storage system
+	 */
+	private static void printTree(JShell shell, StorageUnit toPrint,
+			int depth) {
+		int i;
+		for (i = 0; i < depth; i++) {
+			shell.print("\t");
+		}
+		shell.println(toPrint.name);
+		if (toPrint.getClass().getSimpleName().equals("Directory")) {
+			for (StorageUnit unit : ((Directory) toPrint).getDirContents()) {
+				printTree(shell, unit, depth + 1);
+			}
+		}
+	}
+
+	/**
 	 * Tell the shell to print to its command line the entire file system as a
 	 * tree.
 	 * 
@@ -30,6 +56,7 @@ public class Tree extends ShellCommand {
 					"Invalid number of arguments.");
 			return;
 		}
+		Tree.printTree(shell, shell.getRootDir(), 0);
 	}
 
 }
