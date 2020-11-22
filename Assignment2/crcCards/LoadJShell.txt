@@ -1,12 +1,12 @@
-Class name: Tree
+Class name: LoadJShell
 Parent class (if any): ShellCommand
 Subclasses (if any): 
 
 Responsibilities:
-* Send to StdOut the entire file system as a tree
+* Reinitialize a previous JShell
+* Disallow this command to be used if any other command is executed
 * Provide a manual for how to use this class
 * Report errors to be printed by the shell
 
 Collaborators:
-* StdOut
-* StorageUnit
+* JShell

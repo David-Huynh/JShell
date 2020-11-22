@@ -3,12 +3,12 @@ Parent class (if any): ShellCommand
 Subclasses (if any): 
 
 Responsibilities:
-* Print text content of files into the shell client
+* Send to StdOut text content of files
 * Report errors if file is inaccessible
 * Provide a manual for how to use this class
 
 Collaborators:
-* PrintError
+* StdOut
 * Directory
 * File
 * Path
