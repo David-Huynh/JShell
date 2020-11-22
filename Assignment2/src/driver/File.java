@@ -87,12 +87,12 @@ public class File extends StorageUnit {
 	}
 
 	/**
-	 * Tells a JShell to print to its command line the File's contents
+	 * Sends to an StdOut the File's contents
 	 * 
-	 * @param shell
-	 *            The JShell the contents are to be printed to
+	 * @param stdout
+	 *            The StdOut to send to
 	 */
-	public void print(JShell shell) {
-		shell.println(this.contents);
+	public void print(StdOut stdout) {
+		stdout.sendLine(this.contents);
 	}
 }

@@ -56,8 +56,17 @@ public class PrintWorkingDirectory extends ShellCommand {
 	 * @param parameters
 	 *            The parameters from the interpreter the command is to work
 	 *            with
+	 * @param outputType
+	 *            An integer representing the type of destination: 0 represents
+	 *            the command line, 1 represents overwriting a file, and 2
+	 *            represents appending to a file
+	 * @param outputFile
+	 *            If outputType is 1 or 2, this is the file we are
+	 *            overwriting/appending to, otherwise null
 	 */
-	public static void performOutcome(JShell shell, String[] parameters) {
+	public static void performOutcome(JShell shell, String[] parameters,
+			int outputType, File outputFile) {
+		StdOut stdout = new StdOut(shell, outputType, outputFile);
 		if (parameters.length != 1) {
 			PrintError.reportError(shell, "pwd",
 					"Invalid number of arguments.");
@@ -66,7 +75,7 @@ public class PrintWorkingDirectory extends ShellCommand {
 
 		Path absPath = shell.getCurrentDir().getFullPath(shell);
 
-		shell.println(absPath.getPath());
+		stdout.sendLine(absPath.getPath());
 
 	}
 }

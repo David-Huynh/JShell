@@ -102,9 +102,9 @@ public class Interpreter {
 			try {
 				Method perform = shell.getCmdToClass().get(command)
 						.getDeclaredMethod("performOutcome", shell.getClass(),
-								String[].class);
+								String[].class, int.class, File.class);
 				try {
-					perform.invoke(null, shell, parameters);
+					perform.invoke(null, shell, parameters, 0, null);
 				} catch (IllegalAccessException | IllegalArgumentException
 						| InvocationTargetException e) {
 					e.printStackTrace();

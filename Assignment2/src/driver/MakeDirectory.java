@@ -54,12 +54,28 @@ public class MakeDirectory extends ShellCommand {
 	}
 
 	/**
-	 * Tell the JShell to make two new directories according to the user's specifications.
+	 * Tell the JShell to make two new directories according to the user's
+	 * specifications.
 	 *
-	 * @param shell      The JShell the command is to be performed on
-	 * @param parameters The parameters from the interpreter the command is to work with
+	 * @param shell
+	 *            The JShell the command is to be performed on
+	 * @param parameters
+	 *            The parameters from the interpreter the command is to work
+	 *            with
+	 * @param outputType
+	 *            An integer representing the type of destination: 0 represents
+	 *            the command line, 1 represents overwriting a file, and 2
+	 *            represents appending to a file
+	 * @param outputFile
+	 *            If outputType is 1 or 2, this is the file we are
+	 *            overwriting/appending to, otherwise null
 	 */
-	public static void performOutcome(JShell shell, String[] parameters) {
+	public static void performOutcome(JShell shell, String[] parameters,
+			int outputType, File outputFile) {
+		if (outputType != 0) {
+			PrintError.reportError(shell, "cd",
+					"This command does not produce stdout.");
+		}
 		if (parameters.length < 2) {
 			PrintError.reportError(shell, "mkdir",
 					"Invalid number of arguments.");
@@ -87,14 +103,17 @@ public class MakeDirectory extends ShellCommand {
 					return;
 				} else {
 					if (parent.isSubDir(elements[elements.length - 1]) == -1) {
-						//create dir
-						if (!StorageUnit.hasForbidChar(elements[elements.length - 1])) {
-							Directory newDir = new Directory(elements[elements.length - 1], parent);
+						// create dir
+						if (!StorageUnit
+								.hasForbidChar(elements[elements.length - 1])) {
+							Directory newDir = new Directory(
+									elements[elements.length - 1], parent);
 							parent.addFile(newDir);
 						} else {
 							PrintError.reportError(shell, "mkdir",
 									"Directory name contains forbidden "
-											+ "character(s): " + elements[elements.length - 1]);
+											+ "character(s): "
+											+ elements[elements.length - 1]);
 							return;
 						}
 					} else {
@@ -104,7 +123,6 @@ public class MakeDirectory extends ShellCommand {
 					}
 				}
 			}
-
 		}
 	}
 }
