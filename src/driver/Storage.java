@@ -35,7 +35,7 @@ public class Storage implements Serializable {
 	}
 
 	/**
-	 * Get the only instance of Storage, creates it it if it doesn't exist
+	 * Get the only instance of Storage, creates it if it doesn't exist
 	 * 
 	 * @return A newly created Storage if there is none yet, and returns the
 	 *         only instance of it if there already is one

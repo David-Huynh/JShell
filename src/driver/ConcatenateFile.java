@@ -62,8 +62,17 @@ public class ConcatenateFile extends ShellCommand {
 	 * @param parameters
 	 *            The parameters from the interpreter the command is to work
 	 *            with
+	 * @param outputType
+	 *            An integer representing the type of destination: 0 represents
+	 *            the command line, 1 represents overwriting a file, and 2
+	 *            represents appending to a file
+	 * @param outputFile
+	 *            If outputType is 1 or 2, this is the file we are
+	 *            overwriting/appending to, otherwise null
 	 */
-	public static void performOutcome(JShell shell, String[] parameters) {
+	public static void performOutcome(JShell shell, String[] parameters,
+			int outputType, File outputFile) {
+		StdOut stdout = new StdOut(shell, outputType, outputFile);
 		if (parameters.length < 2) {
 			PrintError.reportError(shell, "cat",
 					"Invalid number of arguments.");
@@ -94,10 +103,10 @@ public class ConcatenateFile extends ShellCommand {
 					return;
 				}
 			}
-			catFiles(p, parent, shell);
+			catFiles(p, parent, shell, stdout);
 			// print line break
 			if (i + 1 != parameters.length) {
-				System.out.print("\n\n\n");
+				stdout.send("\n\n\n");
 			}
 		}
 	}
@@ -111,8 +120,11 @@ public class ConcatenateFile extends ShellCommand {
 	 *            The current directory
 	 * @param shell
 	 *            The JShell in use
+	 * @param stdout
+	 *            The StdOut to send to
 	 */
-	private static void catFiles(Path path, Directory cDir, JShell shell) {
+	private static void catFiles(Path path, Directory cDir, JShell shell,
+			StdOut stdout) {
 		String[] pElements = path.getPathElements();
 		ArrayList<StorageUnit> contents = cDir.getDirContents();
 		// checking if file is valid under the Directory cDir
@@ -124,7 +136,7 @@ public class ConcatenateFile extends ShellCommand {
 		}
 		if (contents.get(fIndex).getClass().getSimpleName().equals("File")) {
 			File file = (File) contents.get(fIndex);
-			file.print(shell); // printing contents of file
+			file.print(stdout); // printing contents of file
 		} else {
 			PrintError.reportError(shell, "cat",
 					"Invalid file path specified: " + path.getPath());

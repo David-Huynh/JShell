@@ -7,9 +7,9 @@ package driver;
 public class StdOut {
 
 	/**
-	 * An integer representing the type of destination: 0 represents a JShell's
-	 * command line, 1 represents overwriting a file, and 2 represents appending
-	 * to a file.
+	 * An integer representing the type of destination: 0 represents the command
+	 * line, 1 represents overwriting a file, and 2 represents appending to a
+	 * file.
 	 */
 	private int destinationType;
 	/**
@@ -63,7 +63,7 @@ public class StdOut {
 	 *            The String to be sent to the destination of the StdOut
 	 */
 	public void send(String message) {
-		if (this.destinationType == 1) {
+		if (this.destinationType == 0) {
 			this.shell.print(message);
 		} else {
 			this.destination.append(message);
