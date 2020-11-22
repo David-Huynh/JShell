@@ -1,7 +1,27 @@
 package driver;
 
+/**
+ * The Remove command is used by the user to remove a specified directory in the file system.
+ */
+
 public class Remove extends ShellCommand {
 
+  /**
+   * Provides the manual for how to use this command
+   * 
+   * @return The manual
+   */
+  public static String getManual() {
+    return "rm DIR\nRemoves the directory from the file system. This also "
+        + "removes all the\nchildren of DIR.";
+  }
+
+  /**
+   * Tell the JShell to remove a specified file/directory.
+   * 
+   * @param shell The JShell the command is to be performed on
+   * @param parameters The parameters from the interpreter the command is to work with
+   */
   public static void performOutcome(JShell shell, String[] parameters) {
 
     if (parameters.length != 2) {
@@ -19,39 +39,19 @@ public class Remove extends ShellCommand {
     }
 
     Directory parentOfDeleted = toDelete.cyclePath(0, startDir, shell);
-
-    if (parentOfDeleted == null) {
+    StorageUnit toDeleteDir = toDelete.determineFinalElement(parentOfDeleted);
+    
+    if (toDeleteDir == null || !toDeleteDir.getClass().getSimpleName().equals("Directory")) {
       PrintError.reportError(shell, "rm",
-          "Cannot access '" + parameters[1] + "', no such file or directory.");
+          "Cannot delete '" + parameters[1] + "', no such directory.");
       return;
     }
-
-    int indexDelete = toDelete.determineFinalElement(parentOfDeleted);
-    if (indexDelete == -1) {
+    
+    if (toDeleteDir.checkParents(shell)) {
       PrintError.reportError(shell, "rm",
-          "Cannot access '" + parameters[1] + "', no such file or directory.");
+          "Cannot remove current working directory or any of its ancestors");
       return;
-    } else if (indexDelete == -2) {
-      if(parentOfDeleted.getParentDir().checkParents(shell)) {
-        PrintError.reportError(shell, "rm",
-            "Cannot remove current working directory or any of its ancestors");
-        return;
-      }
-      parentOfDeleted.getParentDir().getParentDir().getDirContents().remove(parentOfDeleted.getParentDir());
-    } else if (indexDelete == -3) {
-      if(parentOfDeleted.checkParents(shell)) {
-        PrintError.reportError(shell, "rm",
-            "Cannot remove current working directory or any of its ancestors");
-        return;
-      }
-      parentOfDeleted.getParentDir().getDirContents().remove(parentOfDeleted);
-    } else {
-      if(parentOfDeleted.getDirContents().get(indexDelete).checkParents(shell)) {
-        PrintError.reportError(shell, "rm",
-            "Cannot remove current working directory or any of its ancestors");
-        return;
-      }
-      parentOfDeleted.getDirContents().remove(indexDelete);
     }
+    toDeleteDir.getParentDir().getDirContents().remove(toDeleteDir);
   }
 }

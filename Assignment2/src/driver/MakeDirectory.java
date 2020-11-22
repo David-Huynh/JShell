@@ -54,7 +54,7 @@ public class MakeDirectory extends ShellCommand {
 	}
 
 	/**
-	 * Tell the JShell to make two new directories accoriding to the user's specifications.
+	 * Tell the JShell to make two new directories according to the user's specifications.
 	 *
 	 * @param shell      The JShell the command is to be performed on
 	 * @param parameters The parameters from the interpreter the command is to work with

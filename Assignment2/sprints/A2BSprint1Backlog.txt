@@ -60,7 +60,7 @@ User: Collin Chan
 Tasks: a-1, a-2, k-1, i-1, i-2, j-1, j-2, k-9
 
 User: Jeff He
-Tasks: b-1, b-2, k-2, c-1, c-2, c-3, k-3, h-1, h-2, h-3, h-4, h-5, h-6, k-8
+Tasks: b-1, b-2, k-2, c-1, c-2, c-3, k-3, h-1, h-2, h-3, h-4, h-5, k-8
 
 User: Nevin Wong
 Tasks: d-1, d-2, k-4, g-1, g-2, g-3, k-7

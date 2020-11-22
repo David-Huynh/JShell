@@ -145,10 +145,6 @@ abstract class StorageUnit implements Serializable {
     
     currDirParents.add(shell.getRootDir());
     
-    for(int i = 0; i < currDirParents.size();i++) {
-      System.out.println(currDirParents.get(i).name);
-    }
-    
     for(int i = 0; i < currDirParents.size(); i++) {
       if(currDirParents.get(i) == this) {
         return true;
