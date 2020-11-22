@@ -31,8 +31,8 @@
 package driver;
 
 /**
- * The MakeDirectory command is used by the user to make two new directories in
- * the file system.
+ * The MakeDirectory command is used by the user to make new directories in the
+ * file system.
  */
 
 public class MakeDirectory extends ShellCommand {
@@ -43,14 +43,14 @@ public class MakeDirectory extends ShellCommand {
 	 * @return The manual
 	 */
 	public static String getManual() {
-		return "mkdir DIR1 DIR2 \nThis command takes in two arguments only. "
+		return "mkdir DIR ... \n"
 				+ "Create directories, "
 				+ "each of which \nmay be relative to the current directory "
-				+ "or may be a full path. If creating DIR1 \nresults in any "
-				+ "kind of error, do not proceed with creating DIR 2. However, "
-				+ "if \nDIR1 was created successfully, and DIR2 creation "
+				+ "or may be a full path. If creating a DIR \nresults in any "
+				+ "kind of error, do not proceed with creating the rest. However, "
+				+ "if \nsome DIRs are created successfully, and another creation "
 				+ "results in an error, then give \nback an error "
-				+ "specific to DIR2.";
+				+ "specific to this DIR.";
 	}
 
 	/**

@@ -1,7 +1,22 @@
 package driver;
 
 public class Move {
-  public static void performOutcome(JShell shell, String[] parameters) {
+	
+	/**
+	 * Provides the manual for how to use this command
+	 * 
+	 * @return The manual
+	 */
+	public static String getManual() {
+		return "mv OLDPATH NEWPATH\n"
+				+ "Move item OLDPATH to NEWPATH. Both OLDPATH and "
+				+ "NEWPATH may be relative to the current \ndirectory or may be "
+				+ "full paths. If NEWPATH is a"
+				+ " directory, move the item into the directory.";
+	}
+	
+	public static void performOutcome(JShell shell, String[] parameters,
+			int outputType, File outputFile) {
 
     if (parameters.length != 3) {
       PrintError.reportError(shell, "mv", "Invalid number of parameters");

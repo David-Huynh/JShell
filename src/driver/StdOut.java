@@ -2,7 +2,7 @@ package driver;
 
 /**
  * A StdOut is a stream that a command that produces output uses to send output
- * they produce to their destinations.
+ * to their destinations.
  */
 public class StdOut {
 

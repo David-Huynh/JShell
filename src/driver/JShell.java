@@ -36,7 +36,7 @@ import java.util.Scanner;
 import java.util.Stack;
 
 /**
- * JShell is an interactive Unix-like shell that allows a user to use eleven
+ * JShell is an interactive Unix-like shell that allows a user to use nineteen
  * different commands to manipulate a virtual file system containing files and
  * directories.
  */
@@ -84,7 +84,7 @@ public class JShell implements Serializable {
 	 * Class HashMap
 	 */
 	private void populateCmdToClass() {
-		try { // Would need to update only this when there come new commands
+		try { // Would need to update only this if/when there come new commands
 			this.cmdToClass.put("exit", Class.forName("driver.Exit"));
 			this.cmdToClass.put("mkdir", Class.forName("driver.MakeDirectory"));
 			this.cmdToClass.put("cd", Class.forName("driver.ChangeDirectory"));
@@ -107,7 +107,9 @@ public class JShell implements Serializable {
 			this.cmdToClass.put("search", Class.forName("driver.Search"));
 			this.cmdToClass.put("tree", Class.forName("driver.Tree"));
 			this.cmdToClass.put("rm", Class.forName("driver.Remove"));
-			//this.cmdToClass.put("mv", Class.forName("driver.Move"));
+			this.cmdToClass.put("mv", Class.forName("driver.Move"));
+			this.cmdToClass.put("cp", Class.forName("driver.Copy"));
+			this.cmdToClass.put("curl", Class.forName("driver.ClientURL"));
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
