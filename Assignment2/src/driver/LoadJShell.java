@@ -5,9 +5,16 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 
 public class LoadJShell extends ShellCommand {
+
+	/**
+	 * Provides the manual for how to use this command
+	 * 
+	 * @return The manual
+	 */
 	public static String getManual() {
 		return "loadJShell localFilePath\n"
-				+ "Loads a previously saved JShell session onto a fresh JShell sessions.\n"
+				+ "Loads a previously saved JShell session onto a fresh "
+				+ "JShell sessions.\n"
 				+ "This command only works on fresh JShell sessions.";
 	}
 

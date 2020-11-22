@@ -11,7 +11,13 @@ public class Tree extends ShellCommand {
 	 * @return The manual
 	 */
 	public static String getManual() {
-		return "tree";
+		return "tree\n"
+				+ "The the tree command takes in no input "
+				+ "parameter.\nWhen the user types in the tree you must, "
+				+ "starting from the root directory (‘\\’) display the "
+				+ "entire file\n"
+				+ "system as a tree. For every level of the tree, you must "
+				+ "indent by a tab character.";
 	}
 
 	/**
