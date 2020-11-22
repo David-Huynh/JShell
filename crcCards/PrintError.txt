@@ -3,7 +3,8 @@ Parent class (if any): PrintCommand
 Subclasses (if any): 
 
 Responsibilities:
-* Print error messages on the command line
-* Print errors that were thrown by the OS
+* Report error messages on the command line to a JShell
+* Report errors that were thrown by the OS to a JShell
 
 Collaborators:
+* JShell

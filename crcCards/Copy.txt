@@ -1,12 +1,12 @@
-Class name: Tree
+Class name: Copy
 Parent class (if any): ShellCommand
 Subclasses (if any): 
 
 Responsibilities:
-* Send to StdOut the entire file system as a tree
+* Copy a StorageUnit to a new Directory in Storage
 * Provide a manual for how to use this class
 * Report errors to be printed by the shell
 
 Collaborators:
-* StdOut
 * StorageUnit
+* Storage
