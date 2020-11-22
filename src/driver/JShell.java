@@ -107,6 +107,7 @@ public class JShell implements Serializable {
 			this.cmdToClass.put("search", Class.forName("driver.Search"));
 			this.cmdToClass.put("tree", Class.forName("driver.Tree"));
 			this.cmdToClass.put("rm", Class.forName("driver.Remove"));
+			this.cmdToClass.put("mv", Class.forName("driver.Move"));
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
