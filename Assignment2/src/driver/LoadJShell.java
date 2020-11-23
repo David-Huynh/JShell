@@ -70,6 +70,11 @@ public class LoadJShell extends ShellCommand {
 			PrintError.reportError(shell, "cd",
 					"This command does not produce stdout.");
 		}
+		if (parameters.length != 2) {
+			PrintError.reportError(shell, "loadJShell",
+					"Invalid number of arguments.");
+			return;
+		}
 		if (shell.getComHis().size() == 1) {
 			try {
 				ObjectInputStream in = new ObjectInputStream(
@@ -85,7 +90,8 @@ public class LoadJShell extends ShellCommand {
 		} else {
 			PrintError.reportError(shell,
 					"loadJShell: there are unsaved changes in this session,"
-							+ "\nstart a fresh shell to load a previously saved session.");
+							+ "\nstart a fresh shell to load a previously "
+							+ "saved session.");
 		}
 	}
 

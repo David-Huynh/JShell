@@ -37,11 +37,12 @@ import java.io.ObjectOutputStream;
 public class SaveJShell extends ShellCommand {
 	public static String getManual() {
 		return "saveJShell localFilePath\n"
-				+ "The above command will interact with your real file system on your computer.\n"
+				+ "The above command will interact with your real file "
+				+ "system on your computer.\n"
 				+ "Saves the current working session of the shell"
 				+ "so that it can be loaded in a future session";
 	}
-	
+
 	/**
 	 * 
 	 * @param shell
@@ -62,6 +63,11 @@ public class SaveJShell extends ShellCommand {
 		if (outputType != 0) {
 			PrintError.reportError(shell, "cd",
 					"This command does not produce stdout.");
+		}
+		if (parameters.length != 2) {
+			PrintError.reportError(shell, "saveJShell",
+					"Invalid number of arguments.");
+			return;
 		}
 		try {
 			ObjectOutputStream out = new ObjectOutputStream(

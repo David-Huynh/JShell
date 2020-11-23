@@ -73,6 +73,14 @@ public class JShell implements Serializable {
 		this.populateCmdToClass();
 		this.comHis = new ArrayList<String>();
 	}
+
+	/**
+	 * Used by loadJShell command to update this JShell to a previously saved
+	 * one.
+	 * 
+	 * @param newShell
+	 *            The new JShell to up updated to.
+	 */
 	public void updateShell(JShell newShell) {
 		this.rootDir = newShell.rootDir;
 		this.currentDir = newShell.currentDir;
@@ -80,6 +88,7 @@ public class JShell implements Serializable {
 		this.cmdToClass = newShell.cmdToClass;
 		this.comHis = newShell.comHis;
 	}
+
 	/**
 	 * Helper method for JShell initializer, populates the JShell's command to
 	 * Class HashMap
@@ -110,7 +119,8 @@ public class JShell implements Serializable {
 			this.cmdToClass.put("rm", Class.forName("driver.Remove"));
 			this.cmdToClass.put("mv", Class.forName("driver.TransferFile"));
 			this.cmdToClass.put("cp", Class.forName("driver.TransferFile"));
-			this.cmdToClass.put("curl", Class.forName("driver.ClientURL"));		} catch (ClassNotFoundException e) {
+			this.cmdToClass.put("curl", Class.forName("driver.ClientURL"));
+		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
