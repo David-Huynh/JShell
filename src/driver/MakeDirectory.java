@@ -106,7 +106,7 @@ public class MakeDirectory extends ShellCommand {
 						// create dir
 						if (!StorageUnit
 								.hasForbidChar(elements[elements.length - 1])) {
-							if (parent.containsFile(elements[elements.length - 1]) != -1) {
+							if (parent.containsFile(elements[elements.length - 1]) == -1) {
 								Directory newDir = new Directory(
 										elements[elements.length - 1], parent);
 								parent.addFile(newDir);
