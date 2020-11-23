@@ -251,6 +251,11 @@ public class Echo extends ShellCommand {
 			stdout.sendLine(parsedParams[0]);
 			return;
 		}
+		if (dir.isSubDir(fileName)!= -1){
+			PrintError.reportError(shell, "echo:",
+					"there exists directory of the same name");
+			return;
+		}
 		if (index != -1) { // File does not exist
 			File nf = (File) dir.getFile(index);
 			if (numArrow == 1) {// Overwrite file with string
