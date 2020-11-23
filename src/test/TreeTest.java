@@ -29,6 +29,18 @@ public class TreeTest {
 	}
 
 	/**
+	 * Destroy the only reference to the storage system
+	 * 
+	 * @throws Exception
+	 */
+	@After
+	public void tearDown() throws Exception {
+		Field field = Storage.class.getDeclaredField("onlyReference");
+		field.setAccessible(true);
+		field.set(null, null);
+	}
+
+	/**
 	 * Test to see if the right manual is returned for getManual
 	 */
 	@Test
@@ -52,6 +64,7 @@ public class TreeTest {
 		String[] parameters = {"tree", "random", "stuff"};
 		Tree.performOutcome(shell, parameters, 1, stdOutFile);
 		assertEquals(stdOutFile.getContents(), "");
+		// i.e. assert that stdOutFile is empty
 	}
 
 	/**
@@ -97,9 +110,19 @@ public class TreeTest {
 		shell.getRootDir().addFile(file2);
 		shell.getRootDir().addFile(dir1);
 		shell.getRootDir().addFile(dir2);
+		// (above is same as before, here come new subfiles)
+		File file3 = new File("file3", "stuff", dir1);
+		dir1.addFile(file3);
+		Directory dir3 = new Directory("dir3", dir1);
+		dir1.addFile(dir3);
+		Directory dir4 = new Directory("dir4", dir3);
+		dir3.addFile(dir4);
+		File file4 = new File("file4", "stuff", dir2);
+		dir2.addFile(file4);
 		String[] parameters = {"tree"};
 		Tree.performOutcome(shell, parameters, 1, stdOutFile);
 		assertEquals(stdOutFile.getContents(),
-				"/\n\tfile1\n\tfile2\n\tdir1\n\tdir2\n");
+				"/\n\tfile1\n\tfile2\n\tdir1\n\t\tfile3\n\t\tdir3\n\t\t\tdir4"
+						+ "\n\tdir2\n\t\tfile4\n");
 	}
 }
