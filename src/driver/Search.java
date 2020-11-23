@@ -74,12 +74,57 @@ public class Search extends ShellCommand {
 	public static void performOutcome(JShell shell, String[] parameters,
 			int outputType, File outputFile) {
 		StdOut stdout = new StdOut(shell, outputType, outputFile);
-		boolean hasError = hasErrors(shell, parameters);
-		if (hasError) {
+		int tIndex = isValid(shell, parameters);
+		if (tIndex == -1) {
 			return;
 		}
+		Path path = new Path("");
+		Directory currDir;
 		// check for paths recursively
+		for (int i = 0; i < tIndex; i++) {
+			path.setPath(parameters[i]);
+			if (path.isAbsolute()) {
+				currDir = shell.getRootDir();
+			} else {
+				currDir = shell.getCurrentDir();
+			}
+			Directory parent = path.cyclePath(0, currDir, shell);
+			String name = parameters[parameters.length-1].replaceAll("^\"+|\"+$", "");
+			recSearch(parent, name, parameters[tIndex+1], stdout);
+		}
 
+
+	}
+
+	private static void recSearch(Directory parent, String name, String type, StdOut stdout) {
+		ArrayList<StorageUnit> contents = parent.getDirContents();
+		// Base Case
+		if (parent.getDirContents().isEmpty()) {
+			return;
+		}
+		String finalParent = parent.getName();
+		if (type.equals("f")) {
+			if (parent.containsFile(name) != -1) {
+				if (parent.getName().equals("/")) {
+					finalParent = "";
+				}
+				stdout.sendLine(finalParent + "/" + name);
+			}
+		} else {
+			if (parent.isSubDir(name) != -1) {
+				if (parent.getName().equals("/")) {
+					finalParent = "";
+				}
+				stdout.sendLine(finalParent+"/"+name);
+			}
+		}
+
+		for (StorageUnit sub: contents) {
+			if (sub.getClass().getSimpleName().equals("Directory")) {
+				Directory temp = (Directory) sub;
+				recSearch(temp, name, type, stdout);
+			}
+		}
 
 	}
 
@@ -92,13 +137,14 @@ public class Search extends ShellCommand {
 	 * @param parameters
 	 * 						The parameters from the interpreter the command is to work
 	 * 						with
-	 * @return a boolean value that signifies if there is an error.
+	 * @return -1 if it has errors and the index of "-type" in parameters if
+	 * 						it has no errors.
 	 */
-	private static boolean hasErrors(JShell shell, String [] parameters) {
+	private static int isValid(JShell shell, String [] parameters) {
 		if (parameters.length < 6) {
 			PrintError.reportError(shell, "search",
 					"This command does not produce stdout.");
-			return true;
+			return -1;
 		}
 		int tIndex = 0;
 		int nIndex = 0;
@@ -112,19 +158,19 @@ public class Search extends ShellCommand {
 		if (tIndex == 0 || nIndex == 0) {
 			PrintError.reportError(shell, "search",
 					"-type and -name are required parameters.");
-			return true;
+			return -1;
 		}
-		if (tIndex < nIndex) {
+		if (tIndex > nIndex) {
 			PrintError.reportError(shell, "search",
 					"-type should come before -name.");
-			return true;
+			return -1;
 		}
 		if (nIndex+1 == parameters.length-1) {
 			if (!parameters[tIndex+1].equals("f") &&
 			!parameters[tIndex+1].equals("d")) {
 				PrintError.reportError(shell, "search",
 						"Please specify search type after -type [f/d]");
-				return true;
+				return -1;
 			}
 			if (!parameters[nIndex+1].matches("\".*\"")) {
 				PrintError.reportError(shell, "search",
@@ -133,8 +179,8 @@ public class Search extends ShellCommand {
 		} else {
 			PrintError.reportError(shell, "search",
 					"Please specify only one name");
-			return true;
+			return -1;
 		}
-		return false;
+		return tIndex;
 	}
 }

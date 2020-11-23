@@ -1,10 +1,9 @@
 What did I work on in the last three days?
-    - started working on the implementation of Search.java
+    - completed Search.java
     - accounted for all possible errors in Search.java
 
 What do I plan to work in the next three days?
-    - finish implementation of Search class
-    - other Sprint2 tasks
+    - start Sprint2 tasks
 
 Am I blocked on anything?
-    - coming up with a recursive implementation of Search.java
+    - nothing at the moment
