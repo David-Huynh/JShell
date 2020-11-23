@@ -130,6 +130,7 @@ abstract class StorageUnit implements Serializable {
 
   /**
    * Checks if this is equal to the current directory or any of the current directory's ancestors
+   * 
    * @param shell The JShell that the current directory and this live in
    * @return true, if this is equal to currDir or any of its ancestors, false otherwise
    */
@@ -137,19 +138,87 @@ abstract class StorageUnit implements Serializable {
     ArrayList<Directory> currDirParents = new ArrayList<Directory>();
     Directory currDir = shell.getCurrentDir();
     currDirParents.add(currDir);
-    
-    while(currDir.getParentDir() != shell.getRootDir()) {
+
+    while (currDir.getParentDir() != shell.getRootDir()) {
       currDirParents.add(currDir.getParentDir());
       currDir = currDir.getParentDir();
     }
-    
+
     currDirParents.add(shell.getRootDir());
-    
-    for(int i = 0; i < currDirParents.size(); i++) {
-      if(currDirParents.get(i) == this) {
+
+    for (int i = 0; i < currDirParents.size(); i++) {
+      if (currDirParents.get(i) == this) {
         return true;
       }
     }
     return false;
   }
+
+  /**
+   * Checks if this is an ancestor to directory
+   * 
+   * @param directory The directory that this is compared to
+   * @param shell The JShell that the directory lives in
+   * @return true if this is an ancestor to directory, false otherwise
+   */
+
+  public boolean checkParents(Directory directory, JShell shell) {
+    ArrayList<Directory> directoryParents = new ArrayList<Directory>();
+    directoryParents.add(directory);
+
+    while (directory.getParentDir() != shell.getRootDir()) {
+      directoryParents.add(directory.getParentDir());
+      directory = directory.getParentDir();
+    }
+
+    directoryParents.add(shell.getRootDir());
+
+    for (int i = 0; i < directoryParents.size(); i++) {
+      if (directoryParents.get(i) == this) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Checks if this is a directory
+   * 
+   * @return True, if this is a directory, false otherwise
+   */
+  public boolean isDirectory() {
+    return this.getClass().getSimpleName().equals("Directory");
+  }
+
+  /**
+   * Checks if this is a file
+   * 
+   * @return True, if this is a file, false otherwise
+   */
+  public boolean isFile() {
+    return this.getClass().getSimpleName().equals("File");
+  }
+
+  /**
+   * Checks if this.name is equal to any of the StorageUnit names in directory
+   * 
+   * @param The directory where the storage units are that will be compared to this
+   * @return True, if this is a file, false otherwise
+   */
+  public boolean checkIdenticalNames(Directory directory) {
+    for (StorageUnit x : directory.getDirContents()) {
+      if (this.name.equals(x.name)) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  /**
+   * Returns an identical StorageUnit that can be modified independently from this
+   * 
+   * @param parentDir The directory where the cloned StorageUnit will be located
+   * @return The cloned StorageUnit
+   */
+  public abstract StorageUnit clone(Directory parentDir);
 }

@@ -88,8 +88,7 @@ public class Remove extends ShellCommand {
 		StorageUnit toDeleteDir = toDelete
 				.determineFinalElement(parentOfDeleted);
 
-		if (toDeleteDir == null || !toDeleteDir.getClass().getSimpleName()
-				.equals("Directory")) {
+		if (toDeleteDir == null || !toDeleteDir.isDirectory()) {
 			PrintError.reportError(shell, "rm", "Cannot delete '"
 					+ parameters[1] + "', no such directory.");
 			return;
@@ -101,5 +100,6 @@ public class Remove extends ShellCommand {
 			return;
 		}
 		toDeleteDir.getParentDir().getDirContents().remove(toDeleteDir);
+		toDeleteDir.parentDir = null;
 	}
 }

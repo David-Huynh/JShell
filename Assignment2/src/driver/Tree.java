@@ -69,7 +69,7 @@ public class Tree extends ShellCommand {
 			stdout.send("\t");
 		}
 		stdout.sendLine(toPrint.name);
-		if (toPrint.getClass().getSimpleName().equals("Directory")) {
+		if (toPrint.isDirectory()) {
 			for (StorageUnit unit : ((Directory) toPrint).getDirContents()) {
 				printTree(unit, depth + 1, stdout);
 			}

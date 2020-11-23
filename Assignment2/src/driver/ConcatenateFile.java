@@ -134,7 +134,7 @@ public class ConcatenateFile extends ShellCommand {
 					"Invalid file path specified: " + path.getPath());
 			return;
 		}
-		if (contents.get(fIndex).getClass().getSimpleName().equals("File")) {
+		if (contents.get(fIndex).isFile()) {
 			File file = (File) contents.get(fIndex);
 			file.print(stdout); // printing contents of file
 		} else {
