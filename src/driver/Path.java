@@ -196,7 +196,9 @@ public class Path {
 				directoryIndex = -3;
 			}
 		} else {
+		  if(directory != null) {
 			directoryIndex = directory.isSubDir(pathElements[index]);
+		  }
 		}
 
 		return directoryIndex;
@@ -235,7 +237,7 @@ public class Path {
 		}
 		indicator = determinePathElement(directory, finalIndex);
 
-		if (indicator == -1) {
+		if (indicator == -1 && directory != null) {
 			indicator = directory.containsFile(pathElements[finalIndex]);
 		}
 
