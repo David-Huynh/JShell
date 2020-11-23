@@ -95,7 +95,9 @@ public class Search extends ShellCommand {
 	}
 
 	/**
-	 * Recursively checks if a
+	 * Recursively checks if a parent directory contains a file/directory
+	 * depending on type that has name. Prints out the relative path using
+	 * stdout if found.
 	 *
 	 * @param parent
 	 *            The parent directory to be checked
