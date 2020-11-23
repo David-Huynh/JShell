@@ -30,6 +30,9 @@
 
 package driver;
 
+import java.lang.reflect.Array;
+import java.util.*;
+
 /**
  * The Search command is used by the user to search for files/directories in the
  * file system.
@@ -71,6 +74,67 @@ public class Search extends ShellCommand {
 	public static void performOutcome(JShell shell, String[] parameters,
 			int outputType, File outputFile) {
 		StdOut stdout = new StdOut(shell, outputType, outputFile);
+		boolean hasError = hasErrors(shell, parameters);
+		if (hasError) {
+			return;
+		}
+		// check for paths recursively
 
+
+	}
+
+
+	/**
+	 * Checks if parameters are valid for function call
+	 *
+	 * @param shell
+	 *						The JShell the command is to be performed on
+	 * @param parameters
+	 * 						The parameters from the interpreter the command is to work
+	 * 						with
+	 * @return a boolean value that signifies if there is an error.
+	 */
+	private static boolean hasErrors(JShell shell, String [] parameters) {
+		if (parameters.length < 6) {
+			PrintError.reportError(shell, "search",
+					"This command does not produce stdout.");
+			return true;
+		}
+		int tIndex = 0;
+		int nIndex = 0;
+		for (int i = 0; i < parameters.length; i++) {
+			if (parameters[i].equals("-type")) {
+				tIndex = i;
+			} else if (parameters[i].equals("-name")) {
+				nIndex = i;
+			}
+		}
+		if (tIndex == 0 || nIndex == 0) {
+			PrintError.reportError(shell, "search",
+					"-type and -name are required parameters.");
+			return true;
+		}
+		if (tIndex < nIndex) {
+			PrintError.reportError(shell, "search",
+					"-type should come before -name.");
+			return true;
+		}
+		if (nIndex+1 == parameters.length-1) {
+			if (!parameters[tIndex+1].equals("f") &&
+			!parameters[tIndex+1].equals("d")) {
+				PrintError.reportError(shell, "search",
+						"Please specify search type after -type [f/d]");
+				return true;
+			}
+			if (!parameters[nIndex+1].matches("\".*\"")) {
+				PrintError.reportError(shell, "search",
+						"Please enclose name with double quotes (\"\")");
+			}
+		} else {
+			PrintError.reportError(shell, "search",
+					"Please specify only one name");
+			return true;
+		}
+		return false;
 	}
 }
