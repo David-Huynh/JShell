@@ -106,9 +106,16 @@ public class MakeDirectory extends ShellCommand {
 						// create dir
 						if (!StorageUnit
 								.hasForbidChar(elements[elements.length - 1])) {
-							Directory newDir = new Directory(
-									elements[elements.length - 1], parent);
-							parent.addFile(newDir);
+							if (parent.containsFile(elements[elements.length - 1]) != -1) {
+								Directory newDir = new Directory(
+										elements[elements.length - 1], parent);
+								parent.addFile(newDir);
+							} else {
+								PrintError.reportError(shell, "mkdir",
+										"Directory name cannot be the same as filename: "
+												+ elements[elements.length - 1]);
+								return;
+							}
 						} else {
 							PrintError.reportError(shell, "mkdir",
 									"Directory name contains forbidden "
