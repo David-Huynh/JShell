@@ -76,7 +76,7 @@ public class TransferFile {
       move(toMove, (Directory) moveHere);
     }
     if (operation.equals("cp")) { // copy
-      copy(toMove, (Directory) moveHere);
+      Copy.copy(toMove, (Directory) moveHere);
     }
     if (operation.equals("rn")) { // rename
       rename(toMove, moveHere);
@@ -105,11 +105,6 @@ public class TransferFile {
 
   private static void rename(StorageUnit toMove, StorageUnit moveHere) {
 
-  }
-
-  private static void copy(StorageUnit toMove, Directory moveHere) {
-    StorageUnit toAdd = toMove.clone((Directory) moveHere);
-    moveHere.getDirContents().add(toAdd);
   }
 
   private static void move(StorageUnit toMove, Directory moveHere) {

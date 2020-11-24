@@ -73,4 +73,8 @@ public class Copy extends ShellCommand {
 		TransferFile.performOutcome(shell, parameters, outputType, outputFile);
 	}
 
+	public static void copy(StorageUnit toMove, Directory moveHere) {
+	    StorageUnit toAdd = toMove.clone((Directory) moveHere);
+	    moveHere.getDirContents().add(toAdd);
+	  }
 }
