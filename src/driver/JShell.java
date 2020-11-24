@@ -238,11 +238,7 @@ public class JShell implements Serializable {
 			this.print(currentDir.getName() + ">");
 			userCommand = userInput.nextLine();
 			addCom(userCommand);
-			if (userCommand.strip() == "") {
-				PrintError.reportError(this, "Error: no command entered.");
-			} else {
-				Interpreter.interpret(userCommand, this);
-			}
+			Interpreter.interpret(userCommand, this);
 		}
 		userInput.close();
 	}
