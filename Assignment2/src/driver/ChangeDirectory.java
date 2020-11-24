@@ -71,6 +71,7 @@ public class ChangeDirectory extends ShellCommand {
 		if (outputType != 0) {
 			PrintError.reportError(shell, "cd",
 					"This command does not produce stdout.");
+			return;
 		}
 		if (parameters.length != 2) {
 			PrintError.reportError(shell, "cd", "Invalid number of arguments.");

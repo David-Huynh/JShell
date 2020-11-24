@@ -79,17 +79,16 @@ public class PushDirOntoStack extends ShellCommand {
 		if (outputType != 0) {
 			PrintError.reportError(shell, "cd",
 					"This command does not produce stdout.");
+			return;
 		}
 		if (parameters.length != 2) {
 			PrintError.reportError(shell, "pushd",
 					"Invalid number of arguments.");
 			return;
 		}
-
 		Directory prevCurrDir = shell.getCurrentDir();
 		Directory currDir = shell.getCurrentDir();
 		String[] subDir = {};
-
 		if (parameters[1].indexOf("/") == 0) {
 			if (parameters[1].equals("/")) {
 				shell.setCurrentDir(shell.getRootDir());
@@ -99,7 +98,6 @@ public class PushDirOntoStack extends ShellCommand {
 			parameters[1] = parameters[1].substring(1);
 		}
 		subDir = parameters[1].split("/");
-
 		for (int i = 0; i < subDir.length; i++) {
 			if (subDir[i].equals("..") || subDir[i].equals(".")) {
 				if (subDir[i].equals("..")) {

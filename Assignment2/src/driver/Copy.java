@@ -64,6 +64,7 @@ public class Copy extends ShellCommand {
 		if (outputType != 0) {
 			PrintError.reportError(shell, "cp",
 					"This command does not produce stdout.");
+			return;
 		}
 		if (parameters.length != 3) {
 			PrintError.reportError(shell, "cp", "Invalid number of arguments.");
@@ -74,7 +75,7 @@ public class Copy extends ShellCommand {
 	}
 
 	public static void copy(StorageUnit toMove, Directory moveHere) {
-	    StorageUnit toAdd = toMove.clone((Directory) moveHere);
-	    moveHere.getDirContents().add(toAdd);
-	  }
+		StorageUnit toAdd = toMove.clone((Directory) moveHere);
+		moveHere.getDirContents().add(toAdd);
+	}
 }
