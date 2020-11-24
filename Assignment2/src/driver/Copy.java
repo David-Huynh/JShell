@@ -44,7 +44,7 @@ public class Copy extends ShellCommand {
 	}
 
 	/**
-	 * Perform the outcome of this command
+	 * Make a copy of StorageUnit in Storage in a given directory.
 	 * 
 	 * @param shell
 	 *            The JShell the command is to be performed on
@@ -61,6 +61,16 @@ public class Copy extends ShellCommand {
 	 */
 	public static void performOutcome(JShell shell, String[] parameters,
 			int outputType, File outputFile) {
+		if (outputType != 0) {
+			PrintError.reportError(shell, "cp",
+					"This command does not produce stdout.");
+		}
+		if (parameters.length != 3) {
+			PrintError.reportError(shell, "cp", "Invalid number of arguments.");
+			return;
+		}
+		// Just call TransferFile, as its job is to also copy files.
+		TransferFile.performOutcome(shell, parameters, outputType, outputFile);
 	}
-	
+
 }
