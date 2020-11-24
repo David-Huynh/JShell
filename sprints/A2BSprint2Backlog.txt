@@ -50,13 +50,13 @@ n-9: (PrintError) Think of all possible errors the Interpreter can encounter int
 These tasks are assigned as follows:
 
 User: Collin Chan
-Tasks: a-1, j-1
+Tasks: a-1, j-1, k-1, k-2, n-8
 
 User: Jeff He
 Tasks: b-1, b-2, c-1, c-2, h-1, h-2, h-3
 
 User: Nevin Wong
-Tasks: l-1, m-1, m-2, n-9, k-1, k-2, n-8
+Tasks: l-1, m-1, m-2, n-9
 
 User: David Huynh
 Tasks: e-1, e-2, f-1, f-2, f-3, f-4
