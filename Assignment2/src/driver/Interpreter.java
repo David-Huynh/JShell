@@ -182,6 +182,26 @@ public class Interpreter {
 				dir.addFile(outFile);
 			}
 		}
+		callCommand(parameters, outputType, outFile, shell);
+	}
+
+	/**
+	 * Helper for the above method, takes in parameters (without redirection
+	 * part) and calls the appropriate command using the shell's command to
+	 * Class HashMap
+	 * 
+	 * @param parameters
+	 *            The parameters (with the redirection info stripped off)
+	 * @param outputType
+	 *            0 for printing to the shell, 1 for overwriting a File and, 2
+	 *            for appending to a File
+	 * @param outFile
+	 *            If outputType is 1 or 2, this is the the File in question
+	 * @param shell
+	 *            The JShell that send the call to interpret
+	 */
+	private static void callCommand(String[] parameters, int outputType,
+			File outFile, JShell shell) {
 		String command = parameters[0]; // The first word is the command
 		if (shell.getCmdToClass().containsKey(command)) {
 			try {
