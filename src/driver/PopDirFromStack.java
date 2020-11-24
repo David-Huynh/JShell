@@ -77,6 +77,7 @@ public class PopDirFromStack extends ShellCommand {
 		if (outputType != 0) {
 			PrintError.reportError(shell, "cd",
 					"This command does not produce stdout.");
+			return;
 		}
 		if (parameters.length != 1) {
 			PrintError.reportError(shell, "popd",

@@ -30,6 +30,11 @@
 
 package driver;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Scanner;
+
 public class ClientURL extends ShellCommand {
 
 	/**
@@ -41,7 +46,7 @@ public class ClientURL extends ShellCommand {
 		return "curl URL\n"
 				+ "Retrieve the file at that URL and add it to the current "
 				+ "working directory.\n" + "Example1:\n"
-				+ "curl http://www.cs.cmu.edu/ spok/grimmtmp/073.txt\n"
+				+ "curl http://www.cs.cmu.edu/spok/grimmtmp/073.txt\n"
 				+ "Will get the contents of the file, "
 				+ "i.e. 073.txt and create a "
 				+ "file called 073.txt with the contents in \nthe current "
@@ -53,7 +58,8 @@ public class ClientURL extends ShellCommand {
 	}
 
 	/**
-	 * Perform the outcome of this command
+	 * Retrieves the file at a given URL and adds it to the JShell's current
+	 * working directory.
 	 * 
 	 * @param shell
 	 *            The JShell the command is to be performed on
@@ -70,6 +76,30 @@ public class ClientURL extends ShellCommand {
 	 */
 	public static void performOutcome(JShell shell, String[] parameters,
 			int outputType, File outputFile) {
+		if (outputType != 0) {
+			PrintError.reportError(shell, "curl",
+					"This command does not produce stdout.");
+			return;
+		}
+		if (parameters.length != 2) {
+			PrintError.reportError(shell, "curl",
+					"Invalid number of arguments.");
+			return;
+		}
+		/** random stuff i attempted lol i dont think it works
+		String content;
+		try {
+			URL url = new URL(parameters[1]);
+			Scanner urlInput = new Scanner(url.openStream());
+			content = urlInput.next();
+			urlInput.close();
+			System.out.println(content);
+		} catch (MalformedURLException e) {
+			PrintError.reportError(shell, "curl", "Could not reach this URL.");
+		} catch (IOException e) {
+			PrintError.reportError(shell, "curl",
+					"Could not read from this URL.");
+		}
+		**/
 	}
-
 }

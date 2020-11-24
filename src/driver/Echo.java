@@ -119,7 +119,7 @@ public class Echo extends ShellCommand {
 	}
 
 	/**
-	 * Takes in parameters to check if they are formatted correctly Prints an
+	 * Takes in parameters to check if they are formatted correctly. Prints an
 	 * error message if they are returns otherwise
 	 * 
 	 * @param shell
@@ -228,7 +228,7 @@ public class Echo extends ShellCommand {
 	public static void performOutcome(JShell shell, String[] parameters,
 			int outputType, File outputFile) {
 		StdOut stdout = new StdOut(shell, outputType, outputFile);
-		if (parameters.length <= 1 || parameters.length >= 5) {
+		if (parameters.length != 2) {
 			PrintError.reportError(shell, "echo",
 					"invalid number of parameters");
 			return;
@@ -252,8 +252,8 @@ public class Echo extends ShellCommand {
 			return;
 		}
 		if (dir.isSubDir(fileName)!= -1){
-			PrintError.reportError(shell, "echo:",
-					"there exists directory of the same name");
+			PrintError.reportError(shell, "echo",
+					"There exists directory of the same name");
 			return;
 		}
 		if (index != -1) { // File does not exist

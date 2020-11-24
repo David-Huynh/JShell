@@ -1,10 +1,15 @@
 package driver;
 
-public class TransferFile {
+public class TransferFile extends ShellCommand {
 
   public static void performOutcome(JShell shell, String[] parameters,
       int outputType, File outputFile) {
 
+	  if (outputType != 0) {
+			PrintError.reportError(shell, "cd",
+					"This command does not produce stdout.");
+			return;
+		}
     if (parameters.length != 3) {
       PrintError.reportError(shell, "mv", "Invalid number of parameters");
       return;
