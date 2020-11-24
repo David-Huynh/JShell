@@ -43,7 +43,9 @@ n-3: (PrintError) Think of all possible errors Manual can encounter, account for
 n-4: (PrintError) Think of all possible errors SaveJShell can encounter, account for them in the class and write error messages
 n-5: (PrintError) Think of all possible errors LoadJShell can encounter, account for them in the class and write error messages
 n-6: (PrintError) Think of all possible errors Move or Copy can encounter, account for them in the class and write error messages
-n-7: (PrintError) Think of all possible errors Search can encounter, account fo them in the class and write error messages
+n-7: (PrintError) Think of all possible errors Search can encounter, account for them in the class and write error messages
+n-8: (PrintError) Think of all possible errors ClientIRL can encounter, account for them in the class and write error messages
+n-9: (PrintError) Think of all possible errors the Interpreter can encounter interpreting the user's desired output destinations, account for them and write error messages
 
 These tasks are assigned as follows:
 
@@ -54,7 +56,7 @@ User: Jeff He
 Tasks: b-1, b-2, c-1, c-2, h-1, h-2, h-3
 
 User: Nevin Wong
-Tasks: l-1, m-1, m-2
+Tasks: l-1, m-1, m-2, n-9, k-1, k-2, n-8
 
 User: David Huynh
 Tasks: e-1, e-2, f-1, f-2, f-3, f-4
