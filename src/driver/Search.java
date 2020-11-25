@@ -103,6 +103,7 @@ public class Search extends ShellCommand {
 					.replaceAll("^\"+|\"+$", "");
 			recSearch(parent, name, parameters[tIndex + 1], stdout);
 		}
+		stdout.closeStream();
 	}
 
 	/**
