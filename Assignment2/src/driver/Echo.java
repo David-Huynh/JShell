@@ -39,6 +39,16 @@ package driver;
 public class Echo extends ShellCommand {
 
 	/**
+	 * Returns if this command produces StdOut. (used by the Interpreter to know
+	 * whether or not to make a new file)
+	 * 
+	 * @return Whether or not the command produces StdOut
+	 */
+	public static boolean producesStdOut() {
+		return true;
+	}
+	
+	/**
 	 * Provides the manual for how to use this command
 	 * 
 	 * @return The manual
@@ -233,7 +243,6 @@ public class Echo extends ShellCommand {
 					"invalid number of parameters");
 			return;
 		}
-
 		int numArrow = numArrow(parameters);
 		String[] parsedParams = parseParameters(parameters);
 		Directory dir = cycleDir(shell, parsedParams[1]);
@@ -241,12 +250,11 @@ public class Echo extends ShellCommand {
 				.split("/")[parsedParams[1].split("/").length - 1];
 		if (errorHandle(shell, parsedParams, numArrow, dir)) {return;}
 		int index = dir.containsFile(fileName);
-
 		parsedParams[0] = parsedParams[0].substring(1,
 				parsedParams[0].length() - 1);
-
 		if (numArrow == 0) { // Print string to shell command
 			stdout.sendLine(parsedParams[0]);
+			stdout.closeStream();
 			return;
 		}
 		if (dir.isSubDir(fileName)!= -1){
