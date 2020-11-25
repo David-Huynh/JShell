@@ -199,7 +199,7 @@ public class Echo extends ShellCommand {
 		if (StorageUnit.hasForbidChar(
 				filePath.split("/")[filePath.split("/").length - 1])) {
 			PrintError.reportError(shell, "echo",
-					"Path contains forbidden character(s): " + filePath
+					"FileName contains forbidden character(s): " + filePath
 							.split("/")[filePath.split("/").length - 1]);
 			return null;
 		}
@@ -239,9 +239,7 @@ public class Echo extends ShellCommand {
 		Directory dir = cycleDir(shell, parsedParams[1]);
 		String fileName = parsedParams[1]
 				.split("/")[parsedParams[1].split("/").length - 1];
-		if (errorHandle(shell, parsedParams, numArrow, dir)) {
-			return;
-		}
+		if (errorHandle(shell, parsedParams, numArrow, dir)) {return;}
 		int index = dir.containsFile(fileName);
 
 		parsedParams[0] = parsedParams[0].substring(1,
