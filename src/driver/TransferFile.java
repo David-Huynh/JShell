@@ -1,7 +1,7 @@
 package driver;
 
 /**
- * The Move command is used by the user to move a StorageUnit to a new
+ * The TransferFile command is used by the user to move a StorageUnit to a new
  * directory.
  */
 public class TransferFile extends ShellCommand {
@@ -37,12 +37,6 @@ public class TransferFile extends ShellCommand {
 	 */
 	public static void performOutcome(JShell shell, String[] parameters,
 			int outputType, File outputFile) {
-
-		if (outputType != 0) {
-			PrintError.reportError(shell, "mv",
-					"This command does not produce stdout.");
-			return;
-		}
 		if (parameters.length != 3) {
 			PrintError.reportError(shell, "mv", "Invalid number of parameters");
 			return;

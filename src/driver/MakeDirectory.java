@@ -43,13 +43,14 @@ public class MakeDirectory extends ShellCommand {
 	 * @return The manual
 	 */
 	public static String getManual() {
-		return "mkdir DIR ... \n"
-				+ "Create directories, "
-				+ "each of which \nmay be relative to the current directory "
-				+ "or may be a full path. If creating a DIR \nresults in any "
-				+ "kind of error, do not proceed with creating the rest. However, "
-				+ "if \nsome DIRs are created successfully, and another creation "
-				+ "results in an error, then give \nback an error "
+		return "mkdir DIR ... \n" + "Create directories, "
+				+ "each of which may be relative to the current directory "
+				+ "or \nmay be a full path. If creating a DIR results in any "
+				+ "kind of error, do not proceed "
+				+ "\nwith creating the rest. However, "
+				+ "if some DIRs are created "
+				+ "successfully, and another \ncreation "
+				+ "results in an error, then give back an error "
 				+ "specific to this DIR.";
 	}
 
@@ -107,14 +108,16 @@ public class MakeDirectory extends ShellCommand {
 						// create dir
 						if (!StorageUnit
 								.hasForbidChar(elements[elements.length - 1])) {
-							if (parent.containsFile(elements[elements.length - 1]) == -1) {
+							if (parent.containsFile(
+									elements[elements.length - 1]) == -1) {
 								Directory newDir = new Directory(
 										elements[elements.length - 1], parent);
 								parent.addFile(newDir);
 							} else {
 								PrintError.reportError(shell, "mkdir",
 										"Directory name cannot be the same as filename: "
-												+ elements[elements.length - 1]);
+												+ elements[elements.length
+														- 1]);
 								return;
 							}
 						} else {

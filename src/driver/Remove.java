@@ -65,11 +65,6 @@ public class Remove extends ShellCommand {
 	 */
 	public static void performOutcome(JShell shell, String[] parameters,
 			int outputType, File outputFile) {
-		if (outputType != 0) {
-			PrintError.reportError(shell, "cd",
-					"This command does not produce stdout.");
-			return;
-		}
 
 		if (parameters.length != 2) {
 			PrintError.reportError(shell, "rm", "Invalid number of parameters");
