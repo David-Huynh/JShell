@@ -169,9 +169,9 @@ public class Interpreter {
 				} else if (path.getPathElements()[path.getPathElements().length
 						- 2].equals("..")) {
 					dir = shell.getCurrentDir().getParentDir();
-				} else if (path.getPathElements().length == 1
-						&& redirectInfo.charAt(0) == '/') {
-					dir = shell.getCurrentDir();
+				} else if (path.getPathElements().length == 2
+						&& redirectInfo.startsWith("/")) {
+					dir = shell.getRootDir();
 				} else {
 					PrintError.reportError(shell,
 							"Error: that is not a valid directory "
