@@ -61,11 +61,6 @@ public class Copy extends ShellCommand {
 	 */
 	public static void performOutcome(JShell shell, String[] parameters,
 			int outputType, File outputFile) {
-		if (outputType != 0) {
-			PrintError.reportError(shell, "cp",
-					"This command does not produce stdout.");
-			return;
-		}
 		if (parameters.length != 3) {
 			PrintError.reportError(shell, "cp", "Invalid number of arguments.");
 			return;
