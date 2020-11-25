@@ -35,6 +35,11 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 
 public class SaveJShell extends ShellCommand {
+	/**
+	 * Provides the manual for how to use this command
+	 *
+	 * @return The manual
+	 */
 	public static String getManual() {
 		return "saveJShell localFilePath\n"
 				+ "The above command will interact with your real file "

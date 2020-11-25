@@ -33,6 +33,7 @@ package driver;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.Stack;
 
@@ -87,6 +88,24 @@ public class JShell implements Serializable {
 		this.dirStack = newShell.dirStack;
 		this.cmdToClass = newShell.cmdToClass;
 		this.comHis = newShell.comHis;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		JShell jShell = (JShell) o;
+		return rootDir.equals(jShell.rootDir) &&
+				currentDir.equals(jShell.currentDir) &&
+				dirStack.equals(jShell.dirStack) &&
+				cmdToClass.equals(jShell.cmdToClass) &&
+				comHis.equals(jShell.comHis);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(rootDir, currentDir, dirStack, cmdToClass, comHis);
 	}
 
 	/**
