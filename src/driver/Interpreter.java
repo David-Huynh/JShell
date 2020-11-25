@@ -163,16 +163,28 @@ public class Interpreter {
 			}
 			dir = path.cyclePath(0, dir, shell);
 			if (dir == null) { // Check if the second last element is valid dir
-				PrintError.reportError(shell,
-						"Error: that is not a valid directory to redirect to.");
-				return;
+				if (path.getPathElements()[path.getPathElements().length - 2]
+						.equals(".")) {
+					dir = shell.getCurrentDir();
+				} else if (path.getPathElements()[path.getPathElements().length
+						- 2].equals("..")) {
+					dir = shell.getCurrentDir().getParentDir();
+				} else if (path.getPathElements().length == 1
+						&& redirectInfo.charAt(0) == '/') {
+					dir = shell.getCurrentDir();
+				} else {
+					PrintError.reportError(shell,
+							"Error: that is not a valid directory "
+									+ "to redirect to.");
+					return;
+				}
 			}
 			String filename = path
 					.getPathElements()[path.getPathElements().length - 1];
 			int index = dir.containsFile(filename);
 			if (dir.isSubDir(filename) != -1) {
 				PrintError.reportError(shell,
-						"There is a directory with the same name.");
+						"Error: There is a directory with the same name.");
 				return;
 			}
 			if (index != -1) { // File exists
