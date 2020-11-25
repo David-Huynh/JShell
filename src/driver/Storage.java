@@ -31,6 +31,7 @@
 package driver;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Storage is similar to a computer's file system, or root directory of a Unix
@@ -55,6 +56,20 @@ public class Storage implements Serializable {
 		// parent of root directory is always the root itself
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		Storage storage = (Storage) o;
+		return root.equals(storage.root);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(root);
+	}
+
 	/**
 	 * Public getter method for the root directory.
 	 * 
@@ -66,7 +81,7 @@ public class Storage implements Serializable {
 
 	/**
 	 * Get the only instance of Storage, creates it if it doesn't exist
-	 * 
+	 *
 	 * @return A newly created Storage if there is none yet, and returns the
 	 *         only instance of it if there already is one
 	 */

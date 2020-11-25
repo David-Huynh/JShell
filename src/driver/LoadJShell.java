@@ -76,7 +76,7 @@ public class LoadJShell extends ShellCommand {
 					"Invalid number of arguments.");
 			return;
 		}
-		if (shell.getComHis().size() == 1) {
+		if (shell.getComHis().size() <= 1) {
 			try {
 				ObjectInputStream in = new ObjectInputStream(
 						new FileInputStream(parameters[1]));
@@ -84,15 +84,16 @@ public class LoadJShell extends ShellCommand {
 				shell.updateShell(newShell);
 				in.close();
 			} catch (IOException e) {
-				System.out.println("File not found");
+				System.out.println("File not found run saveJShell in another session first");
 			} catch (ClassNotFoundException e) {
 				System.err.println(e.getMessage());
 			}
-		} else {
+		}else {
 			PrintError.reportError(shell,
 					"loadJShell: there are unsaved changes in this session,"
 							+ "\nstart a fresh shell to load a previously "
 							+ "saved session.");
+			return;
 		}
 	}
 

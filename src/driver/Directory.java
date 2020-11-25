@@ -32,6 +32,7 @@ package driver;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * A Directory is a type of StorageUnit (similar to a folder in a computer's file system) that holds
@@ -55,6 +56,20 @@ public class Directory extends StorageUnit implements Serializable {
   public Directory(String name, Directory parentDir) {
     this.name = name;
     this.parentDir = parentDir;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Directory directory = (Directory) o;
+    return contents.equals(directory.contents);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(contents);
   }
 
   /**
