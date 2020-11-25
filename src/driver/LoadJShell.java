@@ -66,11 +66,6 @@ public class LoadJShell extends ShellCommand {
 	 */
 	public static void performOutcome(JShell shell, String[] parameters,
 			int outputType, File outputFile) {
-		if (outputType != 0) {
-			PrintError.reportError(shell, "cd",
-					"This command does not produce stdout.");
-			return;
-		}
 		if (parameters.length != 2) {
 			PrintError.reportError(shell, "loadJShell",
 					"Invalid number of arguments.");
@@ -84,11 +79,12 @@ public class LoadJShell extends ShellCommand {
 				shell.updateShell(newShell);
 				in.close();
 			} catch (IOException e) {
-				System.out.println("File not found run saveJShell in another session first");
+				System.out.println(
+						"File not found run saveJShell in another session first");
 			} catch (ClassNotFoundException e) {
 				System.err.println(e.getMessage());
 			}
-		}else {
+		} else {
 			PrintError.reportError(shell,
 					"loadJShell: there are unsaved changes in this session,"
 							+ "\nstart a fresh shell to load a previously "
