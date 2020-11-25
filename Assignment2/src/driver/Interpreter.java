@@ -187,6 +187,11 @@ public class Interpreter {
 						"Error: There is a directory with the same name.");
 				return;
 			}
+			if (StorageUnit.hasForbidChar(filename)) {
+				PrintError.reportError(shell, "Error: file name " + filename
+						+ " has forbidden characters.");
+				return;
+			}
 			if (index != -1) { // File exists
 				outFile = (File) dir.getFile(index);
 			} else { // File does not exist
