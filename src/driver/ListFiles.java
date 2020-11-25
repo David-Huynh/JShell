@@ -76,16 +76,18 @@ public class ListFiles extends ShellCommand {
       }
     }
 
+    boolean cont = true;
+
     if (parameters.length == 1) {
-      // Case 1: no parameters, list files of current directory
       list(stdout, shell.getCurrentDir().getDirContents());
+    } else if (parameters.length == 2 && recursive) {
+      cont = parseParameter(shell, ".", stdout, recursive);
     } else {
-      boolean cont = true;
       for (int i = 1; i < parameters.length; i++) {
         if (!parameters[i].equals("-R")) {
           cont = parseParameter(shell, parameters[i], stdout, recursive);
         }
-        if(!cont) {
+        if (!cont) {
           break;
         }
       }
