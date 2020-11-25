@@ -41,6 +41,16 @@ import java.lang.reflect.Method;
 public class Manual extends ShellCommand {
 
 	/**
+	 * Returns if this command produces StdOut. (used by the Interpreter to know
+	 * whether or not to make a new file)
+	 * 
+	 * @return Whether or not the command produces StdOut
+	 */
+	public static boolean producesStdOut() {
+		return true;
+	}
+	
+	/**
 	 * This is quite meta, provides the manual for how to use this command
 	 * 
 	 * @return The manual

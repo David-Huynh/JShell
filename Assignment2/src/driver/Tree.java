@@ -36,18 +36,27 @@ package driver;
 public class Tree extends ShellCommand {
 
 	/**
+	 * Returns if this command produces StdOut. (used by the Interpreter to know
+	 * whether or not to make a new file)
+	 * 
+	 * @return Whether or not the command produces StdOut
+	 */
+	public static boolean producesStdOut() {
+		return true;
+	}
+
+	/**
 	 * Provides the manual for how to use this command
 	 *
 	 * @return The manual
 	 */
 	public static String getManual() {
-		return "tree\n"
-				+ "The the tree command takes in no input "
+		return "tree\n" + "The the tree command takes in no input "
 				+ "parameter.\nWhen the user types in the tree you must, "
-				+ "starting from the root directory (‘\\’) display the "
-				+ "entire file\n"
+				+ "starting from the root directory (‘\\’)\ndisplay the "
+				+ "entire file"
 				+ "system as a tree. For every level of the tree, you must "
-				+ "indent by a tab character.";
+				+ "\nindent by a tab character.";
 	}
 
 	/**
@@ -97,11 +106,12 @@ public class Tree extends ShellCommand {
 			int outputType, File outputFile) {
 		StdOut stdout = new StdOut(shell, outputType, outputFile);
 		if (parameters.length != 1) {
-			PrintError.reportError(shell, "man",
+			PrintError.reportError(shell, "tree",
 					"Invalid number of arguments.");
 			return;
 		}
 		Tree.printTree(shell.getRootDir(), 0, stdout);
+		stdout.closeStream();
 	}
 
 }

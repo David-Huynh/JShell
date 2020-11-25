@@ -39,6 +39,16 @@ package driver;
 public class PrintWorkingDirectory extends ShellCommand {
 
 	/**
+	 * Returns if this command produces StdOut. (used by the Interpreter to know
+	 * whether or not to make a new file)
+	 * 
+	 * @return Whether or not the command produces StdOut
+	 */
+	public static boolean producesStdOut() {
+		return true;
+	}
+	
+	/**
 	 * Provides the manual for how to use this command
 	 * 
 	 * @return The manual
@@ -76,6 +86,6 @@ public class PrintWorkingDirectory extends ShellCommand {
 		Path absPath = shell.getCurrentDir().getFullPath(shell);
 
 		stdout.sendLine(absPath.getPath());
-
+		stdout.closeStream();
 	}
 }

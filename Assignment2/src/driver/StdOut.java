@@ -99,4 +99,18 @@ public class StdOut {
 			this.destination.append(message);
 		}
 	}
+
+	/**
+	 * Closes the StdOut stream. Used to delete the unnecessary newline at the
+	 * end if the destination is a file.
+	 */
+	public void closeStream() {
+		// i.e. if the destination is a file and its last character is a
+		// newline, get rid of it
+		if (this.destinationType != 0 && this.destination.getContents()
+				.charAt(this.destination.getContents().length() - 1) == '\n') {
+			this.destination.overwrite(this.destination.getContents()
+					.substring(0, this.destination.getContents().length() - 1));
+		}
+	}
 }

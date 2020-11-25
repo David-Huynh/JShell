@@ -38,6 +38,16 @@ import java.util.Scanner;
 public class ClientURL extends ShellCommand {
 
 	/**
+	 * Returns if this command produces StdOut. (used by the Interpreter to know
+	 * whether or not to make a new file)
+	 * 
+	 * @return Whether or not the command produces StdOut
+	 */
+	public static boolean producesStdOut() {
+		return false;
+	}
+	
+	/**
 	 * Provides the manual for how to use this command
 	 * 
 	 * @return The manual
@@ -76,11 +86,6 @@ public class ClientURL extends ShellCommand {
 	 */
 	public static void performOutcome(JShell shell, String[] parameters,
 			int outputType, File outputFile) {
-		if (outputType != 0) {
-			PrintError.reportError(shell, "curl",
-					"This command does not produce stdout.");
-			return;
-		}
 		if (parameters.length != 2) {
 			PrintError.reportError(shell, "curl",
 					"Invalid number of arguments.");

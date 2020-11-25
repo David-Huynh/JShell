@@ -37,6 +37,16 @@ import java.io.ObjectInputStream;
 public class LoadJShell extends ShellCommand {
 
 	/**
+	 * Returns if this command produces StdOut. (used by the Interpreter to know
+	 * whether or not to make a new file)
+	 * 
+	 * @return Whether or not the command produces StdOut
+	 */
+	public static boolean producesStdOut() {
+		return false;
+	}
+
+	/**
 	 * Provides the manual for how to use this command
 	 * 
 	 * @return The manual

@@ -41,6 +41,16 @@ import java.util.*;
 public class Search extends ShellCommand {
 
 	/**
+	 * Returns if this command produces StdOut. (used by the Interpreter to know
+	 * whether or not to make a new file)
+	 * 
+	 * @return Whether or not the command produces StdOut
+	 */
+	public static boolean producesStdOut() {
+		return true;
+	}
+
+	/**
 	 * Provides the manual for how to use this command
 	 *
 	 * @return The manual
@@ -89,8 +99,9 @@ public class Search extends ShellCommand {
 				currDir = shell.getCurrentDir();
 			}
 			Directory parent = path.cyclePath(0, currDir, shell);
-			String name = parameters[parameters.length-1].replaceAll("^\"+|\"+$", "");
-			recSearch(parent, name, parameters[tIndex+1], stdout);
+			String name = parameters[parameters.length - 1]
+					.replaceAll("^\"+|\"+$", "");
+			recSearch(parent, name, parameters[tIndex + 1], stdout);
 		}
 	}
 
@@ -104,12 +115,13 @@ public class Search extends ShellCommand {
 	 * @param name
 	 *            The name of the file/directory
 	 * @param type
-	 *            A string that signifies the type (f - for file
-	 *            and d - for directory)
+	 *            A string that signifies the type (f - for file and d - for
+	 *            directory)
 	 * @param stdout
 	 *            The stream for output
 	 */
-	private static void recSearch(Directory parent, String name, String type, StdOut stdout) {
+	private static void recSearch(Directory parent, String name, String type,
+			StdOut stdout) {
 		ArrayList<StorageUnit> contents = parent.getDirContents();
 		// Base Case
 		if (parent.getDirContents().isEmpty()) {
@@ -128,11 +140,11 @@ public class Search extends ShellCommand {
 				if (parent.getName().equals("/")) {
 					finalParent = "";
 				}
-				stdout.sendLine(finalParent+"/"+name);
+				stdout.sendLine(finalParent + "/" + name);
 			}
 		}
 		// Recursive Case
-		for (StorageUnit sub: contents) {
+		for (StorageUnit sub : contents) {
 			if (sub.getClass().getSimpleName().equals("Directory")) {
 				Directory temp = (Directory) sub;
 				recSearch(temp, name, type, stdout);
@@ -140,19 +152,18 @@ public class Search extends ShellCommand {
 		}
 	}
 
-
 	/**
 	 * Checks if parameters are valid for function call
 	 *
 	 * @param shell
-	 *						The JShell the command is to be performed on
+	 *            The JShell the command is to be performed on
 	 * @param parameters
-	 * 						The parameters from the interpreter the command is to work
-	 * 						with
-	 * @return -1 if it has errors and the index of "-type" in parameters if
-	 * 						it has no errors.
+	 *            The parameters from the interpreter the command is to work
+	 *            with
+	 * @return -1 if it has errors and the index of "-type" in parameters if it
+	 *         has no errors.
 	 */
-	private static int isValid(JShell shell, String [] parameters) {
+	private static int isValid(JShell shell, String[] parameters) {
 		if (parameters.length < 6) {
 			PrintError.reportError(shell, "search",
 					"This command does not produce stdout.");
@@ -177,14 +188,14 @@ public class Search extends ShellCommand {
 					"-type should come before -name.");
 			return -1;
 		}
-		if (nIndex+1 == parameters.length-1) {
-			if (!parameters[tIndex+1].equals("f") &&
-			!parameters[tIndex+1].equals("d")) {
+		if (nIndex + 1 == parameters.length - 1) {
+			if (!parameters[tIndex + 1].equals("f")
+					&& !parameters[tIndex + 1].equals("d")) {
 				PrintError.reportError(shell, "search",
 						"Please specify search type after -type [f/d]");
 				return -1;
 			}
-			if (!parameters[nIndex+1].matches("\".*\"")) {
+			if (!parameters[nIndex + 1].matches("\".*\"")) {
 				PrintError.reportError(shell, "search",
 						"Please enclose name with double quotes (\"\")");
 			}
