@@ -104,5 +104,6 @@ public class Manual extends ShellCommand {
 					command + " is not a valid command.");
 			return;
 		}
+		stdout.closeStream();
 	}
 }
