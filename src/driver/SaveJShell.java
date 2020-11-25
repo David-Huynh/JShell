@@ -35,6 +35,17 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 
 public class SaveJShell extends ShellCommand {
+
+	/**
+	 * Returns if this command produces StdOut. (used by the Interpreter to know
+	 * whether or not to make a new file)
+	 * 
+	 * @return Whether or not the command produces StdOut
+	 */
+	public static boolean producesStdOut() {
+		return false;
+	}
+
 	/**
 	 * Provides the manual for how to use this command
 	 *
