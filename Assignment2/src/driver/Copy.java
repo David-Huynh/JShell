@@ -1,86 +1,108 @@
-// **********************************************************
-// Assignment2:
-// Student1: Collin Chan
-// UTORID user_name: chancol7
-// UT Student #: 1006200889
-// Author: Collin Chan
-//
-// Student2: Jeff He
-// UTORID user_name: Hejeff2
-// UT Student #: 1006398783
-// Author: Jeff He
-//
-// Student3: Nevin Wong
-// UTORID user_name: wongnevi
-// UT Student #: 1005391434
-// Author: Nevin Wong
-//
-// Student4: David Huynh
-// UTORID user_name: huynhd12
-// UT Student #: 1005991937
-// Author: David Huynh
-//
-//
-// Honor Code: I pledge that this program represents my own
-// program code and that I have coded on my own. I received
-// help from no one in designing and debugging my program.
-// I have also read the plagiarism section in the course info
-// sheet of CSC B07 and understand the consequences.
-// *********************************************************
-
 package driver;
 
 public class Copy extends ShellCommand {
 
-	/**
-	 * Returns if this command produces StdOut. (used by the Interpreter to know
-	 * whether or not to make a new file)
-	 * 
-	 * @return Whether or not the command produces StdOut
-	 */
-	public static boolean producesStdOut() {
-		return false;
-	}
+  public static boolean producesStdOut() {
+    return false;
+  }
 
-	/**
-	 * Provides the manual for how to use this command
-	 * 
-	 * @return The manual
-	 */
-	public static String getManual() {
-		return "cp OLDPATH NEWPATH\n"
-				+ "Like mv, but don’t remove OLDPATH. If OLDPATH\n"
-				+ "is a directory, recursively copy the contents.";
-	}
+  public static String getManual() {
+    return "mv OLDPATH NEWPATH\n"
+        + "Copy item OLDPATH to NEWPATH. Both OLD-PATH and NEWPATH may " + "be "
+        + "relative to \nthe current directory or may be " + "full paths. If "
+        + "NEWPATH is adirectory, copy \nthe item into the directory.";
+  }
 
-	/**
-	 * Make a copy of StorageUnit in Storage in a given directory.
-	 * 
-	 * @param shell
-	 *            The JShell the command is to be performed on
-	 * @param parameters
-	 *            The parameters from the interpreter the command is to work
-	 *            with
-	 * @param outputType
-	 *            An integer representing the type of destination: 0 represents
-	 *            the command line, 1 represents overwriting a file, and 2
-	 *            represents appending to a file
-	 * @param outputFile
-	 *            If outputType is 1 or 2, this is the file we are
-	 *            overwriting/appending to, otherwise null
-	 */
-	public static void performOutcome(JShell shell, String[] parameters,
-			int outputType, File outputFile) {
-		if (parameters.length != 3) {
-			PrintError.reportError(shell, "cp", "Invalid number of arguments.");
-			return;
-		}
-		// Just call TransferFile, as its job is to also copy files.
-		TransferFile.performOutcome(shell, parameters, outputType, outputFile);
-	}
+  public static void performOutcome(JShell shell, String[] parameters,
+      int outputType, File outputFile) {
 
-	public static void copy(StorageUnit toMove, Directory moveHere) {
-		StorageUnit toAdd = toMove.clone((Directory) moveHere);
-		moveHere.getDirContents().add(toAdd);
-	}
+    if (!TransferFile.validateNumberOfParameters(shell, parameters[0],
+        parameters.length)) {
+      return;
+    }
+
+    StorageUnit toCopy = new Path(parameters[1]).verifyPath(shell, false);
+    StorageUnit copyHere = new Path(parameters[2]).verifyPath(shell, false);
+    Directory copyHereParent =
+        (Directory) new Path(parameters[2]).verifyPath(shell, true);
+
+    if (toCopy == null) {
+      PrintError.reportError(shell, "mv",
+          "Cannot stat '" + parameters[1] + "': No such file or directory");
+      return;
+    }
+    if (copyHere != null) {
+      executeExistingPath(copyHere, toCopy, shell, parameters);
+    } else if (copyHereParent != null) {
+      executeNewPath(copyHere, toCopy, copyHereParent, shell, parameters);
+    } else {
+      PrintError.reportError(shell, parameters[0],
+          "Cannot stat '" + parameters[2] + "': Path is invalid.");
+    }
+
+  }
+
+  private static void executeExistingPath(StorageUnit copyHere,
+      StorageUnit toCopy, JShell shell, String[] parameters) {
+    if (copyHere.isDirectory()) {
+      if (!TransferFile.validateNames(toCopy, (Directory) copyHere, shell,
+          parameters)) {
+        return;
+      } else if (toCopy.isDirectory() && TransferFile.validateParents(
+          (Directory) toCopy, (Directory) copyHere, shell, parameters)) {
+        copy(toCopy, (Directory) copyHere);
+      } else if (toCopy.isFile()) {
+        copy(toCopy, (Directory) copyHere);
+      } else {
+        return;
+      }
+    } else if (copyHere.isFile()) {
+      if (!TransferFile.validateFileToFile(copyHere, (File) copyHere, shell,
+          parameters)) {
+        return;
+      }
+      copyAndOverwriteFile((File) toCopy, (File) copyHere);
+    }
+  }
+
+  private static void executeNewPath(StorageUnit copyHere, StorageUnit toCopy,
+      Directory copyHereParent, JShell shell, String[] parameters) {
+    StorageUnit copyHereNew =
+        TransferFile.determineNewStorageUnit(parameters[2]);
+    Path destPath = new Path(parameters[2]);
+    String newStorageUnitName =
+        destPath.getPathElements()[destPath.getPathElements().length - 1];
+    if (toCopy.isDirectory() && TransferFile.validateParents((Directory) toCopy,
+        copyHereParent, shell, parameters)) {
+      copyAndOverwriteDir(toCopy, copyHereParent, newStorageUnitName);
+    } else if (toCopy.isFile() && copyHereNew.isFile()) {
+      copyAndCreateFile((File) toCopy, (File) copyHereNew, copyHereParent);
+    } else {
+      PrintError.reportError(shell, parameters[0], "Cannot copy file '"
+          + parameters[1] + "' into a directory that doesn't exist.");
+    }
+  }
+
+  public static void copy(StorageUnit toCopy, Directory copyHere) {
+    StorageUnit toAdd = toCopy.clone((Directory) copyHere);
+    copyHere.getDirContents().add(toAdd);
+  }
+
+  private static void copyAndOverwriteDir(StorageUnit toCopy,
+      Directory copyHereParent, String newName) {
+
+    copy(toCopy, copyHereParent);
+    toCopy.setName(newName);
+  }
+
+  public static void copyAndOverwriteFile(File toCopy, File copyHere) {
+    copyHere.overwrite(toCopy.getContents());
+  }
+
+  private static void copyAndCreateFile(File toCopy, File copyHereNew,
+      Directory copyHereParent) {
+
+    copyHereParent.addFile(
+        new File(copyHereNew.getName(), toCopy.getContents(), copyHereParent));
+  }
 }
