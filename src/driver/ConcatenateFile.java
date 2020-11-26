@@ -49,7 +49,7 @@ public class ConcatenateFile extends ShellCommand {
 	public static boolean producesStdOut() {
 		return true;
 	}
-	
+
 	/**
 	 * Provides the manual for how to use this command
 	 * 
@@ -93,8 +93,12 @@ public class ConcatenateFile extends ShellCommand {
 		// for loop to loop through all the file paths specified
 		for (int i = 1; i < parameters.length; i++) {
 			p.setPath(parameters[i]);
-			// checks if the path is an absolute path
-			if (p.isAbsolute()) {
+			if (p.getPath().equals("/")) {
+				PrintError.reportError(shell, "cat",
+						"The root is not a valid file!");
+				return;
+			}
+			if (p.isAbsolute()) { // checks if the path is an absolute path
 				cDir = shell.getRootDir();
 			} else {
 				cDir = shell.getCurrentDir();

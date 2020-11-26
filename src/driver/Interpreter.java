@@ -47,7 +47,7 @@ public class Interpreter {
 	 * interpreted as a gap in between parameters. The last parameter will be
 	 * the string containing information regarding redirection.
 	 * 
-	 * For example, "command "something in quotes" random >>file" becomes
+	 * For example, "command "something in quotes" random>>file" becomes
 	 * {"command", ""something in quotes"", "random", ">>file"}.
 	 * 
 	 * @param userCommand
@@ -133,6 +133,21 @@ public class Interpreter {
 	}
 
 	/**
+	 * Helper function for interpret to determine whether a given string
+	 * corresponds to a valid command.
+	 * 
+	 * @param shell
+	 *            The JShell whose command to Class HashMap is to be checked to
+	 *            see if the command is valid in it
+	 * @param cmd
+	 *            The command to be checked
+	 * @return Whether the given string is a valid command
+	 */
+	private static boolean isValidCmd(JShell shell, String cmd) {
+		return shell.getCmdToClass().containsKey(cmd);
+	}
+
+	/**
 	 * Calls the appropriate commands to carry out the user's desired outcomes
 	 * according to a given command, according to the JShell's command to Class
 	 * HashMap
@@ -143,41 +158,29 @@ public class Interpreter {
 	 *            The specific instance of JShell the user is using
 	 */
 	public static void interpret(String userCommand, JShell shell) {
-		String outPath = new String();
 		File outFile = null;
-		outPath = null;
 		String parameters[] = Interpreter.splitCmdIntoParams(userCommand);
 		if (parameters.length == 1) {
 			PrintError.reportError(shell, "Error: no command entered.");
 			return;
 		}
+		if (!isValidCmd(shell, parameters[0])) {
+			PrintError.reportError(shell,
+					"Error: " + parameters[0] + " is not a valid command.");
+			return;
+		}
 		String redirectInfo = parameters[parameters.length - 1];
 		parameters = Arrays.copyOf(parameters, parameters.length - 1);
 		int outputType = getOutputType(redirectInfo);
-		if (outputType != 0) { // Get rid of the '>'s at the beginning
+		if (outputType != 0 && (producesStdOut(shell, parameters[0]))) {
 			redirectInfo = redirectInfo.replace(">", "").strip();
 			Path path = new Path(redirectInfo);
-			Directory dir = shell.getCurrentDir();
-			if (path.isAbsolute()) { // path is absolute
-				dir = shell.getRootDir();
-			}
-			dir = path.cyclePath(0, dir, shell);
-			if (dir == null) { // Check if the second last element is valid dir
-				if (path.getPathElements()[path.getPathElements().length - 2]
-						.equals(".")) {
-					dir = shell.getCurrentDir();
-				} else if (path.getPathElements()[path.getPathElements().length
-						- 2].equals("..")) {
-					dir = shell.getCurrentDir().getParentDir();
-				} else if (path.getPathElements().length == 2
-						&& redirectInfo.startsWith("/")) {
-					dir = shell.getRootDir();
-				} else {
-					PrintError.reportError(shell,
-							"Error: that is not a valid directory "
-									+ "to redirect to.");
-					return;
-				}
+			Directory dir = getFinalDir(path, shell);
+			if (dir == null) {
+				PrintError.reportError(shell,
+						"Error: that is not a valid directory "
+								+ "to redirect to.");
+				return;
 			}
 			String filename = path
 					.getPathElements()[path.getPathElements().length - 1];
@@ -203,9 +206,68 @@ public class Interpreter {
 	}
 
 	/**
-	 * Helper for the above method, takes in parameters (without redirection
-	 * part) and calls the appropriate command using the shell's command to
-	 * Class HashMap
+	 * Helper for interpret, determines the final directory of a given path.
+	 * 
+	 * @param path
+	 *            The path to check
+	 * @param shell
+	 *            The JShell to use for its current directory
+	 * @return The final directory of it is a valid path to one, null otherwise.
+	 */
+	private static Directory getFinalDir(Path path, JShell shell) {
+		if (path.getPath().equals("/")) {
+			return null; // Disallow redirection to "/"
+		}
+		Directory dir = shell.getCurrentDir();
+		if (path.isAbsolute()) { // path is absolute
+			dir = shell.getRootDir();
+		}
+		dir = path.cyclePath(0, dir, shell);
+		if (dir == null) { // Check if the second last element is valid dir
+			if (path.getPathElements()[path.getPathElements().length - 2]
+					.equals(".")) {
+				dir = shell.getCurrentDir();
+			} else if (path.getPathElements()[path.getPathElements().length - 2]
+					.equals("..")) {
+				dir = shell.getCurrentDir().getParentDir();
+			} else if (path.getPathElements().length == 2
+					&& path.getPath().startsWith("/")) {
+				dir = shell.getRootDir();
+			}
+		}
+		return dir;
+	}
+
+	/**
+	 * Helper for interpret, checks if a command produces StdOut. Used to
+	 * determine whether to create a new file.
+	 * 
+	 * @param shell
+	 *            The JShell whose command to Class HashMap is to be used to
+	 *            determine its Class
+	 * @param cmd
+	 *            The string representation of the command
+	 * @return Whether or not this command produces StdOut
+	 */
+	private static boolean producesStdOut(JShell shell, String cmd) {
+		try {
+			Method method = shell.getCmdToClass().get(cmd)
+					.getDeclaredMethod("producesStdOut");
+			try {
+				return (boolean) method.invoke(null);
+			} catch (IllegalAccessException | IllegalArgumentException
+					| InvocationTargetException e) {
+				e.printStackTrace();
+			}
+		} catch (NoSuchMethodException | SecurityException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	/**
+	 * Helper for interpret, takes in parameters (without redirection part) and
+	 * calls the appropriate command using the shell's command to Class HashMap
 	 * 
 	 * @param parameters
 	 *            The parameters (with the redirection info stripped off)
@@ -215,29 +277,23 @@ public class Interpreter {
 	 * @param outFile
 	 *            If outputType is 1 or 2, this is the the File in question
 	 * @param shell
-	 *            The JShell that send the call to interpret
+	 *            The JShell that sent the call to interpret
 	 */
 	private static void callCommand(String[] parameters, int outputType,
 			File outFile, JShell shell) {
 		String command = parameters[0]; // The first word is the command
-		if (shell.getCmdToClass().containsKey(command)) {
+		try {
+			Method perform = shell.getCmdToClass().get(command)
+					.getDeclaredMethod("performOutcome", shell.getClass(),
+							String[].class, int.class, File.class);
 			try {
-				Method perform = shell.getCmdToClass().get(command)
-						.getDeclaredMethod("performOutcome", shell.getClass(),
-								String[].class, int.class, File.class);
-				try {
-					perform.invoke(null, shell, parameters, outputType,
-							outFile);
-				} catch (IllegalAccessException | IllegalArgumentException
-						| InvocationTargetException e) {
-					e.printStackTrace();
-				}
-			} catch (NoSuchMethodException | SecurityException e) {
+				perform.invoke(null, shell, parameters, outputType, outFile);
+			} catch (IllegalAccessException | IllegalArgumentException
+					| InvocationTargetException e) {
 				e.printStackTrace();
 			}
-		} else {
-			PrintError.reportError(shell,
-					"Error: " + command + " is not a valid command.");
+		} catch (NoSuchMethodException | SecurityException e) {
+			e.printStackTrace();
 		}
 	}
 }
