@@ -30,82 +30,86 @@
 
 package driver;
 
+import java.util.ArrayList;
+
 /**
- * The Remove command is used by the user to remove a specified directory in the
- * file system.
+ * The Remove command is used by the user to remove a specified directory in the file system.
  */
 
 public class Remove extends ShellCommand {
 
-	/**
-	 * Returns if this command produces StdOut. (used by the Interpreter to know
-	 * whether or not to make a new file)
-	 * 
-	 * @return Whether or not the command produces StdOut
-	 */
-	public static boolean producesStdOut() {
-		return false;
-	}
-	
-	/**
-	 * Provides the manual for how to use this command
-	 * 
-	 * @return The manual
-	 */
-	public static String getManual() {
-		return "rm DIR\nRemoves the directory from the file system. This also "
-				+ "removes all the\nchildren of DIR.";
-	}
+  /**
+   * Returns if this command produces StdOut. (used by the Interpreter to know whether or not to make
+   * a new file)
+   * 
+   * @return Whether or not the command produces StdOut
+   */
+  public static boolean producesStdOut() {
+    return false;
+  }
 
-	/**
-	 * Tell the JShell to remove a specified file/directory.
-	 * 
-	 * @param shell
-	 *            The JShell the command is to be performed on
-	 * @param parameters
-	 *            The parameters from the interpreter the command is to work
-	 *            with
-	 * @param outputType
-	 *            An integer representing the type of destination: 0 represents
-	 *            the command line, 1 represents overwriting a file, and 2
-	 *            represents appending to a file
-	 * @param outputFile
-	 *            If outputType is 1 or 2, this is the file we are
-	 *            overwriting/appending to, otherwise null
-	 */
-	public static void performOutcome(JShell shell, String[] parameters,
-			int outputType, File outputFile) {
+  /**
+   * Provides the manual for how to use this command
+   * 
+   * @return The manual
+   */
+  public static String getManual() {
+    return "rm DIR\nRemoves the directory from the file system. This also "
+        + "removes all the\nchildren of DIR.";
+  }
 
-		if (parameters.length != 2) {
-			PrintError.reportError(shell, "rm", "Invalid number of parameters");
-			return;
-		}
+  /**
+   * Tell the JShell to remove a specified file/directory.
+   * 
+   * @param shell The JShell the command is to be performed on
+   * @param parameters The parameters from the interpreter the command is to work with
+   * @param outputType An integer representing the type of destination: 0 represents the command line,
+   *        1 represents overwriting a file, and 2 represents appending to a file
+   * @param outputFile If outputType is 1 or 2, this is the file we are overwriting/appending to,
+   *        otherwise null
+   */
+  public static void performOutcome(JShell shell, String[] parameters,
+      int outputType, File outputFile) {
 
-		Path toDelete = new Path(parameters[1]);
-		Directory startDir;
+    if (parameters.length != 2) {
+      PrintError.reportError(shell, "rm", "Invalid number of parameters");
+      return;
+    }
 
-		if (toDelete.isAbsolute()) {
-			startDir = shell.getRootDir();
-		} else {
-			startDir = shell.getCurrentDir();
-		}
+    Path toDelete = new Path(parameters[1]);
+    Directory startDir;
 
-		Directory parentOfDeleted = toDelete.cyclePath(0, startDir, shell);
-		StorageUnit toDeleteDir = toDelete
-				.determineFinalElement(parentOfDeleted);
+    if (toDelete.isAbsolute()) {
+      startDir = shell.getRootDir();
+    } else {
+      startDir = shell.getCurrentDir();
+    }
 
-		if (toDeleteDir == null || !toDeleteDir.isDirectory()) {
-			PrintError.reportError(shell, "rm", "Cannot delete '"
-					+ parameters[1] + "', no such directory.");
-			return;
-		}
+    Directory parentOfDeleted = toDelete.cyclePath(0, startDir, shell);
+    StorageUnit toDeleteDir = toDelete.determineFinalElement(parentOfDeleted);
 
-		if (toDeleteDir.checkParents(shell)) {
-			PrintError.reportError(shell, "rm",
-					"Cannot remove current working directory or any of its ancestors");
-			return;
-		}
-		toDeleteDir.getParentDir().getDirContents().remove(toDeleteDir);
-		toDeleteDir.parentDir = null;
-	}
+    if (toDeleteDir == null || !toDeleteDir.isDirectory()) {
+      PrintError.reportError(shell, "rm",
+          "Cannot delete '" + parameters[1] + "', no such directory.");
+      return;
+    }
+
+    if (toDeleteDir.checkParents(shell)) {
+      PrintError.reportError(shell, "rm",
+          "Cannot remove current working directory or any of its ancestors");
+      return;
+    }
+
+    ArrayList<StorageUnit> parentContents =
+        toDeleteDir.getParentDir().getDirContents();
+    int indexRemove = -1;
+    for (int i = 0; i < parentContents.size(); i++) {
+      if (parentContents.get(i).name.equals(toDeleteDir.name)) {
+        indexRemove = i;
+        break;
+      }
+    }
+    toDeleteDir = null;
+    parentContents.remove(indexRemove);
+  }
 }
