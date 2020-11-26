@@ -1,23 +1,19 @@
 package driver;
 
-import java.util.ArrayList;
-
 /**
- * The Move command is used by the user to move a StorageUnit to a new directory.
+ * The TransferFile class contains helper methods for the Move and Copy class
  */
-public class TransferFile extends ShellCommand {
+public class TransferFile {
 
   /**
-   * Move a given StorageUnit to new location in Storage.
+   * Checks the number of parameters the user has entered, and prints an error message if the number
+   * is invalid
    * 
-   * @param shell The JShell the command is to be performed on
-   * @param parameters The parameters from the interpreter the command is to work with
-   * @param outputType An integer representing the type of destination: 0 represents the command line,
-   *        1 represents overwriting a file, and 2 represents appending to a file
-   * @param outputFile If outputType is 1 or 2, this is the file we are overwriting/appending to,
-   *        otherwise null
+   * @param shell The JShell where the paths should be located
+   * @param operation The string "mv" or "cp", depending on what the user called
+   * @param paramLength Number of parameters user entered
+   * @return True, if paramLength == 3, False otherwise
    */
-
   public static boolean validateNumberOfParameters(JShell shell,
       String operation, int paramLength) {
     if (paramLength != 3) {
@@ -27,6 +23,15 @@ public class TransferFile extends ShellCommand {
     return true;
   }
 
+  /**
+   * Checks whether toMove is an ancestor of moveHere, and prints an error if it is
+   * 
+   * @param toMove The directory that is checked to be an ancestor of toMove
+   * @param moveHere The directory that toMove is compared to
+   * @param shell The JShell toMove and moveHere are located in
+   * @param parameters The command the user entered on the command line
+   * @return True if toMove is not an ancestor of moveHere, False otherwise
+   */
   public static boolean validateParents(Directory toMove, Directory moveHere,
       JShell shell, String[] parameters) {
     if (toMove.checkParents(moveHere, shell)) {
@@ -37,6 +42,16 @@ public class TransferFile extends ShellCommand {
     return true;
   }
 
+  /**
+   * Checks if the name of toMove is equal to any of the names of the StorageUnits in moveHere, and
+   * prints an error if it is
+   * 
+   * @param toMove The StorageUnit that has the name we want to check uniqueness for
+   * @param moveHere The directory where its contents are checked against toMove
+   * @param shell The JShell where toMove and moveHere are located in
+   * @param parameters The command the user entered on the command line
+   * @return True if toMove does not share a name with any of the contents of moveHere
+   */
   public static boolean validateNames(StorageUnit toMove, Directory moveHere,
       JShell shell, String[] parameters) {
     if (toMove.checkIdenticalNames(moveHere)) {
@@ -49,8 +64,16 @@ public class TransferFile extends ShellCommand {
     return true;
   }
 
-  public static boolean validateFileToFile(StorageUnit toMove, File moveHere,
-      JShell shell, String[] parameters) {
+  /**
+   * Checks if toMove is a file, and prints an error if it is not
+   * 
+   * @param toMove The StorageUnit that is checked whether of not it is a file
+   * @param shell The JShell toMove lives in
+   * @param parameters The command the user entered on the command line
+   * @return True if toMove is a file, false otherwise
+   */
+  public static boolean validateFileToFile(StorageUnit toMove, JShell shell,
+      String[] parameters) {
     if (toMove.isFile()) {
       return true;
     } else {
@@ -61,6 +84,14 @@ public class TransferFile extends ShellCommand {
     }
   }
 
+  /**
+   * Checks whether dest is a new file path or a new directory path and returns a StorageUnit with
+   * same name as the element at the end of the path
+   * 
+   * @param dest The path the user entered
+   * @return A File/Directory with the name of the final element of the path depending on whether the
+   *         path is a file or directory path
+   */
   public static StorageUnit determineNewStorageUnit(String dest) {
     Path moveHerePath = new Path(dest);
     String newStorageUnitName = moveHerePath
