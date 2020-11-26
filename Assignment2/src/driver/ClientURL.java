@@ -38,18 +38,18 @@ import java.util.Scanner;
 public class ClientURL extends ShellCommand {
 
 	/**
-	 * Returns if this command produces StdOut. (used by the Interpreter to know
-	 * whether or not to make a new file)
-	 * 
+	 * Returns if this command produces StdOut. (used by the Interpreter to know whether or not to
+	 * make a new file)
+	 *
 	 * @return Whether or not the command produces StdOut
 	 */
 	public static boolean producesStdOut() {
 		return false;
 	}
-	
+
 	/**
 	 * Provides the manual for how to use this command
-	 * 
+	 *
 	 * @return The manual
 	 */
 	public static String getManual() {
@@ -67,22 +67,27 @@ public class ClientURL extends ShellCommand {
 				+ "contents in the current working directory.";
 	}
 
+	private static int createFile(String[] address, String content, JShell shell) {
+		Directory currDir = shell.getCurrentDir();
+		String fileName = address[address.length - 1];
+		fileName = fileName.replace(".", "");
+		File nFile = new File(fileName, content, currDir);
+		if (nFile != null) {
+			currDir.addFile(nFile);
+			return 1;
+		}
+		return 0;
+	}
+
 	/**
-	 * Retrieves the file at a given URL and adds it to the JShell's current
-	 * working directory.
-	 * 
-	 * @param shell
-	 *            The JShell the command is to be performed on
-	 * @param parameters
-	 *            The parameters from the interpreter the command is to work
-	 *            with
-	 * @param outputType
-	 *            An integer representing the type of destination: 0 represents
-	 *            the command line, 1 represents overwriting a file, and 2
-	 *            represents appending to a file
-	 * @param outputFile
-	 *            If outputType is 1 or 2, this is the file we are
-	 *            overwriting/appending to, otherwise null
+	 * Retrieves the file at a given URL and adds it to the JShell's current working directory.
+	 *
+	 * @param shell      The JShell the command is to be performed on
+	 * @param parameters The parameters from the interpreter the command is to work with
+	 * @param outputType An integer representing the type of destination: 0 represents the command
+	 *                   line, 1 represents overwriting a file, and 2 represents appending to a file
+	 * @param outputFile If outputType is 1 or 2, this is the file we are overwriting/appending to,
+	 *                   otherwise null
 	 */
 	public static void performOutcome(JShell shell, String[] parameters,
 			int outputType, File outputFile) {
@@ -91,20 +96,26 @@ public class ClientURL extends ShellCommand {
 					"Invalid number of arguments.");
 			return;
 		}
-		/** random stuff i attempted lol i dont think it works
-		String content;
+
+		String content = "";
 		try {
 			URL url = new URL(parameters[1]);
 			Scanner urlInput = new Scanner(url.openStream());
-			content = urlInput.next();
+			while (urlInput.hasNextLine()) {
+				content += urlInput.nextLine() + "\n";
+			}
 			urlInput.close();
-			System.out.println(content);
+			//System.out.println(content);
 		} catch (MalformedURLException e) {
 			PrintError.reportError(shell, "curl", "Could not reach this URL.");
 		} catch (IOException e) {
 			PrintError.reportError(shell, "curl",
 					"Could not read from this URL.");
 		}
-		**/
+		int success = createFile(parameters[1].split("/"), content, shell);
+		if (success == 0) {
+			PrintError.reportError(shell, "curl",
+					"Unable to create file.");
+		}
 	}
 }
