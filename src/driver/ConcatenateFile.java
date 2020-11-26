@@ -89,7 +89,7 @@ public class ConcatenateFile extends ShellCommand {
 			return;
 		}
 		Path p = new Path("");
-		Directory cDir = shell.getCurrentDir();
+		Directory cDir;
 		// for loop to loop through all the file paths specified
 		for (int i = 1; i < parameters.length; i++) {
 			p.setPath(parameters[i]);
