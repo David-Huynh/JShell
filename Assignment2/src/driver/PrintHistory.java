@@ -58,7 +58,7 @@ public class PrintHistory extends ShellCommand {
 		return "history [number] \n" + "This command will print out recent "
 				+ "commands, one command per " + "line. i.e. \r\n"
 				+ "    1. cd ..\r\n" + "    2. mkdir textFolder\r\n"
-				+ "    3. echo “Hello World”\r\n" + "    4. fsjhdfks\r\n"
+				+ "    3. echo ï¿½Hello Worldï¿½\r\n" + "    4. fsjhdfks\r\n"
 				+ "    5. history\r\n"
 				+ "The above output from history has two columns. The first "
 				+ "column is\r\n" + "numbered such that the line with the "
@@ -114,13 +114,15 @@ public class PrintHistory extends ShellCommand {
 				PrintError.reportError(shell, "history", "Invalid number.");
 				return;
 			}
-			if (counter > his.size() || counter < 0) {
+			if (counter < 0) {
 				PrintError.reportError(shell, "history",
 						"Number specified is not possible.");
 				return;
 			}
-			i = his.size() - counter;
-			num = his.size() - counter + 1;
+			if (counter <= his.size()) {
+				i = his.size() - counter;
+				num = his.size() - counter + 1;
+			}
 		}
 		while (i < his.size()) { // printing commands
 			stdout.sendLine(num + ". " + his.get(i));
