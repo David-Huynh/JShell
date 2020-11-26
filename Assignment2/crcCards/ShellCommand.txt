@@ -1,6 +1,6 @@
 Class name: ShellCommand
 Parent class (if any): 
-Subclasses (if any): Exit, MakeDirectory, ChangeDirectory, ListFiles, PrintWorkingDirectory, PushDirOntoStack, PopDirFromStack, PrintHistory, ConcatenateFile, Echo, Manual, Remove, Move, Copy, ClientURL, SaveJShell, LoadJShell, Search, Tree
+Subclasses (if any): Exit, MakeDirectory, ChangeDirectory, ListFiles, PrintWorkingDirectory, PushDirOntoStack, PopDirFromStack, PrintHistory, ConcatenateFile, Echo, Manual, Remove, TransferFile, Copy, ClientURL, SaveJShell, LoadJShell, Search, Tree
 
 Responsibilities:
 * Perform a specific user induced command
