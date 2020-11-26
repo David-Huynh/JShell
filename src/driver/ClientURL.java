@@ -76,13 +76,18 @@ public class ClientURL extends ShellCommand {
 	 * @param content		 The String that contains the contents for the file to be created
 	 * @param shell      The JShell the command is to be performed on
 	 *
-	 * @return An integer 1 if new file is created and 0 if there is an error creating
-	 * 				 the file
+	 * @return An integer 1 if new file is created, 0 if there is an error creating
+	 * 				 the file and -1 if file with same name already exits
 	 */
 	private static int createFile(String[] address, String content, JShell shell) {
 		Directory currDir = shell.getCurrentDir();
 		String fileName = address[address.length - 1];
 		fileName = fileName.replace(".", "");
+		if (currDir.containsFile(fileName) != -1) {
+			PrintError.reportError(shell, "curl",
+					"Filename already exits: "+fileName);
+			return -1;
+		}
 		File nFile = new File(fileName, content, currDir);
 		if (nFile != null) {
 			currDir.addFile(nFile);
@@ -108,23 +113,28 @@ public class ClientURL extends ShellCommand {
 					"Invalid number of arguments.");
 			return;
 		}
-
 		String content = "";
 		try {
 			URL url = new URL(parameters[1]);
 			Scanner urlInput = new Scanner(url.openStream());
 			while (urlInput.hasNextLine()) {
-				content += urlInput.nextLine() + "\n";
+				content += urlInput.nextLine();
+				if (urlInput.hasNextLine()) {
+					content += "\n";
+				}
 			}
 			urlInput.close();
 			//System.out.println(content);
 		} catch (MalformedURLException e) {
 			PrintError.reportError(shell, "curl", "Could not reach this URL.");
+			return;
 		} catch (IOException e) {
 			PrintError.reportError(shell, "curl",
 					"Could not read from this URL.");
+			return;
 		}
-		int success = createFile(parameters[1].split("/"), content, shell);
+		String [] urlElements = parameters[1].split("/");
+		int success = createFile(urlElements, content, shell);
 		if (success == 0) {
 			PrintError.reportError(shell, "curl",
 					"Unable to create file.");

@@ -202,7 +202,7 @@ abstract class StorageUnit implements Serializable {
   /**
    * Checks if this.name is equal to any of the StorageUnit names in directory
    * 
-   * @param The directory where the storage units are that will be compared to this
+   * @param directory The directory where the storage units are that will be compared to this
    * @return True, if this is a file, false otherwise
    */
   public boolean checkIdenticalNames(Directory directory) {
