@@ -67,6 +67,18 @@ public class ClientURL extends ShellCommand {
 				+ "contents in the current working directory.";
 	}
 
+	/**
+	 * Creates a file given the address and content inside the current working directory
+	 * specified in shell and returns 1 if file was created and 0 if there was an error
+	 * creating the file.
+	 *
+	 * @param address		 The String array containing the url that was split by "/"
+	 * @param content		 The String that contains the contents for the file to be created
+	 * @param shell      The JShell the command is to be performed on
+	 *
+	 * @return An integer 1 if new file is created and 0 if there is an error creating
+	 * 				 the file
+	 */
 	private static int createFile(String[] address, String content, JShell shell) {
 		Directory currDir = shell.getCurrentDir();
 		String fileName = address[address.length - 1];
