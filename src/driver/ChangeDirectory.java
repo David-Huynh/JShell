@@ -92,6 +92,10 @@ public class ChangeDirectory extends ShellCommand {
 			currDir = shell.getRootDir();
 			parameters[1] = parameters[1].substring(1);
 		}
+		if (parameters[1].indexOf("/") == 0) {
+			PrintError.reportError(shell, "cd", "Invalid path.");
+			return;
+		}
 		subDir = parameters[1].split("/"); // getting the sub-dir names in path
 		for (int i = 0; i < subDir.length; i++) {
 			if (subDir[i].equals("..") || subDir[i].equals(".")) {
