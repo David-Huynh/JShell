@@ -3,8 +3,7 @@ Parent class (if any): ShellCommand
 Subclasses (if any): 
 
 Responsibilities:
-* Move a StorageUnit to a new Directory in Storage
-* Provide a manual for how to use this class
+* Provide validity checking for Copy and Move
 * Report errors to be printed by the shell
 
 Collaborators:
