@@ -1,14 +1,12 @@
-Class name: Copy
+Class name: Move
 Parent class (if any): ShellCommand
 Subclasses (if any): 
 
-Responsibilities:
-* Copy a StorageUnit to a new Directory in Storage
+Responsiblities:
+* Move a StorageUnit to a new Directory in Storage
 * Overwrite and create a new StorageUnit in Storage
 * Provide a manual for how to use this class
-* Report errors to be printed by the shell
 
 Collaborators:
 * StorageUnit
 * Storage
-* TransferFile

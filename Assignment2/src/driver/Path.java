@@ -241,6 +241,13 @@ public class Path {
     }
   }
 
+  /**
+   * Determines if entire path is valid
+   * 
+   * @param shell The JShell to perform in
+   * @param returnParent Determines whether or not the parent of the final element is returned
+   * @return Return the final StorageUnit in the path (or parent of final of returnParent true)
+   */
   public StorageUnit verifyPath(JShell shell, boolean returnParent) {
     Directory startDir;
 
