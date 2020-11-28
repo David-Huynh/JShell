@@ -91,7 +91,7 @@ public class Search extends ShellCommand {
 		Path path = new Path("");
 		Directory currDir;
 		// check for paths recursively
-		for (int i = 0; i < tIndex; i++) {
+		for (int i = 1; i < tIndex; i++) {
 			path.setPath(parameters[i]);
 			if (path.isAbsolute()) {
 				currDir = shell.getRootDir();
@@ -101,7 +101,7 @@ public class Search extends ShellCommand {
 			Directory parent = path.cyclePath(0, currDir, shell);
 			String name = parameters[parameters.length - 1]
 					.replaceAll("^\"+|\"+$", "");
-			recSearch(parent, name, parameters[tIndex + 1], stdout);
+			recSearch(parent, name, parameters[i], stdout);
 		}
 		stdout.closeStream();
 	}
