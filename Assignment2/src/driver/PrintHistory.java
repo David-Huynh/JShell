@@ -32,6 +32,8 @@ package driver;
 
 import java.util.ArrayList;
 
+import driver.JShell.CommandHistory;
+
 /**
  * The PrintHistory command is used by the user to print a number of the most
  * recent commands they have input.
@@ -48,7 +50,7 @@ public class PrintHistory extends ShellCommand {
 	public static boolean producesStdOut() {
 		return true;
 	}
-	
+
 	/**
 	 * Provides the manual for how to use this command
 	 * 
@@ -103,10 +105,8 @@ public class PrintHistory extends ShellCommand {
 					"Invalid number of arguments.");
 			return;
 		}
-		ArrayList<String> his = shell.getComHis();
+		CommandHistory his = shell.getComHis();
 		int counter = 0;
-		int i = 0;
-		int num = 1;
 		if (parameters.length == 2) {
 			try { // try-catch to get the number of required commands
 				counter = Integer.parseInt(parameters[1]);
@@ -119,17 +119,20 @@ public class PrintHistory extends ShellCommand {
 						"Number specified is not possible.");
 				return;
 			}
-			if (counter <= his.size()) {
-				i = his.size() - counter;
-				num = his.size() - counter + 1;
+			int currIndex = 0;
+			for (String cmd : his) { // Uses Iterator for his
+				if (currIndex > his.getSize() - counter - 1)
+					stdout.sendLine((currIndex + 1) + ". " + cmd);
+				currIndex++;
 			}
+		} else {
+			int currIndex = 0;
+			for (String cmd : his) { // Uses Iterator for his
+				stdout.sendLine((currIndex + 1) + ". " + cmd);
+				currIndex++;
+			}
+			stdout.closeStream();
 		}
-		while (i < his.size()) { // printing commands
-			stdout.sendLine(num + ". " + his.get(i));
-			num++;
-			i++;
-		}
-		stdout.closeStream();
 	}
 
 }
