@@ -66,19 +66,24 @@ public class ListFiles extends ShellCommand {
 	}
 
 	/**
-	 * Tell the JShell to list all the contents of a specific directory in the file
-	 * system.
+	 * Tell the JShell to list all the contents of a specific directory in the
+	 * file system.
 	 * 
-	 * @param shell      The JShell the command is to be performed on
-	 * @param parameters The parameters from the interpreter the command is to work
-	 *                   with
-	 * @param outputType An integer representing the type of destination: 0
-	 *                   represents the command line, 1 represents overwriting a
-	 *                   file, and 2 represents appending to a file
-	 * @param outputFile If outputType is 1 or 2, this is the file we are
-	 *                   overwriting/appending to, otherwise null
+	 * @param shell
+	 *            The JShell the command is to be performed on
+	 * @param parameters
+	 *            The parameters from the interpreter the command is to work
+	 *            with
+	 * @param outputType
+	 *            An integer representing the type of destination: 0 represents
+	 *            the command line, 1 represents overwriting a file, and 2
+	 *            represents appending to a file
+	 * @param outputFile
+	 *            If outputType is 1 or 2, this is the file we are
+	 *            overwriting/appending to, otherwise null
 	 */
-	public static void performOutcome(JShell shell, String[] parameters, int outputType, File outputFile) {
+	public static void performOutcome(JShell shell, String[] parameters,
+			int outputType, File outputFile) {
 		StdOut stdout = new StdOut(shell, outputType, outputFile);
 		boolean recursive = false;
 
@@ -91,13 +96,14 @@ public class ListFiles extends ShellCommand {
 		boolean cont = true;
 
 		if (parameters.length == 1) {
-			list(stdout, shell.getCurrentDir().getDirContents());
+			list(stdout, shell.getCurrentDir());
 		} else if (parameters.length == 2 && recursive) {
 			cont = parseParameter(shell, ".", stdout, recursive);
 		} else {
 			for (int i = 1; i < parameters.length; i++) {
 				if (!parameters[i].equals("-R")) {
-					cont = parseParameter(shell, parameters[i], stdout, recursive);
+					cont = parseParameter(shell, parameters[i], stdout,
+							recursive);
 				}
 				if (!cont) {
 					break;
@@ -110,13 +116,15 @@ public class ListFiles extends ShellCommand {
 	/**
 	 * Prints all StorageUnit names in an ArrayList of StorageUnits.
 	 * 
-	 * @param stdout   The StdOut to send the contents to
-	 * @param fileList The ArrayList of StorageUnits whose names are to be printed
+	 * @param stdout
+	 *            The StdOut to send the contents to
+	 * @param fileList
+	 *            The ArrayList of StorageUnits whose names are to be printed
 	 */
-	public static void list(StdOut stdout, ArrayList<StorageUnit> fileList) {
+	public static void list(StdOut stdout, Directory dir) {
 		// Function used to print all files in directory
-		for (int i = 0; i < fileList.size(); i++) {
-			stdout.sendLine(fileList.get(i).name);
+		for (StorageUnit unit : dir) { // Uses dir's iterator
+			stdout.sendLine(unit.name);
 		}
 		stdout.sendLine("");
 	}
@@ -124,33 +132,41 @@ public class ListFiles extends ShellCommand {
 	/**
 	 * Perform the actual listing of a given path userInput
 	 * 
-	 * @param shell     The JShell the path lives in
-	 * @param userInput The path the user types in
-	 * @param stdout    the stdOut the user specifies
-	 * @param recursive Whether to print the directories recursively
+	 * @param shell
+	 *            The JShell the path lives in
+	 * @param userInput
+	 *            The path the user types in
+	 * @param stdout
+	 *            the stdOut the user specifies
+	 * @param recursive
+	 *            Whether to print the directories recursively
 	 * @return True, if the path is valid, false otherwise
 	 */
-	public static boolean parseParameter(JShell shell, String userInput, StdOut stdout, boolean recursive) {
+	public static boolean parseParameter(JShell shell, String userInput,
+			StdOut stdout, boolean recursive) {
 		Path path = new Path(userInput);
 		StorageUnit listThis = path.verifyPath(shell, false);
-		
+
 		if (listThis == null) {
-			PrintError.reportError(shell, "ls", "Cannot access '" + path.getPath() + "', no such file or directory.");
+			PrintError.reportError(shell, "ls", "Cannot access '"
+					+ path.getPath() + "', no such file or directory.");
 			return false;
 		} else if (listThis.isFile()) {
 			stdout.sendLine(path.getPath());
 		} else {
 			stdout.sendLine(userInput + ":");
-			list(stdout, ((Directory) listThis).getDirContents());
+			list(stdout, ((Directory) listThis));
 		}
 
 		if (recursive && listThis.isDirectory()) {
 			for (StorageUnit x : ((Directory) listThis).getDirContents()) {
 				if (x.isDirectory()) {
 					if (userInput.endsWith("/")) {
-						parseParameter(shell, userInput + x.name, stdout, recursive);
+						parseParameter(shell, userInput + x.name, stdout,
+								recursive);
 					} else {
-						parseParameter(shell, userInput + "/" + x.name, stdout, recursive);
+						parseParameter(shell, userInput + "/" + x.name, stdout,
+								recursive);
 					}
 				}
 			}
