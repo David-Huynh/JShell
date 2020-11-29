@@ -129,12 +129,9 @@ public class Path {
 	}
 
 	/**
-	 * Cycles through a path to see if the path is valid up to, but not including
-	 * the path.size() - finalIndex - 1 index of the path
-	 * 
-	 * Precondition: startDir is a directory in the path
-	 * 
-	 * The index of startDir.name in this.path.getPathElements() < finalIndex
+	 * Cycles through a path to see if the path is valid (the directories exist in
+	 * the same order on the file system) up to the second last index of
+	 * this.getPathElements
 	 * 
 	 * @param finalIndex The end index of the path that will not be checked
 	 * @param startDir   The start directory of the path
@@ -142,7 +139,7 @@ public class Path {
 	 * @return null, if path is invalid, final directory checked by the function if
 	 *         valid
 	 */
-	public Directory cyclePath(JShell shell) {
+	private Directory cyclePath(JShell shell) {
 		Directory parentDir = determineStartDir(shell);
 		String[] pathElements = this.getPathElements();
 		int index = 0;
@@ -169,7 +166,7 @@ public class Path {
 	 * Determines whether the given index of this.path.getPathElements() is valid in
 	 * the given directory
 	 * 
-	 * @param directory The directory where the element of the path is checked in
+	 * @param parentDir The directory where the element of the path is checked in
 	 * @param index     The index of the element in path that is checked for
 	 *                  validity
 	 */
@@ -195,9 +192,8 @@ public class Path {
 	}
 
 	/**
-	 * Determines whether the final element is a valid file or directory
-	 * 
-	 * Precondition: Path is valid up to but not including the final element
+	 * Determines whether the final element is a valid file or directory, helper
+	 * function for verifyPath
 	 * 
 	 * @param directory The directory where the final element should be stored
 	 * @return the final element as a StorageUnit if it exists/valid, null otherwise
