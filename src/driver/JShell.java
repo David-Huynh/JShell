@@ -33,6 +33,7 @@ package driver;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.Stack;
@@ -58,8 +59,97 @@ public class JShell implements Serializable {
 	 * to ListFiles
 	 */
 	private HashMap<String, Class> cmdToClass;
-	/** ArrayList that stores the history of commands */
-	private ArrayList<String> comHis;
+	/** Collection of the entire history of commands */
+	private CommandHistory comHis;
+
+	/**
+	 * CommandHistory is a nested class that JShell uses to store all the
+	 * commands the user has typed into the command line in chronological order.
+	 * Iterator Design Pattern is used to iterate through a CommandHistory.
+	 */
+	public static class CommandHistory
+			implements
+				Iterable<String>,
+				Serializable {
+		/** The ArrayList used to store the commands in chronological order */
+		private ArrayList<String> cmds;
+
+		/**
+		 * Initializes a new instance of CommandHistory
+		 */
+		public CommandHistory() {
+			this.cmds = new ArrayList<String>();
+		}
+
+		/**
+		 * Used to determine the number of commands
+		 * 
+		 * @return The number of commands in this CommandHistory
+		 */
+		public int getSize() {
+			return this.cmds.size();
+		}
+
+		/**
+		 * Used to add a command into this CommandHistory
+		 * 
+		 * @param command
+		 *            The command to be added
+		 */
+		private void add(String command) {
+			this.cmds.add(command);
+		}
+
+		/**
+		 * ChronologicalOrderIterator is a nested nested class that iterates
+		 * through a CommandHistory in the order that the user has typed their
+		 * commands in.
+		 */
+		private static class ChronologicalOrderIterator implements Iterator {
+
+			/** The current index of the iterator */
+			int currIndex;
+			/** The ArrayList to iterate through */
+			ArrayList<String> toIterate;
+
+			/**
+			 * Constructor for a ChronologicalOrderIterator
+			 * 
+			 * @param toIterate
+			 *            The ArrayList to iterate through
+			 */
+			public ChronologicalOrderIterator(ArrayList<String> toIterate) {
+				this.currIndex = 0;
+				this.toIterate = toIterate;
+			}
+
+			/**
+			 * Checks if there is a next command in the ArrayList
+			 */
+			@Override
+			public boolean hasNext() {
+				return (currIndex < toIterate.size());
+			}
+
+			/**
+			 * Gives the next command of the current iteration
+			 */
+			@Override
+			public Object next() {
+				currIndex = currIndex + 1;
+				return toIterate.get(currIndex - 1);
+			}
+
+		}
+
+		/**
+		 * Returns an appropriate Iterator used to iterate through this
+		 * CommandHistory
+		 */
+		public Iterator<String> iterator() {
+			return new ChronologicalOrderIterator(cmds);
+		}
+	}
 
 	/**
 	 * Initializes an instance of the JShell, initializes all private variables
@@ -72,7 +162,7 @@ public class JShell implements Serializable {
 		this.isActive = true;
 		this.cmdToClass = new HashMap<String, Class>();
 		this.populateCmdToClass();
-		this.comHis = new ArrayList<String>();
+		this.comHis = new CommandHistory();
 	}
 
 	/**
@@ -96,11 +186,11 @@ public class JShell implements Serializable {
 			return false;
 		}
 		JShell jShell = (JShell) o;
-		return rootDir.equals(jShell.rootDir) &&
-				currentDir.equals(jShell.currentDir) &&
-				dirStack.equals(jShell.dirStack) &&
-				cmdToClass.equals(jShell.cmdToClass) &&
-				comHis.equals(jShell.comHis);
+		return rootDir.equals(jShell.rootDir)
+				&& currentDir.equals(jShell.currentDir)
+				&& dirStack.equals(jShell.dirStack)
+				&& cmdToClass.equals(jShell.cmdToClass)
+				&& comHis.equals(jShell.comHis);
 	}
 
 	@Override
@@ -194,9 +284,9 @@ public class JShell implements Serializable {
 	/**
 	 * Public getter method for the history of commands
 	 *
-	 * @return The ArrayList of the history of commands
+	 * @return The CommandHistory of the history of commands
 	 */
-	public ArrayList<String> getComHis() {
+	public CommandHistory getComHis() {
 		return this.comHis;
 	}
 

@@ -81,7 +81,7 @@ public class LoadJShell extends ShellCommand {
 					"Invalid number of arguments.");
 			return;
 		}
-		if (shell.getComHis().size() <= 1) {
+		if (shell.getComHis().getSize() <= 1) {
 			try {
 				ObjectInputStream in = new ObjectInputStream(
 						new FileInputStream(parameters[1]));
