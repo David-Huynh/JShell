@@ -30,8 +30,6 @@
 
 package driver;
 
-import java.util.Arrays;
-
 /**
  * The Echo command is used by the user mainly to manipulate a File's contents
  * by overwriting them or appending to them. It can also print user input
@@ -200,16 +198,6 @@ public class Echo extends ShellCommand {
 	 * @return The end directory of the path
 	 */
 	private static Directory cycleDir(JShell shell, String filePath) {
-		Directory currDir = shell.getCurrentDir();
-		if (filePath.indexOf("/") == 0) {
-			if (filePath.equals("/")) {
-				PrintError.reportError(shell, "echo",
-						"filename must be provided" + filePath);
-			} else {
-				currDir = shell.getRootDir();
-				filePath = filePath.substring(1);
-			}
-		}
 		if (StorageUnit.hasForbidChar(
 				filePath.split("/")[filePath.split("/").length - 1])) {
 			PrintError.reportError(shell, "echo",
