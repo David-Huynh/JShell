@@ -89,7 +89,6 @@ public class ConcatenateFile extends ShellCommand {
 			return;
 		}
 		Path p = new Path("");
-		Directory cDir;
 		// for loop to loop through all the file paths specified
 		for (int i = 1; i < parameters.length; i++) {
 			p.setPath(parameters[i]);
@@ -98,13 +97,9 @@ public class ConcatenateFile extends ShellCommand {
 						"The root is not a valid file!");
 				return;
 			}
-			if (p.isAbsolute()) { // checks if the path is an absolute path
-				cDir = shell.getRootDir();
-			} else {
-				cDir = shell.getCurrentDir();
-			}
+
 			String[] elements = p.getPathElements();
-			Directory parent = p.cyclePath(0, cDir, shell);
+			Directory parent = (Directory) p.verifyPath(shell, true);
 			// checks if the path is valid
 			if (parent == null) {
 				PrintError.reportError(shell, "cat",
