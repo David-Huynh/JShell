@@ -154,7 +154,7 @@ public class Path {
 			index++;
 		}
 
-		while (parentDir != null && index < pathElements.length - 1) {
+		while (parentDir != null && index < pathElements.length - 2) {
 			parentDir = determinePathElement(parentDir, index);
 			index++;
 		}
