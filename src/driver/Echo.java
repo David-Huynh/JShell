@@ -142,9 +142,11 @@ public class Echo extends ShellCommand {
 	 */
 	private static boolean errorHandle(JShell shell, String[] parsedParams,
 			int numArrow, Directory dir) {
-		if (dir == null) {
-			PrintError.reportError(shell, "echo", "directory does not exist");
-			return true;
+		if (numArrow != 0){
+			if (dir == null) {
+				PrintError.reportError(shell, "echo", "directory does not exist");
+				return true;
+			}
 		}
 		// Check for empty string
 		if (parsedParams[0].length() <= 1) {
@@ -248,10 +250,12 @@ public class Echo extends ShellCommand {
 		Directory dir = cycleDir(shell, parsedParams[1]);
 		String fileName = parsedParams[1]
 				.split("/")[parsedParams[1].split("/").length - 1];
+		int index = 0;
 		if (errorHandle(shell, parsedParams, numArrow, dir)) {return;}
-		int index = dir.containsFile(fileName);
-		parsedParams[0] = parsedParams[0].substring(1,
-				parsedParams[0].length() - 1);
+		if (dir != null){
+			index = dir.containsFile(fileName);
+		}
+		parsedParams[0] = parsedParams[0].substring(1, parsedParams[0].length() - 1);
 		if (numArrow == 0) { // Print string to shell command
 			stdout.sendLine(parsedParams[0]);
 			stdout.closeStream();
