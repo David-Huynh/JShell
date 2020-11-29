@@ -209,8 +209,7 @@ public class Move extends ShellCommand {
 			}
 		}
 		toMove.getParentDir().getDirContents().remove(indexRemove);
-		moveHere.getDirContents().add(toMove);
-		toMove.setParentDir(moveHere);
+		moveHere.addFile(toMove);
 	}
 
 	/**

@@ -147,14 +147,14 @@ public class Path {
 		if (this.path.equals("/")) {// path is root directory
 			return shell.getRootDir();
 		}
-		if (pathElements.length == 0) { // path is invalid
+		if (pathElements.length == 0 || this.getPath().equals("")) { // path is invalid
 			return null;
 		}
 		if (this.isAbsolute()) { // skip empty string
 			index++;
 		}
 
-		while (parentDir != null && index < pathElements.length - 2) {
+		while (parentDir != null && index < pathElements.length - 1) {
 			parentDir = determinePathElement(parentDir, index);
 			index++;
 		}

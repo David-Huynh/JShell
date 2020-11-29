@@ -107,6 +107,7 @@ public class Directory extends StorageUnit
 	 */
 	public void addFile(StorageUnit fileName) {
 		contents.add(fileName);
+		this.addFile(fileName);
 	}
 
 	/**
@@ -117,6 +118,7 @@ public class Directory extends StorageUnit
 	 */
 	public void delFile(StorageUnit fileName) {
 		contents.remove(fileName);
+		fileName.parentDir = null;
 	}
 
 	/**
