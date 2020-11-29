@@ -88,58 +88,93 @@ public class MakeDirectory extends ShellCommand {
 					"Invalid number of arguments.");
 			return;
 		}
-		Directory currDir;
 		Path path = new Path("");
 		for (int i = 1; i < parameters.length; i++) {
 			path.setPath(parameters[i]);
-			String[] elements = path.getPathElements();
-			if (path.isAbsolute()) {
-				currDir = shell.getRootDir();
-			} else {
-				currDir = shell.getCurrentDir();
-			}
-			Directory parent = (Directory) path.verifyPath(shell, true);
-			//System.out.println("DIR NAME: "+parent.getName());
-			if (parent == null) {
-				PrintError.reportError(shell, "mkdir",
-						"Directory does not exits: " + parameters[i]);
+			int success = pathToDir(path, shell);
+			if (success == 0) {
 				return;
-			} else {
-				if (path.getPath().equals("/")) {
-					PrintError.reportError(shell, "mkdir",
-							"Root directory already exits!");
-					return;
-				} else {
-					if (parent.isSubDir(elements[elements.length - 1]) == -1) {
-						// create dir
-						if (!StorageUnit
-								.hasForbidChar(elements[elements.length - 1])) {
-							if (parent.containsFile(
-									elements[elements.length - 1]) == -1) {
-								Directory newDir = new Directory(
-										elements[elements.length - 1], parent);
-								parent.addFile(newDir);
-							} else {
-								PrintError.reportError(shell, "mkdir",
-										"Directory name cannot be the same as filename: "
-												+ elements[elements.length
-														- 1]);
-								return;
-							}
-						} else {
-							PrintError.reportError(shell, "mkdir",
-									"Directory name contains forbidden "
-											+ "character(s): "
-											+ elements[elements.length - 1]);
-							return;
-						}
-					} else {
-						PrintError.reportError(shell, "mkdir",
-								"Directory already exits: " + parameters[i]);
-						return;
-					}
-				}
 			}
 		}
 	}
+
+	/**
+	 * Converts a path into a new directory if the path is valid. Returns
+	 * an integer that signifies the result of the operation
+	 *
+	 * @param path
+	 * 						The path to be checked
+	 * @param shell
+	 *            The JShell the command is to be performed on
+	 *
+	 * @return 0 if there was an error with creating the new directory
+	 * 				 1 if creating the new directory from path is successful
+	 */
+	private static int pathToDir(Path path, JShell shell) {
+		Directory parent = (Directory) path.verifyPath(shell, true);
+		String [] elements = path.getPathElements();
+		if (parent == null) {
+			PrintError.reportError(shell, "mkdir",
+					"Directory does not exist: " + path.getPath());
+			return 0;
+		} else {
+			if (path.getPath().equals("/")) {
+				PrintError.reportError(shell, "mkdir",
+						"Root directory already exits!");
+				return 0;
+			} else {
+				if (parent.isSubDir(elements[elements.length - 1]) == -1) {
+					// create dir
+					int nDir = createDir(parent, elements[elements.length - 1], shell);
+					if (nDir == 0) {
+						return 0;
+					}
+				} else {
+					PrintError.reportError(shell, "mkdir",
+							"Directory already exits: " + path.getPath());
+					return 0;
+				}
+			}
+		}
+		return 1;
+	}
+
+	/**
+	 * Creates a directory given parent, name and shell. Returns an
+	 * integer that signifies the result of the operation
+	 *
+	 * @param parent
+	 * 						The parent directory of the directory to be created in
+	 * @param name
+	 * 						The name of the new directory to be created
+	 * @param shell
+	 * 						The JShell the command is to be performed on
+	 *
+	 * @return 0 if there was an error creating the directory and
+	 * 				 1 if creating the directory was successful
+	 *
+	 */
+	private static int createDir(Directory parent, String name, JShell shell) {
+		if (!StorageUnit.hasForbidChar(name)) {
+			if (parent.containsFile(name) == -1) {
+				Directory nDir = new Directory(name, parent);
+				if (nDir == null) {
+					return 0;
+				}
+				parent.addFile(nDir);
+				return 1;
+			} else {
+				PrintError.reportError(shell, "mkdir",
+						"Directory name cannot be the same as filename: "+name);
+				return 0;
+			}
+		} else {
+			PrintError.reportError(shell, "mkdir",
+					"Directory name contains forbidden "
+							+ "character(s): "
+							+ name);
+			return 0;
+		}
+	}
+
 }
