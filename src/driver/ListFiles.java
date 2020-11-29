@@ -30,8 +30,6 @@
 
 package driver;
 
-import java.util.ArrayList;
-
 /**
  * The ListFiles command is used by the user to print the contents of a specific
  * directory in the file system, sometimes recursively.
@@ -118,8 +116,8 @@ public class ListFiles extends ShellCommand {
 	 * 
 	 * @param stdout
 	 *            The StdOut to send the contents to
-	 * @param fileList
-	 *            The ArrayList of StorageUnits whose names are to be printed
+	 * @param dir
+	 *            The Directory whose contents are to be send to stdout
 	 */
 	public static void list(StdOut stdout, Directory dir) {
 		// Function used to print all files in directory
@@ -145,30 +143,19 @@ public class ListFiles extends ShellCommand {
 	public static boolean parseParameter(JShell shell, String userInput,
 			StdOut stdout, boolean recursive) {
 		Path path = new Path(userInput);
-		Directory currDir = shell.getCurrentDir();
-		StorageUnit listThis = null;
-		// separate path into its directories
-		if (path.isAbsolute()) { // path is absolute
-			currDir = shell.getRootDir();
-		}
-		currDir = path.cyclePath(0, currDir, shell);
-		if (currDir == null) {
-			PrintError.reportError(shell, "ls", "Cannot access '" + userInput
-					+ "', no such file or directory.");
+		StorageUnit listThis = path.verifyPath(shell, false);
+
+		if (listThis == null) {
+			PrintError.reportError(shell, "ls", "Cannot access '"
+					+ path.getPath() + "', no such file or directory.");
 			return false;
+		} else if (listThis.isFile()) {
+			stdout.sendLine(path.getPath());
 		} else {
-			listThis = path.determineFinalElement(currDir);
-			if (listThis == null) {
-				PrintError.reportError(shell, "ls", "Cannot access '"
-						+ path.getPath() + "', no such file or directory.");
-				return false;
-			} else if (listThis.isFile()) {
-				stdout.sendLine(path.getPath());
-			} else {
-				stdout.sendLine(userInput + ":");
-				list(stdout, ((Directory) listThis));
-			}
+			stdout.sendLine(userInput + ":");
+			list(stdout, ((Directory) listThis));
 		}
+
 		if (recursive && listThis.isDirectory()) {
 			for (StorageUnit x : ((Directory) listThis).getDirContents()) {
 				if (x.isDirectory()) {
