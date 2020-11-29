@@ -214,7 +214,7 @@ public class Echo extends ShellCommand {
 			return null;
 		}
 		Path newPath = new Path(filePath);
-		return newPath.cyclePath(0, currDir, shell);
+		return (Directory) newPath.verifyPath(shell, true);
 	}
 
 	/**

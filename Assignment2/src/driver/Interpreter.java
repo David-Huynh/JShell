@@ -222,7 +222,7 @@ public class Interpreter {
 		if (path.isAbsolute()) { // path is absolute
 			dir = shell.getRootDir();
 		}
-		dir = path.cyclePath(0, dir, shell);
+		dir = (Directory) path.verifyPath(shell, true);
 		if (dir == null) { // Check if the second last element is valid dir
 			if (path.getPathElements()[path.getPathElements().length - 2]
 					.equals(".")) {
