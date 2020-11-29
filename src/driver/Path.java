@@ -1,0 +1,267 @@
+// **********************************************************
+// Assignment2:
+// Student1: Collin Chan
+// UTORID user_name: chancol7
+// UT Student #: 1006200889
+// Author: Collin Chan
+//
+// Student2: Jeff He
+// UTORID user_name: Hejeff2
+// UT Student #: 1006398783
+// Author: Jeff He
+//
+// Student3: Nevin Wong
+// UTORID user_name: wongnevi
+// UT Student #: 1005391434
+// Author: Nevin Wong
+//
+// Student4: David Huynh
+// UTORID user_name: huynhd12
+// UT Student #: 1005991937
+// Author: David Huynh
+//
+//
+// Honor Code: I pledge that this program represents my own
+// program code and that I have coded on my own. I received
+// help from no one in designing and debugging my program.
+// I have also read the plagiarism section in the course info
+// sheet of CSC B07 and understand the consequences.
+// *********************************************************
+
+package driver;
+
+/**
+ * A Path is a collection of directories listed in succession separated by delimiter '/' the final
+ * element in a path may be either a File or Directory
+ * 
+ */
+
+public class Path {
+
+  /** A string representation of the path to be checked */
+  private String path;
+  /**
+   * The path stored as an array of strings, with the name of each directory/file in the path being
+   * its own element in the array
+   */
+  private String[] pathElements;
+  /**
+   * Marks whether path is absolute (from root) or relative to the current directory
+   */
+  private boolean absolute;
+
+  /**
+   * Initializes a Path variable with the given string. Note that if the path is absolute, index 0 of
+   * the array will be the empty string, and if path only contains forward slashes,
+   * pathElements.length == 0
+   * 
+   * @param path The string representation of the path to be stored
+   */
+  public Path(String path) {
+    this.setPath(path);
+    this.pathElements = (path.split("/"));
+    this.absolute = this.determineAbsolute();
+  }
+
+  /**
+   * Public getter method for the string path
+   * 
+   * @return The string representation of the path of a path variable
+   */
+  public String getPath() {
+    return path;
+  }
+
+  /**
+   * Public getter method for pathElements
+   * 
+   * @return The array of strings, pathElements of a path variable
+   */
+  public String[] getPathElements() {
+    return pathElements;
+  }
+
+  /**
+   * Public getter method for the boolean absolute
+   * 
+   * @return The boolean absolute of a path variable
+   */
+  public boolean isAbsolute() {
+    return absolute;
+  }
+
+  /**
+   * Changes the path that the path variable refers to
+   * 
+   * @param path The string representation of the path to be referred to
+   */
+  public void setPath(String path) {
+    this.path = path;
+    this.pathElements = (path.split("/"));
+    this.absolute = this.determineAbsolute();
+  }
+
+  /**
+   * Cycles through a path to see if the path is valid up to, but not including the path.size() -
+   * finalIndex - 1 index of the path
+   * 
+   * Precondition: startDir is a directory in the path
+   * 
+   * The index of startDir.name in this.path.getPathElements() < finalIndex
+   * 
+   * @param finalIndex The end index of the path that will not be checked
+   * @param startDir The start directory of the path
+   * @param shell The JShell to perform in
+   * @return null, if path is invalid, final directory checked by the function if valid
+   */
+  public Directory cyclePath(int finalIndex, Directory startDir, JShell shell) {
+    String[] pathElements = this.getPathElements();
+    int index = 0;
+    int directoryIndexFollow = -1;
+    int directoryIndex = -1;
+    int fileIndex = -1;
+
+    if (this.path.equals("/")) {// path is root directory
+      return shell.getRootDir();
+    }
+    if (pathElements.length == 0) { // path is invalid
+      return null;
+    }
+    if (this.isAbsolute()) { // skip empty string
+      index++;
+    }
+
+    directoryIndex = determinePathElement(startDir, index);
+    if (directoryIndex == -1) {
+      fileIndex = startDir.containsFile(pathElements[index]);
+      if (fileIndex != -1 && index == pathElements.length - 1) {
+        return startDir;
+      }
+    }
+
+    while (directoryIndex != -1
+        && index < pathElements.length - finalIndex - 1) {
+      if (directoryIndex == -2) {
+        startDir = startDir.getParentDir();
+      } else if (directoryIndex == -3) {
+      } else {
+        startDir = (Directory) startDir.getDirContents().get(directoryIndex);
+      }
+      index++;
+      directoryIndexFollow = directoryIndex;
+      directoryIndex = determinePathElement(startDir, index);
+      if (directoryIndex == -1) {
+        fileIndex = startDir.containsFile(pathElements[index]);
+        if (fileIndex != -1 && index == pathElements.length - 1) {
+          return startDir;
+        }
+      }
+    }
+
+    if (startDir != shell.getRootDir()) {
+      directoryIndex = startDir.getParentDir().isSubDir(startDir.getName());
+    } else {
+      directoryIndex = directoryIndexFollow;
+    }
+    if (directoryIndex != -1 || pathElements.length == 1) {
+      return startDir;
+    } else {
+      return null;
+    }
+  }
+
+  /**
+   * Determines whether the given index of this.path.getPathElements() is valid in the given directory
+   * 
+   * @param directory The directory where the element of the path is checked in
+   * @param index The index of the element in path that is checked for validity
+   */
+  public int determinePathElement(Directory directory, int index) {
+    int directoryIndex = -1;
+    String[] pathElements = this.getPathElements();
+
+    if (pathElements[index].equals("..") || pathElements[index].equals(".")) {
+      if (pathElements[index].equals("..")) {
+        directoryIndex = -2;
+      } else {
+        directoryIndex = -3;
+      }
+    } else {
+      if (directory != null) {
+        directoryIndex = directory.isSubDir(pathElements[index]);
+      }
+    }
+
+    return directoryIndex;
+  }
+
+  /**
+   * Determines if the Path is absolute
+   * 
+   * @return True if absolute, False otherwise
+   */
+  public boolean determineAbsolute() {
+    if (this.path.startsWith("/")) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Determines whether the final element is a valid file or directory
+   * 
+   * Precondition: Path is valid up to but not including the final element
+   * 
+   * @param directory The directory where the final element should be stored
+   * @return the final element as a StorageUnit if it exists/valid, null otherwise
+   */
+  public StorageUnit determineFinalElement(Directory directory) {
+    String[] pathElements = this.getPathElements();
+    int indicator;
+    int finalIndex;
+    if (pathElements.length != 0) {
+      finalIndex = pathElements.length - 1;
+    } else {
+      return directory;
+    }
+    indicator = determinePathElement(directory, finalIndex);
+
+    if (indicator == -1 && directory != null) {
+      indicator = directory.containsFile(pathElements[finalIndex]);
+    }
+
+    if (indicator == -1) {
+      return null;
+    } else if (indicator == -2) {
+      return directory.getParentDir();
+    } else if (indicator == -3) {
+      return directory;
+    } else {
+      return directory.getDirContents().get(indicator);
+    }
+  }
+
+  /**
+   * Determines if entire path is valid
+   * 
+   * @param shell The JShell to perform in
+   * @param returnParent Determines whether or not the parent of the final element is returned
+   * @return Return the final StorageUnit in the path (or parent of final of returnParent true)
+   */
+  public StorageUnit verifyPath(JShell shell, boolean returnParent) {
+    Directory startDir;
+
+    if (this.isAbsolute()) {
+      startDir = shell.getRootDir();
+    } else {
+      startDir = shell.getCurrentDir();
+    }
+
+    Directory parentOfFinal = this.cyclePath(0, startDir, shell);
+    if (returnParent) {
+      return parentOfFinal;
+    }
+    StorageUnit finalItem = this.determineFinalElement(parentOfFinal);
+    return finalItem;
+  }
+}
