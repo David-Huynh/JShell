@@ -30,6 +30,8 @@
 
 package driver;
 
+import javax.swing.plaf.synth.SynthTextAreaUI;
+
 /**
  * A Path is a collection of directories listed in succession separated by
  * delimiter '/' the final element in a path may be either a File or Directory
@@ -155,7 +157,7 @@ public class Path {
 			index++;
 		}
 
-		while (parentDir != null && index < pathElements.length - 1) {
+		while (parentDir != null && index < pathElements.length - 2) {
 			parentDir = determinePathElement(parentDir, index);
 			index++;
 		}
