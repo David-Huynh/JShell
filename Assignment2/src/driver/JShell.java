@@ -180,6 +180,13 @@ public class JShell implements Serializable {
 		this.comHis = newShell.comHis;
 	}
 
+	/**
+	 * Checks if another object is equal to this JShell
+	 * 
+	 * @param o
+	 *            The other object
+	 * @return If they are equal
+	 */
 	@Override
 	public boolean equals(Object o) {
 		if (o == null || getClass() != o.getClass()) {
@@ -193,6 +200,11 @@ public class JShell implements Serializable {
 				&& comHis.equals(jShell.comHis);
 	}
 
+	/**
+	 * Provides the hashCode for this JShell
+	 * 
+	 * @return The hashCode
+	 */
 	@Override
 	public int hashCode() {
 		return Objects.hash(rootDir, currentDir, dirStack, cmdToClass, comHis);

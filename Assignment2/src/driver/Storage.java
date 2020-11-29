@@ -56,6 +56,13 @@ public class Storage implements Serializable {
 		// parent of root directory is always the root itself
 	}
 
+	/**
+	 * Checks if another object is equal to this Storage
+	 * 
+	 * @param o
+	 *            The other object
+	 * @return If they are equal
+	 */
 	@Override
 	public boolean equals(Object o) {
 		if (o == null || getClass() != o.getClass()) {
@@ -65,6 +72,11 @@ public class Storage implements Serializable {
 		return root.equals(storage.root);
 	}
 
+	/**
+	 * Provides the hashCode for this Storage
+	 * 
+	 * @return The hashCode
+	 */
 	@Override
 	public int hashCode() {
 		return Objects.hash(root);
