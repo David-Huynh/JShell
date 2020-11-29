@@ -118,8 +118,8 @@ public class ListFiles extends ShellCommand {
 	 * 
 	 * @param stdout
 	 *            The StdOut to send the contents to
-	 * @param fileList
-	 *            The ArrayList of StorageUnits whose names are to be printed
+	 * @param dir
+	 *            The Directory whose contents are to be send to stdout
 	 */
 	public static void list(StdOut stdout, Directory dir) {
 		// Function used to print all files in directory
