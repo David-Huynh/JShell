@@ -95,6 +95,7 @@ public class Directory extends StorageUnit
 	 */
 	public void addFile(StorageUnit fileName) {
 		contents.add(fileName);
+		fileName.setParentDir(this);
 	}
 
 	/**

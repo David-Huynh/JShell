@@ -85,8 +85,8 @@ public class Remove extends ShellCommand {
       startDir = shell.getCurrentDir();
     }
 
-    Directory parentOfDeleted = toDelete.cyclePath(0, startDir, shell);
-    StorageUnit toDeleteDir = toDelete.determineFinalElement(parentOfDeleted);
+    Directory parentOfDeleted = (Directory) toDelete.verifyPath(shell, true, startDir);
+    StorageUnit toDeleteDir = toDelete.verifyPath(shell, false, startDir);
 
     if (toDeleteDir == null || !toDeleteDir.isDirectory()) {
       PrintError.reportError(shell, "rm",

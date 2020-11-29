@@ -104,7 +104,7 @@ public class ConcatenateFile extends ShellCommand {
 				cDir = shell.getCurrentDir();
 			}
 			String[] elements = p.getPathElements();
-			Directory parent = p.cyclePath(0, cDir, shell);
+			Directory parent = (Directory) p.verifyPath(shell, true, cDir);
 			// checks if the path is valid
 			if (parent == null) {
 				PrintError.reportError(shell, "cat",

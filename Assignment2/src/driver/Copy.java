@@ -164,12 +164,12 @@ public class Copy extends ShellCommand {
 	/**
 	 * Copies StorageUnit toCopy inside of Directory copyHere
 	 * 
-	 * @param toCopy   The StorageUnit to be copyd
+	 * @param toCopy   The StorageUnit to be copied
 	 * @param copyHere The destination of toCopy
 	 */
 	public static void copy(StorageUnit toCopy, Directory copyHere) {
 		StorageUnit toAdd = toCopy.clone((Directory) copyHere);
-		copyHere.getDirContents().add(toAdd);
+		copyHere.addFile(toAdd);
 	}
 
 	/**
