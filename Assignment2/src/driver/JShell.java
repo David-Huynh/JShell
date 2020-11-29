@@ -356,7 +356,7 @@ public class JShell implements Serializable {
 		String userCommand;
 		Scanner userInput = new Scanner(System.in);
 		while (this.isActive) {
-			this.print(currentDir.getName() + ">");
+			this.print(currentDir.getFullPath(this).getPath() + "> ");
 			userCommand = userInput.nextLine();
 			addCom(userCommand);
 			Interpreter.interpret(userCommand, this);
