@@ -169,7 +169,7 @@ public class Copy extends ShellCommand {
 	 */
 	public static void copy(StorageUnit toCopy, Directory copyHere) {
 		StorageUnit toAdd = toCopy.clone((Directory) copyHere);
-		copyHere.getDirContents().add(toAdd);
+		copyHere.addFile(toAdd);
 	}
 
 	/**

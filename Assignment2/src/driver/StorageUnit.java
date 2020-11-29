@@ -38,7 +38,7 @@ import java.util.ArrayList;
  * File and Directory.
  */
 
-abstract class StorageUnit implements Serializable {
+abstract public class StorageUnit implements Serializable {
 
   /** The name that the StorageUnit is identified by */
   protected String name;
@@ -55,7 +55,7 @@ abstract class StorageUnit implements Serializable {
   }
 
   /**
-   * Public setter method for the namme
+   * Public setter method for the name
    * 
    * @param name The name to be changed to
    */
