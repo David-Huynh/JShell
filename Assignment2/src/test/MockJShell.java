@@ -1,5 +1,7 @@
 package test;
 
+import java.util.Stack;
+
 import driver.Directory;
 import driver.JShellInterface;
 
@@ -7,6 +9,7 @@ public class MockJShell implements JShellInterface {
 	
 	Directory currDir;
 	Directory rootDir;
+	Stack<Directory> dirStack;
 
 	@Override
 	public Directory getRootDir() {
@@ -23,6 +26,7 @@ public class MockJShell implements JShellInterface {
 		rootDir = new Directory("/", null);
 		rootDir.setParentDir(rootDir);
 		currDir = rootDir;
+		dirStack = new Stack<Directory>();
 
 	}
 	
@@ -35,4 +39,8 @@ public class MockJShell implements JShellInterface {
 	public void printError(String string) {
 	}
 
+	@Override
+	public Stack<Directory> getDirStack() {
+		return dirStack;
+	}
 }
