@@ -93,27 +93,27 @@ public class MakeDirectory extends ShellCommand {
 		for (int i = 1; i < parameters.length; i++) {
 			path.setPath(parameters[i]);
 			int success = pathToDir(path, shell);
-			if (success == 0){
+			if (success == 0) {
 				return;
 			}
 		}
 	}
 
 	/**
-	 * Converts a path into a new directory if the path is valid. Returns
-	 * an integer that signifies the result of the operation
+	 * Converts a path into a new directory if the path is valid. Returns an
+	 * integer that signifies the result of the operation
 	 *
 	 * @param path
-	 * 						The path to be checked
+	 *            The path to be checked
 	 * @param shell
 	 *            The JShell the command is to be performed on
 	 *
-	 * @return 0 if there was an error with creating the new directory
-	 * 				 1 if creating the new directory from path is successful
+	 * @return 0 if there was an error with creating the new directory 1 if
+	 *         creating the new directory from path is successful
 	 */
 	private static int pathToDir(Path path, JShell shell) {
 		Directory parent = (Directory) path.verifyPath(shell, true);
-		String [] elements = path.getPathElements();
+		String[] elements = path.getPathElements();
 		if (parent == null) {
 			PrintError.reportError(shell, "mkdir",
 					"Directory does not exist: " + path.getPath());
@@ -126,7 +126,8 @@ public class MakeDirectory extends ShellCommand {
 			} else {
 				if (parent.isSubDir(elements[elements.length - 1]) == -1) {
 					// create dir
-					int nDir = createDir(parent, elements[elements.length - 1], shell);
+					int nDir = createDir(parent, elements[elements.length - 1],
+							shell);
 					if (nDir == 0) {
 						return 0;
 					}
@@ -141,18 +142,18 @@ public class MakeDirectory extends ShellCommand {
 	}
 
 	/**
-	 * Creates a directory given parent, name and shell. Returns an
-	 * integer that signifies the result of the operation
+	 * Creates a directory given parent, name and shell. Returns an integer that
+	 * signifies the result of the operation
 	 *
 	 * @param parent
-	 * 						The parent directory of the directory to be created in
+	 *            The parent directory of the directory to be created in
 	 * @param name
-	 * 						The name of the new directory to be created
+	 *            The name of the new directory to be created
 	 * @param shell
-	 * 						The JShell the command is to be performed on
+	 *            The JShell the command is to be performed on
 	 *
-	 * @return 0 if there was an error creating the directory and
-	 * 				 1 if creating the directory was successful
+	 * @return 0 if there was an error creating the directory and 1 if creating
+	 *         the directory was successful
 	 *
 	 */
 	private static int createDir(Directory parent, String name, JShell shell) {
@@ -166,13 +167,13 @@ public class MakeDirectory extends ShellCommand {
 				return 1;
 			} else {
 				PrintError.reportError(shell, "mkdir",
-						"Directory name cannot be the same as filename: "+name);
+						"Directory name cannot be the same as filename: "
+								+ name);
 				return 0;
 			}
 		} else {
 			PrintError.reportError(shell, "mkdir",
-					"Directory name contains forbidden "
-							+ "character(s): "
+					"Directory name contains forbidden " + "character(s): "
 							+ name);
 			return 0;
 		}
