@@ -114,7 +114,7 @@ public class Directory extends StorageUnit
 	 * Deletes a StorageUnit from the Directory
 	 * 
 	 * @param fileName
-	 *            The StorageUnit to be added
+	 *            The StorageUnit to be removed
 	 */
 	public void delFile(StorageUnit fileName) {
 		contents.remove(fileName);
@@ -127,7 +127,7 @@ public class Directory extends StorageUnit
 	 *            The desired index
 	 * @return The StorageUnit in that index
 	 */
-	StorageUnit getFile(int index) {
+	public StorageUnit getFile(int index) {
 		return contents.get(index);
 	}
 

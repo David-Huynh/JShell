@@ -14,11 +14,14 @@ import org.junit.Test;
 import driver.JShell;
 
 public class LoadJShellTest {
+
 	JShell shell;
+
 	@Before
 	public void setUp() {
 		shell = new JShell();
 	}
+
 	@Test
 	public void testGetManual() {
 		String manual;
@@ -28,6 +31,7 @@ public class LoadJShellTest {
 				+ "JShell sessions.\n"
 				+ "This command only works on fresh JShell sessions.");
 	}
+
 	@Test
 	public void testPerformOutcome() {
 		LoadJShell.performOutcome(shell,

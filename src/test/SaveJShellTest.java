@@ -9,11 +9,14 @@ import org.junit.Test;
 import driver.JShell;
 
 public class SaveJShellTest {
+
 	JShell shell;
+
 	@Before
 	public void setUp() {
 		shell = new JShell();
 	}
+
 	@Test
 	public void testGetManual() {
 		String manual;
@@ -25,6 +28,7 @@ public class SaveJShellTest {
 						+ "Saves the current working session of the shell"
 						+ "so that it can be loaded in a future session");
 	}
+
 	@Test
 	public void testPerformOutcome() {
 		SaveJShell.performOutcome(shell,
