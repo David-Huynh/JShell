@@ -40,6 +40,8 @@ import java.util.*;
 
 public class Search extends ShellCommand {
 
+	private static ArrayList<String> paths = new ArrayList<String>();
+
 	/**
 	 * Returns if this command produces StdOut. (used by the Interpreter to know
 	 * whether or not to make a new file)
@@ -48,6 +50,15 @@ public class Search extends ShellCommand {
 	 */
 	public static boolean producesStdOut() {
 		return true;
+	}
+
+	/**
+	 * Getter method for ArrayList that stores all paths after recSearch is done
+	 *
+	 * @return String ArrayList that store all paths
+	 */
+	public static ArrayList<String> getPaths() {
+		return paths;
 	}
 
 	/**
@@ -102,8 +113,12 @@ public class Search extends ShellCommand {
 					currDir);
 			String name = parameters[parameters.length - 1]
 					.replaceAll("^\"+|\"+$", "");
-			recSearch(parent, name, parameters[i], stdout);
+			recSearch(parent, name, parameters[tIndex+1]);
 		}
+		for (String p: paths) {
+			stdout.sendLine(p);
+		}
+		paths.clear();
 		stdout.closeStream();
 	}
 
@@ -119,11 +134,9 @@ public class Search extends ShellCommand {
 	 * @param type
 	 *            A string that signifies the type (f - for file and d - for
 	 *            directory)
-	 * @param stdout
-	 *            The stream for output
+	 *
 	 */
-	private static void recSearch(Directory parent, String name, String type,
-			StdOut stdout) {
+	public static void recSearch(Directory parent, String name, String type) {
 		ArrayList<StorageUnit> contents = parent.getDirContents();
 		// Base Case
 		if (parent.getDirContents().isEmpty()) {
@@ -135,21 +148,21 @@ public class Search extends ShellCommand {
 				if (parent.getName().equals("/")) {
 					finalParent = "";
 				}
-				stdout.sendLine(finalParent + "/" + name);
+				paths.add(finalParent+"/"+name);
 			}
 		} else {
 			if (parent.isSubDir(name) != -1) {
 				if (parent.getName().equals("/")) {
 					finalParent = "";
 				}
-				stdout.sendLine(finalParent + "/" + name);
+				paths.add(finalParent+"/"+name);
 			}
 		}
 		// Recursive Case
 		for (StorageUnit sub : contents) {
 			if (sub.getClass().getSimpleName().equals("Directory")) {
 				Directory temp = (Directory) sub;
-				recSearch(temp, name, type, stdout);
+				recSearch(temp, name, type);
 			}
 		}
 	}
