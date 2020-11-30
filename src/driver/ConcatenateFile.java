@@ -89,35 +89,11 @@ public class ConcatenateFile extends ShellCommand {
 			return;
 		}
 		Path p = new Path("");
-		Directory cDir;
+		Directory cDir = shell.getCurrentDir();
 		// for loop to loop through all the file paths specified
 		for (int i = 1; i < parameters.length; i++) {
 			p.setPath(parameters[i]);
-			if (p.getPath().equals("/")) {
-				PrintError.reportError(shell, "cat",
-						"The root is not a valid file!");
-				return;
-			}
-			if (p.isAbsolute()) { // checks if the path is an absolute path
-				cDir = shell.getRootDir();
-			} else {
-				cDir = shell.getCurrentDir();
-			}
-			String[] elements = p.getPathElements();
-			Directory parent = (Directory) p.verifyPath(shell, true, cDir);
-			// checks if the path is valid
-			if (parent == null) {
-				PrintError.reportError(shell, "cat",
-						"Invalid file path specified: " + p.getPath());
-				return;
-			} else {
-				if (parent.containsFile(elements[elements.length - 1]) == -1) {
-					PrintError.reportError(shell, "cat", "File does not exist: "
-							+ elements[elements.length - 1]);
-					return;
-				}
-			}
-			catFiles(p, parent, shell, stdout);
+			pathToCat(p, cDir, shell, stdout);
 			// print line break
 			if (i + 1 != parameters.length) {
 				stdout.send("\n\n\n");
@@ -127,7 +103,54 @@ public class ConcatenateFile extends ShellCommand {
 	}
 
 	/**
-	 * Concatenates files in a given path to a directory
+	 * Checks if given paths are valid and concatenates if valid.
+	 * Returns an integer that signifies the result of the operation
+	 *
+	 * @param path
+	 *            The (valid) path to the directory
+	 * @param cDir
+	 *            The current directory
+	 * @param shell
+	 *            The JShell in use
+	 * @param stdout
+	 *            The StdOut to send to
+	 * @return 0 if operation is not successful and 1 if operation
+	 * 				 is successful
+	 */
+	private static int pathToCat(Path path, Directory cDir, JShell shell,
+			StdOut stdout) {
+		if (path.getPath().equals("/")) {
+			PrintError.reportError(shell, "cat",
+					"The root is not a valid file!");
+			return 0;
+		}
+		if (path.isAbsolute()) { // checks if the path is an absolute path
+			cDir = shell.getRootDir();
+		}
+		String[] elements = path.getPathElements();
+		Directory parent = (Directory) path.verifyPath(shell, true, cDir);
+		// checks if the path is valid
+		if (parent == null) {
+			PrintError.reportError(shell, "cat",
+					"Invalid file path specified: " + path.getPath());
+			return 0;
+		} else {
+			if (parent.containsFile(elements[elements.length - 1]) == -1) {
+				PrintError.reportError(shell, "cat", "File does not exist: "
+						+ elements[elements.length - 1]);
+				return 0;
+			}
+		}
+		int success = catFiles(path, parent, shell, stdout);
+		if (success == 0) {
+			return 0;
+		}
+		return 1;
+	}
+
+	/**
+	 * Concatenates files in a given path to a directory. Returns
+	 * an integer that signifies the result of the operation
 	 * 
 	 * @param path
 	 *            The (valid) path to the directory
@@ -137,8 +160,10 @@ public class ConcatenateFile extends ShellCommand {
 	 *            The JShell in use
 	 * @param stdout
 	 *            The StdOut to send to
+	 * @return 0 if operation is not successful and 1 if operation
+	 * 				 is successful
 	 */
-	private static void catFiles(Path path, Directory cDir, JShell shell,
+	private static int catFiles(Path path, Directory cDir, JShell shell,
 			StdOut stdout) {
 		String[] pElements = path.getPathElements();
 		ArrayList<StorageUnit> contents = cDir.getDirContents();
@@ -147,7 +172,7 @@ public class ConcatenateFile extends ShellCommand {
 		if (fIndex == -1) {
 			PrintError.reportError(shell, "cat",
 					"Invalid file path specified: " + path.getPath());
-			return;
+			return 0;
 		}
 		if (contents.get(fIndex).isFile()) {
 			File file = (File) contents.get(fIndex);
@@ -155,7 +180,8 @@ public class ConcatenateFile extends ShellCommand {
 		} else {
 			PrintError.reportError(shell, "cat",
 					"Invalid file path specified: " + path.getPath());
-			return;
+			return 0;
 		}
+		return 1;
 	}
 }
