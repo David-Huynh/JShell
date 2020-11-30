@@ -55,27 +55,35 @@ public class PopDirFromStack extends ShellCommand {
 	 * @return The manual
 	 */
 	public static String getManual() {
-		return "popd \nRemove the top entry from the directory stack, and cd " + "into it. The removal \n"
-				+ "must be consistent as per the LIFO behavior of a stack. " + "The popd command \n"
-				+ "removes the top most directory from the " + "directory stack and makes it the \n"
-				+ "current working directory. If there is no directory onto " + "the stack, then give \n"
-				+ "appropriate error message.";
+		return "popd \nRemove the top entry from the directory stack, and cd "
+				+ "into it. The removal \n"
+				+ "must be consistent as per the LIFO behavior of a stack. "
+				+ "The popd command \n"
+				+ "removes the top most directory from the "
+				+ "directory stack and makes it the \n"
+				+ "current working directory. If there is no directory onto "
+				+ "the stack, then give \n" + "appropriate error message.";
 	}
 
 	/**
-	 * Tell the JShell to remove the top entry from the directory stack and make it
-	 * its current directory.
+	 * Tell the JShell to remove the top entry from the directory stack and make
+	 * it its current directory.
 	 * 
-	 * @param shell      The JShell the command is to be performed on
-	 * @param parameters The parameters from the interpreter the command is to work
-	 *                   with
-	 * @param outputType An integer representing the type of destination: 0
-	 *                   represents the command line, 1 represents overwriting a
-	 *                   file, and 2 represents appending to a file
-	 * @param outputFile If outputType is 1 or 2, this is the file we are
-	 *                   overwriting/appending to, otherwise null
+	 * @param shell
+	 *            The JShell the command is to be performed on
+	 * @param parameters
+	 *            The parameters from the interpreter the command is to work
+	 *            with
+	 * @param outputType
+	 *            An integer representing the type of destination: 0 represents
+	 *            the command line, 1 represents overwriting a file, and 2
+	 *            represents appending to a file
+	 * @param outputFile
+	 *            If outputType is 1 or 2, this is the file we are
+	 *            overwriting/appending to, otherwise null
 	 */
-	public static void performOutcome(JShell shell, String[] parameters, int outputType, File outputFile) {
+	public static void performOutcome(JShell shell, String[] parameters,
+			int outputType, File outputFile) {
 
 		boolean cont = true;
 
@@ -95,7 +103,8 @@ public class PopDirFromStack extends ShellCommand {
 
 	public static boolean checkParam(int paramNum, JShellInterface shell) {
 		if (paramNum != 1) {
-			PrintError.reportError(shell, "popd", "Invalid number of arguments.");
+			PrintError.reportError(shell, "popd",
+					"Invalid number of arguments.");
 			return false;
 		}
 		return true;

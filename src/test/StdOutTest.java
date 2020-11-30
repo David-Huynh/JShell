@@ -21,7 +21,7 @@ public class StdOutTest {
 
 	/** Used to test print statements */
 	private final PrintStream printed = System.out;
-	private final ByteArrayOutputStream consoleStreamCaptor = new ByteArrayOutputStream();
+	private ByteArrayOutputStream consoleStreamCaptor = new ByteArrayOutputStream();
 
 	@Before
 	public void setUp() throws Exception {
