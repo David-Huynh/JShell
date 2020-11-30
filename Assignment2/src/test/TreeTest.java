@@ -50,10 +50,10 @@ public class TreeTest {
 		assertEquals(manual, "tree\n"
 				+ "The the tree command takes in no input "
 				+ "parameter.\nWhen the user types in the tree you must, "
-				+ "starting from the root directory (‘\\’) display the "
-				+ "entire file\n"
+				+ "starting from the root directory (‘\\’)\ndisplay the "
+				+ "entire file"
 				+ "system as a tree. For every level of the tree, you must "
-				+ "indent by a tab character.");
+				+ "\nindent by a tab character.");
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class TreeTest {
 	public void testPerformOutcomeWithEmptyRoot() {
 		String[] parameters = {"tree"};
 		Tree.performOutcome(shell, parameters, 1, stdOutFile);
-		assertEquals(stdOutFile.getContents(), "/\n");
+		assertEquals(stdOutFile.getContents(), "/");
 	}
 
 	/**
@@ -93,7 +93,7 @@ public class TreeTest {
 		String[] parameters = {"tree"};
 		Tree.performOutcome(shell, parameters, 1, stdOutFile);
 		assertEquals(stdOutFile.getContents(),
-				"/\n\tfile1\n\tfile2\n\tdir1\n\tdir2\n");
+				"/\n\tfile1\n\tfile2\n\tdir1\n\tdir2");
 	}
 
 	/**
@@ -123,6 +123,6 @@ public class TreeTest {
 		Tree.performOutcome(shell, parameters, 1, stdOutFile);
 		assertEquals(stdOutFile.getContents(),
 				"/\n\tfile1\n\tfile2\n\tdir1\n\t\tfile3\n\t\tdir3\n\t\t\tdir4"
-						+ "\n\tdir2\n\t\tfile4\n");
+						+ "\n\tdir2\n\t\tfile4");
 	}
 }
