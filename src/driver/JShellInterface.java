@@ -1,5 +1,7 @@
 package driver;
 
+import java.util.Stack;
+
 /**
  * The Interface used for the real JShell and MockJShells used for testing.
  */
@@ -35,4 +37,10 @@ public interface JShellInterface {
 	 */
 	void printError(String string);
 
+	/**
+	 * Public getter method for the directory stack
+	 * 
+	 * @return The directory stack of the shell
+	 */
+	Stack<Directory> getDirStack();
 }
