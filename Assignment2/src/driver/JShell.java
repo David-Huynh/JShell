@@ -44,7 +44,7 @@ import java.util.Stack;
  * directories.
  */
 
-public class JShell implements Serializable {
+public class JShell implements Serializable, JShellInterface {
 
 	/** Root directory stores everything */
 	private Storage rootDir;

@@ -38,7 +38,7 @@ import java.util.ArrayList;
  * File and Directory.
  */
 
-abstract class StorageUnit implements Serializable {
+public abstract class StorageUnit implements Serializable {
 
   /** The name that the StorageUnit is identified by */
   protected String name;
@@ -162,7 +162,7 @@ abstract class StorageUnit implements Serializable {
    * @return true if this is an ancestor to directory, false otherwise
    */
 
-  public boolean checkParents(Directory directory, JShell shell) {
+  public boolean checkParents(Directory directory, JShellInterface shell) {
     ArrayList<Directory> directoryParents = new ArrayList<Directory>();
     directoryParents.add(directory);
 

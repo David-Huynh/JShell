@@ -59,8 +59,7 @@ public class PrintError {
 	 * @param errMsg
 	 *            The error message to be reported
 	 */
-	public static void reportError(JShell shell, String cmd, String errMsg) {
+	public static void reportError(JShellInterface shell, String cmd, String errMsg) {
 		shell.printError(cmd + ": " + errMsg);
 	}
-
 }
