@@ -96,7 +96,7 @@ public class Path {
 	 * 
 	 * @param shell The JShell where the file system is
 	 */
-	public Directory determineStartDir(JShell shell) {
+	public Directory determineStartDir(JShellInterface shell) {
 		if (this.isAbsolute()) {
 			return shell.getRootDir();
 		}
@@ -123,7 +123,7 @@ public class Path {
 	 * @return null, if path is invalid, final directory checked by the function if
 	 *         valid
 	 */
-	private Directory cyclePath(Directory startDir, JShell shell) {
+	private Directory cyclePath(Directory startDir, JShellInterface shell) {
 		String[] pathElements = this.getPathElements();
 		int index = 0;
 
@@ -189,9 +189,7 @@ public class Path {
 	/**
 	 * Determines whether the final element is a valid file or directory
 	 * 
-	 * Precondition: Path is valid up to but not including the final element
-	 * 
-	 * @param directory The directory where the final element should be stored
+	 * @param parentDir The directory where the final element should be stored
 	 * @return the final element as a StorageUnit if it exists/valid, null otherwise
 	 */
 	private StorageUnit determineFinalElement(Directory parentDir) {
@@ -231,10 +229,11 @@ public class Path {
 	 * @param shell        The JShell to perform in
 	 * @param returnParent Determines whether or not the parent of the final element
 	 *                     is returned
+	 * @param startDir	   The directory where cyclePath will begin in
 	 * @return Return the final StorageUnit in the path (or parent of final of
 	 *         returnParent true)
 	 */
-	public StorageUnit verifyPath(JShell shell, boolean returnParent, Directory startDir) {
+	public StorageUnit verifyPath(JShellInterface shell, boolean returnParent, Directory startDir) {
 
 		Directory parentOfFinal = this.cyclePath(startDir, shell);
 		if (returnParent) {
@@ -257,7 +256,7 @@ public class Path {
 	 * @return Return the final StorageUnit in the path (or parent of final of
 	 *         returnParent true)
 	 */
-	public StorageUnit verifyPath(JShell shell, boolean returnParent) {
+	public StorageUnit verifyPath(JShellInterface shell, boolean returnParent) {
 		Directory startDir = this.determineStartDir(shell);
 		Directory parentOfFinal = this.cyclePath(startDir, shell);
 		if (returnParent) {
