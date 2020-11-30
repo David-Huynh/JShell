@@ -6,7 +6,7 @@ import driver.Directory;
 import driver.JShellInterface;
 
 public class MockJShell implements JShellInterface {
-	
+
 	Directory currDir;
 	Directory rootDir;
 	Stack<Directory> dirStack;
@@ -29,7 +29,7 @@ public class MockJShell implements JShellInterface {
 		dirStack = new Stack<Directory>();
 
 	}
-	
+
 	@Override
 	public void setCurrentDir(Directory dir) {
 		this.currDir = dir;

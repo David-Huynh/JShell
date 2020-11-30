@@ -33,16 +33,16 @@ public class PathTest {
 		dir1.addFile(file1);
 		dir2.addFile(dir21);
 		dir21.addFile(file2);
-		
+
 		shell.setCurrentDir(dir1);
 	}
-	
+
 	@Test
 	public void testDetermineAbs() {
 		Path path = new Path("/wow/cool/wow");
 		assertEquals(path.determineAbsolute(), true);
 	}
-	
+
 	public void testDetermineRel() {
 		Path path = new Path("d/di/da/di/di/da/");
 		assertEquals(path.determineAbsolute(), false);
@@ -59,7 +59,7 @@ public class PathTest {
 		Path path = new Path("hey/soul/sister");
 		assertEquals(path.determineStartDir(shell), dir1);
 	}
-	
+
 	@Test
 	public void testVerifyPathRoot() {
 		Path path = new Path("/");
@@ -84,46 +84,46 @@ public class PathTest {
 	@Test
 	public void testVerifyPathFile1() {
 		Path path = new Path("file1");
-		
+
 		assertEquals(path.verifyPath(shell, false), file1);
 		assertEquals(path.verifyPath(shell, true), dir1);
 	}
-	
+
 	@Test
 	public void testVerifyPathFile1Abs() {
 		Path path = new Path("/dir1/file1");
 		assertEquals(path.verifyPath(shell, false), file1);
 		assertEquals(path.verifyPath(shell, true), dir1);
 	}
-	
+
 	@Test
 	public void testVerifyPathInvalidFile1() {
 		Path path = new Path("dir1/file1");
 		assertEquals(path.verifyPath(shell, false), null);
 		assertEquals(path.verifyPath(shell, true), null);
 	}
-	
+
 	@Test
 	public void testVerifyPathTriplePathFile() {
 		Path path = new Path("/dir2/dir21/file2");
 		assertEquals(path.verifyPath(shell, false), file2);
 		assertEquals(path.verifyPath(shell, true), dir21);
 	}
-	
+
 	@Test
 	public void testVerifyPathInvalidTriplePathFile() {
 		Path path = new Path("/dir2/nonexistDir/file2");
 		assertEquals(path.verifyPath(shell, false), null);
 		assertEquals(path.verifyPath(shell, true), null);
 	}
-	
+
 	@Test
 	public void testVerifyPathLastInvalid() {
 		Path path = new Path("/dir2/dir21/fakefile");
 		assertEquals(path.verifyPath(shell, false), null);
 		assertEquals(path.verifyPath(shell, true), dir21);
 	}
-	
+
 	@Test
 	public void testVerifyPath2ndLastDoubleDot() {
 		Path path = new Path("../dir21");
@@ -131,7 +131,7 @@ public class PathTest {
 		assertEquals(path.verifyPath(shell, false), dir21);
 		assertEquals(path.verifyPath(shell, true), dir2);
 	}
-	
+
 	@Test
 	public void testVerifyPath2ndLastSingleDot() {
 		Path path = new Path("./dir21");

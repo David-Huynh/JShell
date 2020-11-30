@@ -41,10 +41,10 @@ public class PopDirFromStackTest {
 
 	@Test
 	public void testParametersNumFail() {
-		String[] test0 = { "popd", "sadfa" };
-		String[] test1 = { "popd", "dir1" };
-		String[] test2 = { "popd", "/dir1" };
-		String[] test3 = { "popd", "file1", "sadfa", "saddfv" };
+		String[] test0 = {"popd", "sadfa"};
+		String[] test1 = {"popd", "dir1"};
+		String[] test2 = {"popd", "/dir1"};
+		String[] test3 = {"popd", "file1", "sadfa", "saddfv"};
 
 		assertEquals(PopDirFromStack.checkParam(test0.length, shell), false);
 		assertEquals(PopDirFromStack.checkParam(test1.length, shell), false);
@@ -60,7 +60,8 @@ public class PopDirFromStackTest {
 	@Test
 	public void testOneElementStack() {
 		dirStack.add(dir1);
-		assertEquals(PopDirFromStack.checkStackSize(dirStack.size(), shell), true);
+		assertEquals(PopDirFromStack.checkStackSize(dirStack.size(), shell),
+				true);
 	}
 
 	@Test
@@ -68,7 +69,8 @@ public class PopDirFromStackTest {
 		dirStack.add(dir1);
 		dirStack.add(dir2);
 		dirStack.add(dir21);
-		assertEquals(PopDirFromStack.checkStackSize(dirStack.size(), shell), true);
+		assertEquals(PopDirFromStack.checkStackSize(dirStack.size(), shell),
+				true);
 	}
 
 	@Test
@@ -76,13 +78,13 @@ public class PopDirFromStackTest {
 		dirStack.add(dir1);
 		String[] param = {"popd"};
 		assertEquals(dirStack.size(), 1);
-		
+
 		PopDirFromStack.performOutcome(shell, param, 0, null);
-		
+
 		assertEquals(dirStack.size(), 0);
 		assertEquals(shell.getCurrentDir(), dir1);
 	}
-	
+
 	@Test
 	public void testOutcomeMultipleElementStack() {
 		dirStack.add(dir1);
@@ -91,9 +93,9 @@ public class PopDirFromStackTest {
 		String[] param = {"popd"};
 		assertEquals(dirStack.size(), 3);
 		assertEquals(dirStack.peek(), dir21);
-		
+
 		PopDirFromStack.performOutcome(shell, param, 0, null);
-		
+
 		assertEquals(dirStack.size(), 2);
 		assertEquals(shell.getCurrentDir(), dir21);
 		assertEquals(dirStack.peek(), dir2);

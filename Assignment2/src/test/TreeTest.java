@@ -23,7 +23,8 @@ public class TreeTest {
 
 	/** Used to test print statements */
 	private final PrintStream printed = System.out;
-	private final ByteArrayOutputStream consoleStreamCaptor = new ByteArrayOutputStream();
+	private final ByteArrayOutputStream consoleStreamCaptor = 
+			new ByteArrayOutputStream();
 
 	/**
 	 * Set up a new JShell and a File to send StdOut to.
