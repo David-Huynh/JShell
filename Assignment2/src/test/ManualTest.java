@@ -104,6 +104,8 @@ public class ManualTest {
 		String[] parameters = {"man", "abbas"};
 		Manual.performOutcome(shell, parameters, 1, stdOutFile);
 		assertEquals(stdOutFile.getContents(), "");
+		assertEquals("man: abbas is not a valid command.",
+				consoleStreamCaptor.toString().trim());
 	}
 
 	/**
