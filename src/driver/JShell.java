@@ -82,6 +82,15 @@ public class JShell implements Serializable, JShellInterface {
 		}
 
 		/**
+		 * Gets the ArrayList of commands for testing purposes.
+		 * 
+		 * @return The ArrayList of commands
+		 */
+		public ArrayList<String> getCmds() {
+			return this.cmds;
+		}
+
+		/**
 		 * Used to determine the number of commands
 		 * 
 		 * @return The number of commands in this CommandHistory
@@ -310,6 +319,15 @@ public class JShell implements Serializable, JShellInterface {
 	 */
 	public void addCom(String command) {
 		this.comHis.add(command);
+	}
+
+	/**
+	 * Public getter method for isActive
+	 * 
+	 * @return Whether this JShell is active
+	 */
+	public boolean isActive() {
+		return this.isActive;
 	}
 
 	/**
