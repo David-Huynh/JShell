@@ -107,23 +107,23 @@ public class ChangeDirectoryTest {
 		dir3.addFile(dir4);
 		File file4 = new File("file4", "stuff", dir2);
 		dir2.addFile(file4);
-		// At this point: the storage system looks like this:
-		// Say we want to cd into dir2
+		//    At this point: the storage system looks like this:
+		//    Say we want to cd into dir2
 		//
-		// / <-- CURRENT DIRECTORY
-		// file1
-		// file2
-		// dir1
-		// file3
-		// dir3
-		// dir4
-		// dir2 <-- GOAL
-		// file4
+		//    / <-- CURRENT DIRECTORY
+		//        file1
+		//        file2
+		//        dir1
+		//	          file3
+		//	          dir3
+		//		          dir4
+		//        dir2 <-- GOAL
+		//	          file4
 		String[] parameters = {"cd", "dir2"};
 		ChangeDirectory.performOutcome(shell, parameters, 0, null);
 		assertEquals(dir2, shell.getCurrentDir());
 	}
-
+	
 	@Test
 	public void testPerformOutcomePushNonRootDirOntoStack() {
 		File file1 = new File("file1", "stuff", shell.getRootDir());
@@ -143,18 +143,18 @@ public class ChangeDirectoryTest {
 		File file4 = new File("file4", "stuff", dir2);
 		dir2.addFile(file4);
 		shell.setCurrentDir(dir2);
-		// At this point: the storage system looks like this:
-		// Say we want to cd into dir1
+		//    At this point: the storage system looks like this:
+		//    Say we want to cd into dir1
 		//
-		// /
-		// file1
-		// file2
-		// dir1 <-- GOAL
-		// file3
-		// dir3
-		// dir4
-		// dir2 <-- CURRENT DIRECTORY
-		// file4
+		//    /
+		//        file1
+		//        file2
+		//        dir1 <-- GOAL
+		//	          file3
+		//	          dir3
+		//		          dir4
+		//        dir2 <-- CURRENT DIRECTORY
+		//	          file4
 		String[] parameters = {"cd", "/dir1"};
 		ChangeDirectory.performOutcome(shell, parameters, 0, null);
 		assertEquals(dir1, shell.getCurrentDir());
@@ -179,23 +179,23 @@ public class ChangeDirectoryTest {
 		File file4 = new File("file4", "stuff", dir2);
 		dir2.addFile(file4);
 		shell.setCurrentDir(dir2);
-		// At this point: the storage system looks like this:
-		// Say we want to cd into dir4
+		//    At this point: the storage system looks like this:
+		//    Say we want to cd into dir4
 		//
-		// /
-		// file1
-		// file2
-		// dir1
-		// file3
-		// dir3
-		// dir4 <-- GOAL
-		// dir2 <-- CURRENT DIRECTORY
-		// file4
+		//    /
+		//        file1
+		//        file2
+		//        dir1
+		//	          file3
+		//	          dir3
+		//		          dir4 <-- GOAL
+		//        dir2 <-- CURRENT DIRECTORY
+		//	          file4
 		String[] parameters = {"cd", "../dir1/dir3/dir4"};
 		ChangeDirectory.performOutcome(shell, parameters, 0, null);
 		assertEquals(dir4, shell.getCurrentDir());
 	}
-
+	
 	@Test
 	public void testPerformOutcomeWithRelPath() {
 		File file1 = new File("file1", "stuff", shell.getRootDir());
@@ -215,23 +215,23 @@ public class ChangeDirectoryTest {
 		File file4 = new File("file4", "stuff", dir2);
 		dir2.addFile(file4);
 		shell.setCurrentDir(dir2);
-		// At this point: the storage system looks like this:
-		// Say we want to cd into dir2
+		//    At this point: the storage system looks like this:
+		//    Say we want to cd into dir2
 		//
-		// /
-		// file1
-		// file2
-		// dir1
-		// file3
-		// dir3
-		// dir4 <-- GOAL
-		// dir2 <-- CURRENT DIRECTORY
-		// file4
+		//    /
+		//        file1
+		//        file2
+		//        dir1
+		//	          file3
+		//	          dir3
+		//		          dir4 <-- GOAL
+		//        dir2 <-- CURRENT DIRECTORY
+		//	          file4
 		String[] parameters = {"cd", "/dir1/dir3/dir4"};
 		ChangeDirectory.performOutcome(shell, parameters, 0, null);
 		assertEquals(dir4, shell.getCurrentDir());
 	}
-
+	
 	@Test
 	public void testPerformOutcomeNonExistentAbsDirectory() {
 		File file1 = new File("file1", "stuff", shell.getRootDir());
@@ -251,23 +251,23 @@ public class ChangeDirectoryTest {
 		File file4 = new File("file4", "stuff", dir2);
 		dir2.addFile(file4);
 		shell.setCurrentDir(dir2);
-		// At this point: the storage system looks like this:
+		//    At this point: the storage system looks like this:
 		//
-		// /
-		// file1
-		// file2
-		// dir1
-		// file3
-		// dir3
-		// dir4
-		// dir2 <-- CURRENT DIRECTORY
-		// file4
+		//    /
+		//        file1
+		//        file2
+		//        dir1
+		//	          file3
+		//	          dir3
+		//		          dir4
+		//        dir2 <-- CURRENT DIRECTORY
+		//	          file4
 		String[] parameters = {"cd", "/dir2/dir1"};
 		ChangeDirectory.performOutcome(shell, parameters, 0, null);
 		assertEquals("cd: That is not a valid directory.",
 				consoleStreamCaptor.toString().trim());
 	}
-
+	
 	@Test
 	public void testPerformOutcomeNonExistentRelDirectory() {
 		File file1 = new File("file1", "stuff", shell.getRootDir());
@@ -287,17 +287,17 @@ public class ChangeDirectoryTest {
 		File file4 = new File("file4", "stuff", dir2);
 		dir2.addFile(file4);
 		shell.setCurrentDir(dir2);
-		// At this point: the storage system looks like this:
+		//    At this point: the storage system looks like this:
 		//
-		// /
-		// file1
-		// file2
-		// dir1
-		// file3
-		// dir3
-		// dir4
-		// dir2 <-- CURRENT DIRECTORY
-		// file4
+		//    /
+		//        file1
+		//        file2
+		//        dir1
+		//	          file3
+		//	          dir3
+		//		          dir4
+		//        dir2 <-- CURRENT DIRECTORY
+		//	          file4
 		String[] parameters = {"cd", "dir3"};
 		ChangeDirectory.performOutcome(shell, parameters, 0, null);
 		assertEquals("cd: That is not a valid directory.",
