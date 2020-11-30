@@ -269,4 +269,17 @@ public class ClientURLTest {
     }
   }
 
+  @Test
+  public void testPerformOutcomeWithSameTxtFile() {
+    String[] parameters = {"curl", "http://www.cs.cmu.edu/~spok/grimmtmp/073.txt"};
+    shell.setCurrentDir(dir1);
+
+    driver.ClientURL.performOutcome(shell, parameters, 0, stdOutFile);
+    int index = root.containsFile("073txt");
+    if (index != -1) {
+      File file = (File) root.getDirContents().get(index);
+      assertEquals("123", file.getContents());
+    }
+  }
+
 }
