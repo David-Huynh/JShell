@@ -190,10 +190,10 @@ public class JShell implements Serializable, JShellInterface {
 	}
 
 	/**
-	 * Checks if another object is equal to this JShell
+	 * Checks if another Object is equal to this JShell
 	 * 
 	 * @param o
-	 *            The other object
+	 *            The other Object
 	 * @return If they are equal
 	 */
 	@Override

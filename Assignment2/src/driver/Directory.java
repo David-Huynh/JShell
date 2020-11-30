@@ -64,6 +64,13 @@ public class Directory extends StorageUnit
 		this.parentDir = parentDir;
 	}
 
+	/**
+	 * Checks if another Object is equal to this Directory
+	 * 
+	 * @param o
+	 *            The other Object
+	 * @return If they are equal
+	 */
 	@Override
 	public boolean equals(Object o) {
 		if (o == null || getClass() != o.getClass()) {
@@ -73,6 +80,11 @@ public class Directory extends StorageUnit
 		return contents.equals(directory.contents);
 	}
 
+	/**
+	 * Provides the hashCode for this Directory
+	 * 
+	 * @return The hashCode
+	 */
 	@Override
 	public int hashCode() {
 		return Objects.hash(contents);
