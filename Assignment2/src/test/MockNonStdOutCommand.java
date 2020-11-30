@@ -15,7 +15,7 @@ public class MockNonStdOutCommand extends ShellCommand {
 	}
 
 	public static String getManual() {
-		return "cmd2 \nI am a command that produces StdOut.";
+		return "cmd2 \nI am a command that does not produce StdOut.";
 	}
 
 	public static void performOutcome(JShell shell, String[] parameters,
