@@ -121,7 +121,7 @@ public class MakeDirectory extends ShellCommand {
 		} else {
 			if (path.getPath().equals("/")) {
 				PrintError.reportError(shell, "mkdir",
-						"Root directory already exits!");
+						"Root directory already exists!");
 				return 0;
 			} else {
 				if (parent.isSubDir(elements[elements.length - 1]) == -1) {
@@ -132,7 +132,7 @@ public class MakeDirectory extends ShellCommand {
 					}
 				} else {
 					PrintError.reportError(shell, "mkdir",
-							"Directory already exits: " + path.getPath());
+							"Directory already exists: " + path.getPath());
 					return 0;
 				}
 			}
