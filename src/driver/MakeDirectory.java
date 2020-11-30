@@ -46,7 +46,7 @@ public class MakeDirectory extends ShellCommand {
 	public static boolean producesStdOut() {
 		return false;
 	}
-	
+
 	/**
 	 * Provides the manual for how to use this command
 	 *
@@ -98,8 +98,9 @@ public class MakeDirectory extends ShellCommand {
 			} else {
 				currDir = shell.getCurrentDir();
 			}
-			Directory parent = (Directory) path.verifyPath(shell, true, currDir);
-			//System.out.println("DIR NAME: "+parent.getName());
+			Directory parent = (Directory) path.verifyPath(shell, true,
+					currDir);
+			// System.out.println("DIR NAME: "+parent.getName());
 			if (parent == null) {
 				PrintError.reportError(shell, "mkdir",
 						"Directory does not exits: " + parameters[i]);
@@ -121,7 +122,8 @@ public class MakeDirectory extends ShellCommand {
 								parent.addFile(newDir);
 							} else {
 								PrintError.reportError(shell, "mkdir",
-										"Directory name cannot be the same as filename: "
+										"Directory name cannot be the same as "
+												+ "filename: "
 												+ elements[elements.length
 														- 1]);
 								return;

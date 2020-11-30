@@ -47,7 +47,7 @@ public class PrintWorkingDirectory extends ShellCommand {
 	public static boolean producesStdOut() {
 		return true;
 	}
-	
+
 	/**
 	 * Provides the manual for how to use this command
 	 * 

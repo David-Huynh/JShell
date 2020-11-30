@@ -49,7 +49,7 @@ public class Manual extends ShellCommand {
 	public static boolean producesStdOut() {
 		return true;
 	}
-	
+
 	/**
 	 * This is quite meta, provides the manual for how to use this command
 	 * 

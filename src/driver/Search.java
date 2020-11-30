@@ -98,7 +98,8 @@ public class Search extends ShellCommand {
 			} else {
 				currDir = shell.getCurrentDir();
 			}
-			Directory parent = (Directory) path.verifyPath(shell, true, currDir);
+			Directory parent = (Directory) path.verifyPath(shell, true,
+					currDir);
 			String name = parameters[parameters.length - 1]
 					.replaceAll("^\"+|\"+$", "");
 			recSearch(parent, name, parameters[i], stdout);

@@ -47,7 +47,7 @@ public class Echo extends ShellCommand {
 	public static boolean producesStdOut() {
 		return true;
 	}
-	
+
 	/**
 	 * Provides the manual for how to use this command
 	 * 
@@ -142,9 +142,10 @@ public class Echo extends ShellCommand {
 	 */
 	private static boolean errorHandle(JShell shell, String[] parsedParams,
 			int numArrow, Directory dir) {
-		if (numArrow != 0){
+		if (numArrow != 0) {
 			if (dir == null) {
-				PrintError.reportError(shell, "echo", "directory does not exist");
+				PrintError.reportError(shell, "echo",
+						"directory does not exist");
 				return true;
 			}
 		}
@@ -251,17 +252,20 @@ public class Echo extends ShellCommand {
 		String fileName = parsedParams[1]
 				.split("/")[parsedParams[1].split("/").length - 1];
 		int index = 0;
-		if (errorHandle(shell, parsedParams, numArrow, dir)) {return;}
-		if (dir != null){
+		if (errorHandle(shell, parsedParams, numArrow, dir)) {
+			return;
+		}
+		if (dir != null) {
 			index = dir.containsFile(fileName);
 		}
-		parsedParams[0] = parsedParams[0].substring(1, parsedParams[0].length() - 1);
+		parsedParams[0] = parsedParams[0].substring(1,
+				parsedParams[0].length() - 1);
 		if (numArrow == 0) { // Print string to shell command
 			stdout.sendLine(parsedParams[0]);
 			stdout.closeStream();
 			return;
 		}
-		if (dir.isSubDir(fileName)!= -1){
+		if (dir.isSubDir(fileName) != -1) {
 			PrintError.reportError(shell, "echo",
 					"There exists directory of the same name");
 			return;

@@ -90,7 +90,8 @@ public class LoadJShell extends ShellCommand {
 				in.close();
 			} catch (IOException e) {
 				System.out.println(
-						"File not found run saveJShell in another session first");
+						"File not found run saveJShell in another session "
+								+ "first");
 			} catch (ClassNotFoundException e) {
 				System.err.println(e.getMessage());
 			}

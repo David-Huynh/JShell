@@ -24,7 +24,8 @@ public class JShellTest {
 
 	/** Used to test print statements */
 	private final PrintStream printed = System.out;
-	private final ByteArrayOutputStream consoleStreamCaptor = new ByteArrayOutputStream();
+	private final ByteArrayOutputStream consoleStreamCaptor = 
+			new ByteArrayOutputStream();
 
 	/**
 	 * Sets up a JShell called shell.

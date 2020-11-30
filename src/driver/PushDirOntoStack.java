@@ -46,7 +46,7 @@ public class PushDirOntoStack extends ShellCommand {
 	public static boolean producesStdOut() {
 		return false;
 	}
-	
+
 	/**
 	 * Provides the manual for how to use this command
 	 * 
