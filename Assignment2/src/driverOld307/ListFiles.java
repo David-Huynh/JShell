@@ -28,7 +28,7 @@
 // sheet of CSC B07 and understand the consequences.
 // *********************************************************
 
-package driver;
+package driverOld307;
 
 import java.util.ArrayList;
 
@@ -62,7 +62,7 @@ public class ListFiles extends ShellCommand {
 				+ "specifies a file, print p \n    - If p specifies a "
 				+ "directory, print p, a colon, then the contents of that \n"
 				+ "      directory, then an extra new line. \n    - If p does "
-				+ "not exist, print a suitable message.\n If –R is present, recursively list all subdirectories of each given path";
+				+ "not exist, print a suitable message.\n If ï¿½R is present, recursively list all subdirectories of each given path";
 	}
 
 	/**

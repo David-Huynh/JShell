@@ -28,7 +28,7 @@
 // sheet of CSC B07 and understand the consequences.
 // *********************************************************
 
-package driver;
+package driverOld307;
 
 /**
  * The Tree command displays the entire file system as a tree on the shell.
@@ -53,7 +53,7 @@ public class Tree extends ShellCommand {
 	public static String getManual() {
 		return "tree\n" + "The the tree command takes in no input "
 				+ "parameter.\nWhen the user types in the tree you must, "
-				+ "starting from the root directory (‘\\’)\ndisplay the "
+				+ "starting from the root directory (ï¿½\\ï¿½)\ndisplay the "
 				+ "entire file"
 				+ "system as a tree. For every level of the tree, you must "
 				+ "\nindent by a tab character.";
