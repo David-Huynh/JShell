@@ -41,8 +41,8 @@ public class Path {
 	/** A string representation of the path to be checked */
 	private String path;
 	/**
-	 * The path stored as an array of strings, with the name of each directory/file
-	 * in the path being its own element in the array
+	 * The path stored as an array of strings, with the name of each
+	 * directory/file in the path being its own element in the array
 	 */
 	private String[] pathElements;
 	/**
@@ -52,11 +52,12 @@ public class Path {
 	private boolean absolute;
 
 	/**
-	 * Initializes a Path variable with the given string. Note that if the path is
-	 * absolute, index 0 of the array will be the empty string, and if path only
-	 * contains forward slashes, pathElements.length == 0
+	 * Initializes a Path variable with the given string. Note that if the path
+	 * is absolute, index 0 of the array will be the empty string, and if path
+	 * only contains forward slashes, pathElements.length == 0
 	 * 
-	 * @param path The string representation of the path to be stored
+	 * @param path
+	 *            The string representation of the path to be stored
 	 */
 	public Path(String path) {
 		this.setPath(path);
@@ -94,7 +95,8 @@ public class Path {
 	/**
 	 * Determines the starting directory of a path
 	 * 
-	 * @param shell The JShell where the file system is
+	 * @param shell
+	 *            The JShell where the file system is
 	 */
 	public Directory determineStartDir(JShellInterface shell) {
 		if (this.isAbsolute()) {
@@ -106,7 +108,8 @@ public class Path {
 	/**
 	 * Changes the path that the path variable refers to
 	 * 
-	 * @param path The string representation of the path to be referred to
+	 * @param path
+	 *            The string representation of the path to be referred to
 	 */
 	public void setPath(String path) {
 		this.path = path;
@@ -115,13 +118,16 @@ public class Path {
 	}
 
 	/**
-	 * Cycles through a path to see if the path is valid up to second last entry in path
+	 * Cycles through a path to see if the path is valid up to second last entry
+	 * in path
 	 * 
 	 * 
-	 * @param startDir   The start directory of the path
-	 * @param shell      The JShell to perform in
-	 * @return null, if path is invalid, final directory checked by the function if
-	 *         valid
+	 * @param startDir
+	 *            The start directory of the path
+	 * @param shell
+	 *            The JShell to perform in
+	 * @return null, if path is invalid, final directory checked by the function
+	 *         if valid
 	 */
 	private Directory cyclePath(Directory startDir, JShellInterface shell) {
 		String[] pathElements = this.getPathElements();
@@ -146,12 +152,13 @@ public class Path {
 	}
 
 	/**
-	 * Determines whether the given index of this.path.getPathElements() is valid in
-	 * the given directory
+	 * Determines whether the given index of this.path.getPathElements() is
+	 * valid in the given directory
 	 * 
-	 * @param directory The directory where the element of the path is checked in
-	 * @param index     The index of the element in path that is checked for
-	 *                  validity
+	 * @param directory
+	 *            The directory where the element of the path is checked in
+	 * @param index
+	 *            The index of the element in path that is checked for validity
 	 */
 	private Directory determinePathElement(Directory parentDir, int index) {
 		int directoryIndex = parentDir.isSubDir(pathElements[index]);
@@ -189,8 +196,10 @@ public class Path {
 	/**
 	 * Determines whether the final element is a valid file or directory
 	 * 
-	 * @param parentDir The directory where the final element should be stored
-	 * @return the final element as a StorageUnit if it exists/valid, null otherwise
+	 * @param parentDir
+	 *            The directory where the final element should be stored
+	 * @return the final element as a StorageUnit if it exists/valid, null
+	 *         otherwise
 	 */
 	private StorageUnit determineFinalElement(Directory parentDir) {
 		String[] pathElements = this.getPathElements();
@@ -226,14 +235,18 @@ public class Path {
 	/**
 	 * Determines if entire path is valid
 	 * 
-	 * @param shell        The JShell to perform in
-	 * @param returnParent Determines whether or not the parent of the final element
-	 *                     is returned
-	 * @param startDir	   The directory where cyclePath will begin in
+	 * @param shell
+	 *            The JShell to perform in
+	 * @param returnParent
+	 *            Determines whether or not the parent of the final element is
+	 *            returned
+	 * @param startDir
+	 *            The directory where cyclePath will begin in
 	 * @return Return the final StorageUnit in the path (or parent of final of
 	 *         returnParent true)
 	 */
-	public StorageUnit verifyPath(JShellInterface shell, boolean returnParent, Directory startDir) {
+	public StorageUnit verifyPath(JShellInterface shell, boolean returnParent,
+			Directory startDir) {
 
 		Directory parentOfFinal = this.cyclePath(startDir, shell);
 		if (returnParent) {
@@ -246,13 +259,15 @@ public class Path {
 
 		return null;
 	}
-	
+
 	/**
 	 * Determines if entire path is valid
 	 * 
-	 * @param shell        The JShell to perform in
-	 * @param returnParent Determines whether or not the parent of the final element
-	 *                     is returned
+	 * @param shell
+	 *            The JShell to perform in
+	 * @param returnParent
+	 *            Determines whether or not the parent of the final element is
+	 *            returned
 	 * @return Return the final StorageUnit in the path (or parent of final of
 	 *         returnParent true)
 	 */

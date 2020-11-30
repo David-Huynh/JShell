@@ -38,8 +38,8 @@ import java.util.Scanner;
 public class ClientURL extends ShellCommand {
 
 	/**
-	 * Returns if this command produces StdOut. (used by the Interpreter to know whether or not to
-	 * make a new file)
+	 * Returns if this command produces StdOut. (used by the Interpreter to know
+	 * whether or not to make a new file)
 	 *
 	 * @return Whether or not the command produces StdOut
 	 */
@@ -68,24 +68,29 @@ public class ClientURL extends ShellCommand {
 	}
 
 	/**
-	 * Creates a file given the address and content inside the current working directory
-	 * specified in shell and returns 1 if file was created and 0 if there was an error
-	 * creating the file.
+	 * Creates a file given the address and content inside the current working
+	 * directory specified in shell and returns 1 if file was created and 0 if
+	 * there was an error creating the file.
 	 *
-	 * @param address		 The String array containing the url that was split by "/"
-	 * @param content		 The String that contains the contents for the file to be created
-	 * @param shell      The JShell the command is to be performed on
+	 * @param address
+	 *            The String array containing the url that was split by "/"
+	 * @param content
+	 *            The String that contains the contents for the file to be
+	 *            created
+	 * @param shell
+	 *            The JShell the command is to be performed on
 	 *
-	 * @return An integer 1 if new file is created, 0 if there is an error creating
-	 * 				 the file and -1 if file with same name already exits
+	 * @return An integer 1 if new file is created, 0 if there is an error
+	 *         creating the file and -1 if file with same name already exits
 	 */
-	private static int createFile(String[] address, String content, JShell shell) {
+	private static int createFile(String[] address, String content,
+			JShell shell) {
 		Directory currDir = shell.getCurrentDir();
 		String fileName = address[address.length - 1];
 		fileName = fileName.replace(".", "");
 		if (currDir.containsFile(fileName) != -1) {
 			PrintError.reportError(shell, "curl",
-					"Filename already exits: "+fileName);
+					"Filename already exits: " + fileName);
 			return -1;
 		}
 		File nFile = new File(fileName, content, currDir);
@@ -97,14 +102,21 @@ public class ClientURL extends ShellCommand {
 	}
 
 	/**
-	 * Retrieves the file at a given URL and adds it to the JShell's current working directory.
+	 * Retrieves the file at a given URL and adds it to the JShell's current
+	 * working directory.
 	 *
-	 * @param shell      The JShell the command is to be performed on
-	 * @param parameters The parameters from the interpreter the command is to work with
-	 * @param outputType An integer representing the type of destination: 0 represents the command
-	 *                   line, 1 represents overwriting a file, and 2 represents appending to a file
-	 * @param outputFile If outputType is 1 or 2, this is the file we are overwriting/appending to,
-	 *                   otherwise null
+	 * @param shell
+	 *            The JShell the command is to be performed on
+	 * @param parameters
+	 *            The parameters from the interpreter the command is to work
+	 *            with
+	 * @param outputType
+	 *            An integer representing the type of destination: 0 represents
+	 *            the command line, 1 represents overwriting a file, and 2
+	 *            represents appending to a file
+	 * @param outputFile
+	 *            If outputType is 1 or 2, this is the file we are
+	 *            overwriting/appending to, otherwise null
 	 */
 	public static void performOutcome(JShell shell, String[] parameters,
 			int outputType, File outputFile) {
@@ -124,7 +136,7 @@ public class ClientURL extends ShellCommand {
 				}
 			}
 			urlInput.close();
-			//System.out.println(content);
+			// System.out.println(content);
 		} catch (MalformedURLException e) {
 			PrintError.reportError(shell, "curl", "Could not reach this URL.");
 			return;
@@ -133,11 +145,10 @@ public class ClientURL extends ShellCommand {
 					"Could not read from this URL.");
 			return;
 		}
-		String [] urlElements = parameters[1].split("/");
+		String[] urlElements = parameters[1].split("/");
 		int success = createFile(urlElements, content, shell);
 		if (success == 0) {
-			PrintError.reportError(shell, "curl",
-					"Unable to create file.");
+			PrintError.reportError(shell, "curl", "Unable to create file.");
 		}
 	}
 }
