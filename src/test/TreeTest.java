@@ -2,6 +2,8 @@ package test;
 
 import static org.junit.Assert.*;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.lang.reflect.Field;
 
 import org.junit.After;
@@ -19,6 +21,10 @@ public class TreeTest {
 	JShell shell;
 	File stdOutFile;
 
+	/** Used to test print statements */
+	private final PrintStream printed = System.out;
+	private final ByteArrayOutputStream consoleStreamCaptor = new ByteArrayOutputStream();
+
 	/**
 	 * Set up a new JShell and a File to send StdOut to.
 	 */
@@ -26,6 +32,7 @@ public class TreeTest {
 	public void setUp() {
 		shell = new JShell();
 		stdOutFile = new File("file", "", null);
+		System.setOut(new PrintStream(consoleStreamCaptor));
 	}
 
 	/**
@@ -38,6 +45,7 @@ public class TreeTest {
 		Field field = Storage.class.getDeclaredField("onlyReference");
 		field.setAccessible(true);
 		field.set(null, null);
+		System.setOut(printed);
 	}
 
 	/**
@@ -65,6 +73,8 @@ public class TreeTest {
 		Tree.performOutcome(shell, parameters, 1, stdOutFile);
 		assertEquals(stdOutFile.getContents(), "");
 		// i.e. assert that stdOutFile is empty
+		assertEquals("tree: Invalid number of arguments.",
+				consoleStreamCaptor.toString().trim());
 	}
 
 	/**

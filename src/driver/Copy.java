@@ -53,7 +53,7 @@ public class Copy extends ShellCommand {
 	 * @return The manual
 	 */
 	public static String getManual() {
-		return "mv OLDPATH NEWPATH\n"
+		return "cp OLDPATH NEWPATH\n"
 				+ "Copy item OLDPATH to NEWPATH. Both OLD-PATH and NEWPATH may "
 				+ "be " + "relative to \nthe current directory or may be "
 				+ "full paths. If "
