@@ -100,7 +100,6 @@ public class MakeDirectory extends ShellCommand {
 			}
 			Directory parent = (Directory) path.verifyPath(shell, true,
 					currDir);
-			// System.out.println("DIR NAME: "+parent.getName());
 			if (parent == null) {
 				PrintError.reportError(shell, "mkdir",
 						"Directory does not exits: " + parameters[i]);
