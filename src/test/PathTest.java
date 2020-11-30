@@ -13,13 +13,13 @@ import driver.*;
  */
 public class PathTest {
 
-	JShell shell;
+	MockJShell shell;
 	Directory root, dir1, dir2, dir21;
 	File file1, file2;
 
 	@Before
 	public void setUp() {
-		shell = new JShell();
+		shell = new MockJShell();
 		root = shell.getRootDir();
 
 		dir1 = new Directory("dir1", root);
@@ -58,13 +58,6 @@ public class PathTest {
 	public void testdetermineStartDirRel() {
 		Path path = new Path("hey/soul/sister");
 		assertEquals(path.determineStartDir(shell), dir1);
-	}
-
-	@Test
-	public void testVerifyEmptyPath() {
-		Path path = new Path("");
-		assertEquals(path.verifyPath(shell, false), null);
-		assertEquals(path.verifyPath(shell, true), null);
 	}
 	
 	@Test
