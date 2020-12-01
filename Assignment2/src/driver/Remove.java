@@ -55,22 +55,28 @@ public class Remove extends ShellCommand {
 	 * @return The manual
 	 */
 	public static String getManual() {
-		return "rm DIR\nRemoves the directory from the file system. This also " + "removes all the\nchildren of DIR.";
+		return "rm DIR\nRemoves the directory from the file system. This also "
+				+ "removes all the\nchildren of DIR.";
 	}
 
 	/**
 	 * Tell the JShell to remove a specified file/directory.
 	 * 
-	 * @param shell      The JShell the command is to be performed on
-	 * @param parameters The parameters from the interpreter the command is to work
-	 *                   with
-	 * @param outputType An integer representing the type of destination: 0
-	 *                   represents the command line, 1 represents overwriting a
-	 *                   file, and 2 represents appending to a file
-	 * @param outputFile If outputType is 1 or 2, this is the file we are
-	 *                   overwriting/appending to, otherwise null
+	 * @param shell
+	 *            The JShell the command is to be performed on
+	 * @param parameters
+	 *            The parameters from the interpreter the command is to work
+	 *            with
+	 * @param outputType
+	 *            An integer representing the type of destination: 0 represents
+	 *            the command line, 1 represents overwriting a file, and 2
+	 *            represents appending to a file
+	 * @param outputFile
+	 *            If outputType is 1 or 2, this is the file we are
+	 *            overwriting/appending to, otherwise null
 	 */
-	public static void performOutcome(JShell shell, String[] parameters, int outputType, File outputFile) {
+	public static void performOutcome(JShell shell, String[] parameters,
+			int outputType, File outputFile) {
 		boolean cont = true;
 
 		cont = checkParam(parameters.length, shell);
@@ -88,15 +94,16 @@ public class Remove extends ShellCommand {
 		}
 		StorageUnit toDeleteDir = toDelete.verifyPath(shell, false, startDir);
 		cont = checkDirectory(shell, toDeleteDir);
-		if(!cont) {
+		if (!cont) {
 			return;
 		}
 		cont = checkAncestor(shell, toDeleteDir);
-		if(!cont) {
+		if (!cont) {
 			return;
 		}
-		
-		ArrayList<StorageUnit> parentContents = ((Directory)toDeleteDir).getParentDir().getDirContents();
+
+		ArrayList<StorageUnit> parentContents = ((Directory) toDeleteDir)
+				.getParentDir().getDirContents();
 		int indexRemove = -1;
 		for (int i = 0; i < parentContents.size(); i++) {
 			if (parentContents.get(i).name.equals(toDeleteDir.name)) {
@@ -116,18 +123,22 @@ public class Remove extends ShellCommand {
 		}
 		return true;
 	}
-	
-	public static boolean checkDirectory(JShell shell, StorageUnit toDeleteDir) {
+
+	public static boolean checkDirectory(JShell shell,
+			StorageUnit toDeleteDir) {
 		if (toDeleteDir == null || !toDeleteDir.isDirectory()) {
-			PrintError.reportError(shell, "rm", "Cannot delete, no such directory.");
+			PrintError.reportError(shell, "rm",
+					"Cannot delete, no such directory.");
 			return false;
 		}
 		return true;
 	}
-	
+
 	public static boolean checkAncestor(JShell shell, StorageUnit toDeleteDir) {
 		if (toDeleteDir.checkParents(shell)) {
-			PrintError.reportError(shell, "rm", "Cannot remove current working directory or any of its " + "ancestors");
+			PrintError.reportError(shell, "rm",
+					"Cannot remove current working directory or any of its "
+							+ "ancestors");
 			return false;
 		}
 		return true;
