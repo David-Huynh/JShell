@@ -2,305 +2,47 @@ package test;
 
 import static org.junit.Assert.*;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import java.lang.reflect.Field;
-
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import driver.ChangeDirectory;
-import driver.Directory;
-import driver.File;
-import driver.JShell;
-import driver.PushDirOntoStack;
-import driver.Storage;
+import driver.*;
 
 public class ChangeDirectoryTest {
+  JShell shell;
+  Directory root;
+  Directory dir1;
 
-	JShell shell;
+  @Before
+  public void setUp() {
+    shell = new JShell();
+    root = shell.getRootDir();
+    dir1 = new Directory("dir1", root);
+    root.addFile(dir1);
+    shell.setCurrentDir(root);
+  }
 
-	/** Used to test print statements */
-	private final PrintStream printed = System.out;
-	private final ByteArrayOutputStream consoleStreamCaptor = 
-			new ByteArrayOutputStream();
+  @Test
+  public void testPerformOutComeWithRelativePath() {
+    String [] parameters = {"cd", "dir1"};
+    driver.ChangeDirectory.performOutcome(shell, parameters, 0, null);
+    assertEquals("dir1", shell.getCurrentDir().getName());
+    assertEquals("/", shell.getCurrentDir().getParentDir().getName());
+  }
 
-	/**
-	 * Set up a new JShell and a File to send StdOut to.
-	 */
-	@Before
-	public void setUp() {
-		shell = new JShell();
-		System.setOut(new PrintStream(consoleStreamCaptor));
+  @Test
+  public void testPerformOutComeWithAbsPath() {
+    String [] parameters = {"cd", "/dir1"};
+    driver.ChangeDirectory.performOutcome(shell, parameters, 0, null);
+    assertEquals("dir1", shell.getCurrentDir().getName());
+    assertEquals("/", shell.getCurrentDir().getParentDir().getName());
+  }
 
-	}
+  @Test
+  public void testPerformOutComeWithDotPath() {
+    String [] parameters = {"cd", "./dir1/.."};
+    driver.ChangeDirectory.performOutcome(shell, parameters, 0, null);
+    assertEquals("/", shell.getCurrentDir().getName());
+    assertEquals("/", shell.getCurrentDir().getParentDir().getName());
+  }
 
-	/**
-	 * Destroy the only reference to the storage system
-	 * 
-	 * @throws Exception
-	 */
-	@After
-	public void tearDown() throws Exception {
-		Field field = Storage.class.getDeclaredField("onlyReference");
-		field.setAccessible(true);
-		field.set(null, null);
-		System.setOut(printed);
-	}
-
-	@Test
-	public void testProducesStdOut() {
-		assertFalse(PushDirOntoStack.producesStdOut());
-	}
-
-	@Test
-	public void testGetManual() {
-		assertEquals("cd DIR \nChange directory to DIR, which may be relative "
-				+ "to the " + "current directory or \nmay be a full path. As "
-				+ "with Unix, .. "
-				+ "means a parent directory and a . means \nthe " + "current "
-				+ "directory. The directory must be /, the forwa"
-				+ "rd slash. The " + "foot of \nthe file system is a single sla"
-				+ "sh: /.  ", ChangeDirectory.getManual());
-	}
-
-	@Test
-	public void testPerformOutcomeOneParam() {
-		String[] parameters = {"cd"};
-		ChangeDirectory.performOutcome(shell, parameters, 0, null);
-		assertEquals("cd: Invalid number of arguments.",
-				consoleStreamCaptor.toString().trim());
-	}
-
-	@Test
-	public void testPerformOutcomeThreeParams() {
-		String[] parameters = {"cd", "/dir", "two"};
-		ChangeDirectory.performOutcome(shell, parameters, 0, null);
-		assertEquals("cd: Invalid number of arguments.",
-				consoleStreamCaptor.toString().trim());
-	}
-
-	@Test
-	public void testPerformOutcomeThreeParams2() {
-		String[] parameters = {"cd", "dir2", "dir3"};
-		ChangeDirectory.performOutcome(shell, parameters, 0, null);
-		assertEquals("cd: Invalid number of arguments.",
-				consoleStreamCaptor.toString().trim());
-	}
-
-	@Test
-	public void testPerformOutcomeGoalInCurrentDir() {
-		File file1 = new File("file1", "stuff", shell.getRootDir());
-		File file2 = new File("file2", "stuff", shell.getRootDir());
-		Directory dir1 = new Directory("dir1", shell.getRootDir());
-		Directory dir2 = new Directory("dir2", shell.getRootDir());
-		shell.getRootDir().addFile(file1);
-		shell.getRootDir().addFile(file2);
-		shell.getRootDir().addFile(dir1);
-		shell.getRootDir().addFile(dir2);
-		File file3 = new File("file3", "stuff", dir1);
-		dir1.addFile(file3);
-		Directory dir3 = new Directory("dir3", dir1);
-		dir1.addFile(dir3);
-		Directory dir4 = new Directory("dir4", dir3);
-		dir3.addFile(dir4);
-		File file4 = new File("file4", "stuff", dir2);
-		dir2.addFile(file4);
-		//    At this point: the storage system looks like this:
-		//    Say we want to cd into dir2
-		//
-		//    / <-- CURRENT DIRECTORY
-		//        file1
-		//        file2
-		//        dir1
-		//	          file3
-		//	          dir3
-		//		          dir4
-		//        dir2 <-- GOAL
-		//	          file4
-		String[] parameters = {"cd", "dir2"};
-		ChangeDirectory.performOutcome(shell, parameters, 0, null);
-		assertEquals(dir2, shell.getCurrentDir());
-	}
-	
-	@Test
-	public void testPerformOutcomePushNonRootDirOntoStack() {
-		File file1 = new File("file1", "stuff", shell.getRootDir());
-		File file2 = new File("file2", "stuff", shell.getRootDir());
-		Directory dir1 = new Directory("dir1", shell.getRootDir());
-		Directory dir2 = new Directory("dir2", shell.getRootDir());
-		shell.getRootDir().addFile(file1);
-		shell.getRootDir().addFile(file2);
-		shell.getRootDir().addFile(dir1);
-		shell.getRootDir().addFile(dir2);
-		File file3 = new File("file3", "stuff", dir1);
-		dir1.addFile(file3);
-		Directory dir3 = new Directory("dir3", dir1);
-		dir1.addFile(dir3);
-		Directory dir4 = new Directory("dir4", dir3);
-		dir3.addFile(dir4);
-		File file4 = new File("file4", "stuff", dir2);
-		dir2.addFile(file4);
-		shell.setCurrentDir(dir2);
-		//    At this point: the storage system looks like this:
-		//    Say we want to cd into dir1
-		//
-		//    /
-		//        file1
-		//        file2
-		//        dir1 <-- GOAL
-		//	          file3
-		//	          dir3
-		//		          dir4
-		//        dir2 <-- CURRENT DIRECTORY
-		//	          file4
-		String[] parameters = {"cd", "/dir1"};
-		ChangeDirectory.performOutcome(shell, parameters, 0, null);
-		assertEquals(dir1, shell.getCurrentDir());
-	}
-
-	@Test
-	public void testPerformOutcomeWithAbsPath() {
-		File file1 = new File("file1", "stuff", shell.getRootDir());
-		File file2 = new File("file2", "stuff", shell.getRootDir());
-		Directory dir1 = new Directory("dir1", shell.getRootDir());
-		Directory dir2 = new Directory("dir2", shell.getRootDir());
-		shell.getRootDir().addFile(file1);
-		shell.getRootDir().addFile(file2);
-		shell.getRootDir().addFile(dir1);
-		shell.getRootDir().addFile(dir2);
-		File file3 = new File("file3", "stuff", dir1);
-		dir1.addFile(file3);
-		Directory dir3 = new Directory("dir3", dir1);
-		dir1.addFile(dir3);
-		Directory dir4 = new Directory("dir4", dir3);
-		dir3.addFile(dir4);
-		File file4 = new File("file4", "stuff", dir2);
-		dir2.addFile(file4);
-		shell.setCurrentDir(dir2);
-		//    At this point: the storage system looks like this:
-		//    Say we want to cd into dir4
-		//
-		//    /
-		//        file1
-		//        file2
-		//        dir1
-		//	          file3
-		//	          dir3
-		//		          dir4 <-- GOAL
-		//        dir2 <-- CURRENT DIRECTORY
-		//	          file4
-		String[] parameters = {"cd", "../dir1/dir3/dir4"};
-		ChangeDirectory.performOutcome(shell, parameters, 0, null);
-		assertEquals(dir4, shell.getCurrentDir());
-	}
-	
-	@Test
-	public void testPerformOutcomeWithRelPath() {
-		File file1 = new File("file1", "stuff", shell.getRootDir());
-		File file2 = new File("file2", "stuff", shell.getRootDir());
-		Directory dir1 = new Directory("dir1", shell.getRootDir());
-		Directory dir2 = new Directory("dir2", shell.getRootDir());
-		shell.getRootDir().addFile(file1);
-		shell.getRootDir().addFile(file2);
-		shell.getRootDir().addFile(dir1);
-		shell.getRootDir().addFile(dir2);
-		File file3 = new File("file3", "stuff", dir1);
-		dir1.addFile(file3);
-		Directory dir3 = new Directory("dir3", dir1);
-		dir1.addFile(dir3);
-		Directory dir4 = new Directory("dir4", dir3);
-		dir3.addFile(dir4);
-		File file4 = new File("file4", "stuff", dir2);
-		dir2.addFile(file4);
-		shell.setCurrentDir(dir2);
-		//    At this point: the storage system looks like this:
-		//    Say we want to cd into dir2
-		//
-		//    /
-		//        file1
-		//        file2
-		//        dir1
-		//	          file3
-		//	          dir3
-		//		          dir4 <-- GOAL
-		//        dir2 <-- CURRENT DIRECTORY
-		//	          file4
-		String[] parameters = {"cd", "/dir1/dir3/dir4"};
-		ChangeDirectory.performOutcome(shell, parameters, 0, null);
-		assertEquals(dir4, shell.getCurrentDir());
-	}
-	
-	@Test
-	public void testPerformOutcomeNonExistentAbsDirectory() {
-		File file1 = new File("file1", "stuff", shell.getRootDir());
-		File file2 = new File("file2", "stuff", shell.getRootDir());
-		Directory dir1 = new Directory("dir1", shell.getRootDir());
-		Directory dir2 = new Directory("dir2", shell.getRootDir());
-		shell.getRootDir().addFile(file1);
-		shell.getRootDir().addFile(file2);
-		shell.getRootDir().addFile(dir1);
-		shell.getRootDir().addFile(dir2);
-		File file3 = new File("file3", "stuff", dir1);
-		dir1.addFile(file3);
-		Directory dir3 = new Directory("dir3", dir1);
-		dir1.addFile(dir3);
-		Directory dir4 = new Directory("dir4", dir3);
-		dir3.addFile(dir4);
-		File file4 = new File("file4", "stuff", dir2);
-		dir2.addFile(file4);
-		shell.setCurrentDir(dir2);
-		//    At this point: the storage system looks like this:
-		//
-		//    /
-		//        file1
-		//        file2
-		//        dir1
-		//	          file3
-		//	          dir3
-		//		          dir4
-		//        dir2 <-- CURRENT DIRECTORY
-		//	          file4
-		String[] parameters = {"cd", "/dir2/dir1"};
-		ChangeDirectory.performOutcome(shell, parameters, 0, null);
-		assertEquals("cd: That is not a valid directory.",
-				consoleStreamCaptor.toString().trim());
-	}
-	
-	@Test
-	public void testPerformOutcomeNonExistentRelDirectory() {
-		File file1 = new File("file1", "stuff", shell.getRootDir());
-		File file2 = new File("file2", "stuff", shell.getRootDir());
-		Directory dir1 = new Directory("dir1", shell.getRootDir());
-		Directory dir2 = new Directory("dir2", shell.getRootDir());
-		shell.getRootDir().addFile(file1);
-		shell.getRootDir().addFile(file2);
-		shell.getRootDir().addFile(dir1);
-		shell.getRootDir().addFile(dir2);
-		File file3 = new File("file3", "stuff", dir1);
-		dir1.addFile(file3);
-		Directory dir3 = new Directory("dir3", dir1);
-		dir1.addFile(dir3);
-		Directory dir4 = new Directory("dir4", dir3);
-		dir3.addFile(dir4);
-		File file4 = new File("file4", "stuff", dir2);
-		dir2.addFile(file4);
-		shell.setCurrentDir(dir2);
-		//    At this point: the storage system looks like this:
-		//
-		//    /
-		//        file1
-		//        file2
-		//        dir1
-		//	          file3
-		//	          dir3
-		//		          dir4
-		//        dir2 <-- CURRENT DIRECTORY
-		//	          file4
-		String[] parameters = {"cd", "dir3"};
-		ChangeDirectory.performOutcome(shell, parameters, 0, null);
-		assertEquals("cd: That is not a valid directory.",
-				consoleStreamCaptor.toString().trim());
-	}
 }
