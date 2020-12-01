@@ -93,7 +93,7 @@ public class ChangeDirectory extends ShellCommand {
 			parameters[1] = parameters[1].substring(1);
 		}
 		if (parameters[1].indexOf("/") == 0) {
-			PrintError.reportError(shell, "cd", "Invalid path.");
+			PrintError.reportError(shell, "cd", "That is not a valid path.");
 			return;
 		}
 		subDir = parameters[1].split("/"); // getting the sub-dir names in path
@@ -105,7 +105,7 @@ public class ChangeDirectory extends ShellCommand {
 			} else {
 				if (currDir.isSubDir(subDir[i]) == -1) {
 					PrintError.reportError(shell, "cd",
-							"That is not a valid directory.");
+							"That is not a valid path.");
 					return;
 				} else {
 					int index = currDir.isSubDir(subDir[i]);

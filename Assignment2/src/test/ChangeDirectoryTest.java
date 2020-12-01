@@ -32,6 +32,8 @@ package test;
 
 import static org.junit.Assert.*;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -41,6 +43,12 @@ public class ChangeDirectoryTest {
   JShell shell;
   Directory root;
   Directory dir1;
+  File stdOutFile;
+
+  /** Used to test print statements */
+  private final PrintStream printed = System.out;
+  private final ByteArrayOutputStream consoleStreamCaptor =
+      new ByteArrayOutputStream();
 
   @Before
   public void setUp() {
@@ -49,6 +57,18 @@ public class ChangeDirectoryTest {
     dir1 = new Directory("dir1", root);
     root.addFile(dir1);
     shell.setCurrentDir(root);
+    stdOutFile = new File("file", "", null);
+    System.setOut(new PrintStream(consoleStreamCaptor));
+  }
+
+  @Test
+  public void testGetManual() {
+    assertEquals("cd DIR \nChange directory to DIR, which may be relative to the "
+        + "current directory or \nmay be a full path. As with Unix, .. "
+        + "means a parent directory and a . means \nthe current "
+        + "directory. The directory must be /, the forward slash. The "
+        + "foot of \nthe file system is a single slash: /.  ",
+        driver.ChangeDirectory.getManual());
   }
 
   @Test
@@ -75,4 +95,24 @@ public class ChangeDirectoryTest {
     assertEquals("/", shell.getCurrentDir().getParentDir().getName());
   }
 
+  @Test
+  public void testPerformOutComeInvalidPathOne() {
+    String [] parameters = {"cd", "//"};
+    driver.ChangeDirectory.performOutcome(shell, parameters, 1, stdOutFile);
+    assertEquals("cd: That is not a valid path.", consoleStreamCaptor.toString().trim());
+  }
+
+  @Test
+  public void testPerformOutComeInvalidPathTwo() {
+    String [] parameters = {"cd", "/dir2"};
+    driver.ChangeDirectory.performOutcome(shell, parameters, 1, stdOutFile);
+    assertEquals("cd: That is not a valid path.", consoleStreamCaptor.toString().trim());
+  }
+
+  @Test
+  public void testPerformOutComeInvalidArg() {
+    String [] parameters = {"cd"};
+    driver.ChangeDirectory.performOutcome(shell, parameters, 1, stdOutFile);
+    assertEquals("cd: Invalid number of arguments.", consoleStreamCaptor.toString().trim());
+  }
 }
