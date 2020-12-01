@@ -32,6 +32,8 @@ package test;
 
 import static org.junit.Assert.*;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -42,6 +44,12 @@ public class ClientURLTest {
 	Directory root, dir1;
 	File file1;
 	File stdOutFile;
+
+	/** Used to test print statements */
+	private final PrintStream printed = System.out;
+	private final ByteArrayOutputStream consoleStreamCaptor =
+			new ByteArrayOutputStream();
+
 	String txtContents = "There was once a king who had an illness, and no "
 			+ "one believed that he\n"
 			+ "would come out of it with his life.  He had three sons w"
@@ -401,6 +409,7 @@ public class ClientURLTest {
 		dir1 = new Directory("dir1", root);
 		file1 = new File("073txt", "123", dir1);
 		stdOutFile = new File("file", "", null);
+		System.setOut(new PrintStream(consoleStreamCaptor));
 		dir1.addFile(file1);
 	}
 
@@ -435,13 +444,27 @@ public class ClientURLTest {
 		String[] parameters = {"curl",
 				"http://www.cs.cmu.edu/~spok/grimmtmp/073.txt"};
 		shell.setCurrentDir(dir1);
+		driver.ClientURL.performOutcome(shell, parameters, 1, stdOutFile);
+		assertEquals("curl: Filename already exists: 073txt",
+				consoleStreamCaptor.toString().trim());
+	}
 
-		driver.ClientURL.performOutcome(shell, parameters, 0, stdOutFile);
-		int index = root.containsFile("073txt");
-		if (index != -1) {
-			File file = (File) root.getDirContents().get(index);
-			assertEquals("123", file.getContents());
-		}
+	@Test
+	public void testPerformOutcomeInvalidNumArgs() {
+		String[] parameters = {"curl",
+				"http://www.cs.cmu.edu/~spok/grimmtmp/073.txt", "hello"};
+		driver.ClientURL.performOutcome(shell, parameters, 1, stdOutFile);
+		assertEquals("curl: Invalid number of arguments.",
+				consoleStreamCaptor.toString().trim());
+	}
+
+	@Test
+	public void testPerformOutcomeInvalidURL() {
+		String[] parameters = {"curl",
+				"http://collin.chan"};
+		driver.ClientURL.performOutcome(shell, parameters, 1, stdOutFile);
+		assertEquals("curl: Could not read from this URL.",
+				consoleStreamCaptor.toString().trim());
 	}
 
 }

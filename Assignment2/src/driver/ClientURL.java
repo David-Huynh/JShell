@@ -90,7 +90,7 @@ public class ClientURL extends ShellCommand {
 		fileName = fileName.replace(".", "");
 		if (currDir.containsFile(fileName) != -1) {
 			PrintError.reportError(shell, "curl",
-					"Filename already exits: " + fileName);
+					"Filename already exists: " + fileName);
 			return -1;
 		}
 		File nFile = new File(fileName, content, currDir);
@@ -136,7 +136,6 @@ public class ClientURL extends ShellCommand {
 				}
 			}
 			urlInput.close();
-			// System.out.println(content);
 		} catch (MalformedURLException e) {
 			PrintError.reportError(shell, "curl", "Could not reach this URL.");
 			return;
