@@ -21,8 +21,7 @@ public class InterpreterTest {
 
 	/** Used to test print statements */
 	private final PrintStream printed = System.out;
-	private final ByteArrayOutputStream consoleStreamCaptor = 
-			new ByteArrayOutputStream();
+	private final ByteArrayOutputStream consoleStreamCaptor = new ByteArrayOutputStream();
 
 	@Before
 	public void setUp() throws Exception {
@@ -85,8 +84,9 @@ public class InterpreterTest {
 	@Test
 	public void testInterpretUserCommandHasSpaces() {
 		Interpreter.interpret("   cmd1      so   here  "
-				+ "  is      some     whitespace        ", shell);
-		String want[] = {"cmd1", "so", "here", "is", "some", "whitespace"};
+				+ "  is      a load of     whitespace        ", shell);
+		String want[] = {"cmd1", "so", "here", "is", "a", "load", "of",
+				"whitespace"};
 		assertArrayEquals(MockStdOutCommand.receivedParams, want);
 	}
 
