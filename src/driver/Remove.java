@@ -116,6 +116,15 @@ public class Remove extends ShellCommand {
 		toDeleteDir = null;
 	}
 
+	/**
+	 * Checks number of parameters and prints error when needed
+	 * 
+	 * @param paramNum
+	 *            The number of wanted parameters
+	 * @param shell
+	 *            The shell in use
+	 * @return
+	 */
 	public static boolean checkParam(int paramNum, JShellInterface shell) {
 		if (paramNum != 2) {
 			PrintError.reportError(shell, "rm", "Invalid number of parameters");
@@ -124,6 +133,15 @@ public class Remove extends ShellCommand {
 		return true;
 	}
 
+	/**
+	 * Checks of a StorageUnit exists in a JShell's shell
+	 * 
+	 * @param shell
+	 *            The shell in use
+	 * @param toDeleteDir
+	 *            The StorageUnit to be deleted and checked
+	 * @return
+	 */
 	public static boolean checkDirectory(JShell shell,
 			StorageUnit toDeleteDir) {
 		if (toDeleteDir == null || !toDeleteDir.isDirectory()) {
@@ -134,6 +152,15 @@ public class Remove extends ShellCommand {
 		return true;
 	}
 
+	/**
+	 * Checks if a StorageUnit is an ancestor
+	 * 
+	 * @param shell
+	 *            The JShell in use
+	 * @param toDeleteDir
+	 *            The StorageUnit to be deleted and checked
+	 * @return
+	 */
 	public static boolean checkAncestor(JShell shell, StorageUnit toDeleteDir) {
 		if (toDeleteDir.checkParents(shell)) {
 			PrintError.reportError(shell, "rm",
