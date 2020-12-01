@@ -414,6 +414,22 @@ public class ClientURLTest {
 	}
 
 	@Test
+	public void testGetManual() {
+		assertEquals("curl URL\n"
+				+ "Retrieve the file at that URL and add it to the current "
+				+ "working directory.\n" + "Example1:\n"
+				+ "curl http://www.cs.cmu.edu/spok/grimmtmp/073.txt\n"
+				+ "Will get the contents of the file, "
+				+ "i.e. 073.txt and create a "
+				+ "file called 073.txt with the contents in \nthe current "
+				+ "working directory.\n" + "Example2:\n"
+				+ "curl http://www.ub.edu/gilcub/SIMPLE/simple.html\n"
+				+ "Will get the contents of the file, i.e. simple.html "
+				+ "(raw HTML) and create a file called simple.html with the\n"
+				+ "contents in the current working directory.", driver.ClientURL.getManual());
+	}
+
+	@Test
 	public void testPerformOutcomeWithoutSameTxtFile() {
 		String[] parameters = {"curl",
 				"http://www.cs.cmu.edu/~spok/grimmtmp/073.txt"};

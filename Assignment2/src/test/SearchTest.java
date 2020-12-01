@@ -64,6 +64,17 @@ public class SearchTest {
   }
 
   @Test
+  public void testGetManual() {
+    assertEquals("search path ... -type [f|d] -name expression\n"
+        + "This command takes in at least three arguments. "
+        + "Searches for files/directories\nas specified after "
+        + "-type that has the name expression which is specified "
+        + "after -name.\nHowever, if path or [f|d] or "
+        + "expression is not specified, then give back an error",
+        driver.Search.getManual());
+  }
+
+  @Test
   public void testPerformOutComeForExistingDir() {
     String [] parameters = {"search", "/", "-type", "d", "-name", "\"dir1\""};
     driver.Search.performOutcome(shell, parameters, 1, stdOutFile);
@@ -77,6 +88,53 @@ public class SearchTest {
     String [] parameters = {"search", "/", "-type", "f", "-name", "\"file1\""};
     driver.Search.performOutcome(shell, parameters, 1, stdOutFile);
     assertEquals("dir1/file1", stdOutFile.getContents());
+  }
+
+  @Test
+  public void testPerformOutComeForNonExistingDir() {
+    String [] parameters = {"search", "/", "-type", "d", "-name", "\"dir3\""};
+    driver.Search.performOutcome(shell, parameters, 1, stdOutFile);
+    assertEquals("", stdOutFile.getContents());
+  }
+
+  @Test
+  public void testPerformOutComeWithNoTypeOrName() {
+    String [] parameters = {"search", "/", "ty", "d", "-name", "\"dir3\""};
+    driver.Search.performOutcome(shell, parameters, 1, stdOutFile);
+    assertEquals("search: -type and -name are required parameters.",
+        consoleStreamCaptor.toString().trim());
+  }
+
+  @Test
+  public void testPerformOutComeWithNoTypeBeforeName() {
+    String [] parameters = {"search", "/", "-type", "s", "-name", "\"dir3\""};
+    driver.Search.performOutcome(shell, parameters, 1, stdOutFile);
+    assertEquals("search: Please specify search type after -type [f/d]",
+        consoleStreamCaptor.toString().trim());
+  }
+
+  @Test
+  public void testPerformOutComeWithNoDoubleQuotes() {
+    String [] parameters = {"search", "/", "-type", "d", "-name", "dir3"};
+    driver.Search.performOutcome(shell, parameters, 1, stdOutFile);
+    assertEquals("search: Please enclose name with double quotes (\"\")",
+        consoleStreamCaptor.toString().trim());
+  }
+
+  @Test
+  public void testPerformOutComeWithTwoNames() {
+    String [] parameters = {"search", "/", "-type", "d", "-name", "\"dir3\"", "\"dir4\""};
+    driver.Search.performOutcome(shell, parameters, 1, stdOutFile);
+    assertEquals("search: Please specify only one name",
+        consoleStreamCaptor.toString().trim());
+  }
+
+  @Test
+  public void testPerformOutComeInvalNumArgs() {
+    String [] parameters = {"search", "/"};
+    driver.Search.performOutcome(shell, parameters, 1, stdOutFile);
+    assertEquals("search: Invalid number of arguments.",
+        consoleStreamCaptor.toString().trim());
   }
 
 }
