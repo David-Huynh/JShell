@@ -202,7 +202,8 @@ public class Directory extends StorageUnit
 	}
 	
 	/**
-	 * Sets this and all StorageUnits inside this to be null, does not remove references to this
+	 * Sets this and all StorageUnits inside this to be null, does not remove
+	 *  references to this
 	 * 
 	 */
 	public void delete() {
@@ -210,7 +211,12 @@ public class Directory extends StorageUnit
 		this.deleteRec();
 	}
 	
-	public void deleteRec() {
+	/**
+	 * Sets this and all StorageUnits inside this to be null, does not 
+	 * remove references to this, helper function for delete()
+	 * 
+	 */
+	protected void deleteRec() {
 		this.parentDir = null;
 		this.name = null;
 		
