@@ -64,6 +64,6 @@ public class SaveJShellTest {
 		SaveJShell.performOutcome(shell,
 				new String[]{"saveJShell", " ./test.txt"}, 0, null);
 		File f = new File("./test.txt");
-		assertEquals(f.isFile(), true);
+		assertEquals(File.class, f.getClass());
 	}
 }
