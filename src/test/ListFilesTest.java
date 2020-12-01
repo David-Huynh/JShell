@@ -433,4 +433,43 @@ public class ListFilesTest {
 				+ "directory.",
 				consoleStreamCaptor.toString().trim());
 	}
+	
+	@Test
+	public void testPerformOutcomePathExistentUpToSomeExtentButLastIsNot() {
+		File file1 = new File("file1", "stuff", shell.getRootDir());
+		File file2 = new File("file2", "stuff", shell.getRootDir());
+		Directory dir1 = new Directory("dir1", shell.getRootDir());
+		Directory dir2 = new Directory("dir2", shell.getRootDir());
+		shell.getRootDir().addFile(file1);
+		shell.getRootDir().addFile(file2);
+		shell.getRootDir().addFile(dir1);
+		shell.getRootDir().addFile(dir2);
+		File file3 = new File("file3", "stuff", dir1);
+		dir1.addFile(file3);
+		Directory dir3 = new Directory("dir3", dir1);
+		dir1.addFile(dir3);
+		Directory dir4 = new Directory("dir4", dir3);
+		dir3.addFile(dir4);
+		File file4 = new File("file4", "stuff", dir2);
+		dir2.addFile(file4);
+		// At this point: the storage system looks like this as a tree:
+		//    /
+		//        file1
+		//        file2
+		//        dir1
+		//	          file3
+		//	          dir3
+		//		          dir4
+		//        dir2
+		//	          file4
+		String[] parameters = {"ls", "/dir1/dir3/dir4/dir5/dir10"};
+		ListFiles.performOutcome(shell, parameters, 1, stdOutFile);
+		// Test that the stack picked up the root and the shell changed its
+		// current directory to dir2
+		assertEquals("", stdOutFile.getContents());
+		assertEquals("ls: Cannot access '/dir1/dir3/dir4/dir5/dir10', "
+				+ "no such file or "
+				+ "directory.",
+				consoleStreamCaptor.toString().trim());
+	}
 }
