@@ -120,7 +120,7 @@ public class ListFiles extends ShellCommand {
 	 * @param dir
 	 *            The Directory whose contents are to be send to stdout
 	 */
-	public static void list(StdOut stdout, Directory dir) {
+	private static void list(StdOut stdout, Directory dir) {
 		// Function used to print all files in directory
 		for (StorageUnit unit : dir) { // Uses dir's iterator
 			stdout.sendLine(unit.name);
@@ -141,7 +141,7 @@ public class ListFiles extends ShellCommand {
 	 *            Whether to print the directories recursively
 	 * @return True, if the path is valid, false otherwise
 	 */
-	public static boolean parseParameter(JShell shell, String userInput,
+	private static boolean parseParameter(JShell shell, String userInput,
 			StdOut stdout, boolean recursive) {
 		Path path = new Path(userInput);
 		StorageUnit listThis = path.verifyPath(shell, false);
