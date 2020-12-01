@@ -114,11 +114,6 @@ public class PrintHistory extends ShellCommand {
 				PrintError.reportError(shell, "history", "Invalid number.");
 				return;
 			}
-			if (counter < 0) {
-				PrintError.reportError(shell, "history",
-						"Number specified is not possible.");
-				return;
-			}
 			int currIndex = 0;
 			for (String cmd : his) { // Uses Iterator for his
 				if (currIndex > his.getSize() - counter - 1)
