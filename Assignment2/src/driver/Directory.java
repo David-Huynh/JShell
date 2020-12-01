@@ -118,6 +118,7 @@ public class Directory extends StorageUnit
 	 */
 	public void delFile(StorageUnit fileName) {
 		contents.remove(fileName);
+		fileName.setParentDir(null);
 	}
 
 	/**
@@ -199,7 +200,31 @@ public class Directory extends StorageUnit
 		}
 		return clonedDir;
 	}
-
+	
+	/**
+	 * Sets this and all StorageUnits inside this to be null, does not remove references to this
+	 * 
+	 */
+	public void delete() {
+		this.parentDir.contents.remove(this);
+		this.deleteRec();
+	}
+	
+	public void deleteRec() {
+		this.parentDir = null;
+		this.name = null;
+		
+		for(StorageUnit x: this.contents) {
+			x.deleteRec();
+			x = null;
+		}
+		
+		for(int i = 0; i < this.contents.size(); i++) {
+			this.contents.remove(i);
+		}
+		
+		this.contents = null;
+	}
 	/**
 	 * ContentIterator is a nested class that iterates through StorageUnits in a
 	 * Directory.
@@ -240,7 +265,6 @@ public class Directory extends StorageUnit
 			currIndex = currIndex + 1;
 			return toIterate.get(currIndex - 1);
 		}
-
 	}
 
 	/**

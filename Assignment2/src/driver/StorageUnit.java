@@ -234,4 +234,9 @@ public abstract class StorageUnit implements Serializable {
 	 * @return The cloned StorageUnit
 	 */
 	public abstract StorageUnit clone(Directory parentDir);
+
+	/** Sets all instance variables to null */
+	public abstract void delete();
+
+	protected abstract void deleteRec();
 }
