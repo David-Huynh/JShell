@@ -54,8 +54,8 @@ public class ShellCommandTest {
 	}
 
 	/**
-	 * Test performOutcome We will only use cmd1 because it does not differ from
-	 * cmd2 in this method.
+	 * Test performOutcome. We will only use cmd1 because it does not differ
+	 * from cmd2 in this method.
 	 */
 	@Test
 	public void testPerformOutcome() {

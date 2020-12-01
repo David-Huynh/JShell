@@ -12,7 +12,7 @@ import driver.JShell;
 import driver.PrintWorkingDirectory;
 
 public class PrintWorkingDirectoryTest {
-	
+
 	JShell shell;
 	Directory root, dir1, dir2, dir21, dir12;
 	File result;
@@ -31,7 +31,7 @@ public class PrintWorkingDirectoryTest {
 		root.addFile(dir2);
 		dir2.addFile(dir21);
 		dir1.addFile(dir12);
-		
+
 		result = new File("name", "", null);
 	}
 
@@ -42,7 +42,7 @@ public class PrintWorkingDirectoryTest {
 		PrintWorkingDirectory.performOutcome(shell, input, 1, result);
 		assertEquals(result.getContents(), "");
 	}
-	
+
 	@Test
 	public void testInvalidParamRandom() {
 		shell.setCurrentDir(root);
@@ -50,7 +50,7 @@ public class PrintWorkingDirectoryTest {
 		PrintWorkingDirectory.performOutcome(shell, input, 1, result);
 		assertEquals(result.getContents(), "");
 	}
-	
+
 	@Test
 	public void testRoot() {
 		shell.setCurrentDir(root);
@@ -58,7 +58,7 @@ public class PrintWorkingDirectoryTest {
 		PrintWorkingDirectory.performOutcome(shell, input, 1, result);
 		assertEquals(result.getContents(), "/");
 	}
-	
+
 	@Test
 	public void testDirectoryDepth1() {
 		shell.setCurrentDir(dir1);
@@ -66,7 +66,7 @@ public class PrintWorkingDirectoryTest {
 		PrintWorkingDirectory.performOutcome(shell, input, 1, result);
 		assertEquals(result.getContents(), "/dir1/");
 	}
-	
+
 	@Test
 	public void testDirectoryDiffDepth1() {
 		shell.setCurrentDir(dir2);
@@ -74,7 +74,7 @@ public class PrintWorkingDirectoryTest {
 		PrintWorkingDirectory.performOutcome(shell, input, 1, result);
 		assertEquals(result.getContents(), "/dir2/");
 	}
-	
+
 	@Test
 	public void testDirectoryDepth2() {
 		shell.setCurrentDir(dir21);
@@ -82,7 +82,7 @@ public class PrintWorkingDirectoryTest {
 		PrintWorkingDirectory.performOutcome(shell, input, 1, result);
 		assertEquals(result.getContents(), "/dir2/dir21/");
 	}
-	
+
 	@Test
 	public void testDirectoryDepth2SameNameDiffLocation() {
 		shell.setCurrentDir(dir12);
@@ -90,6 +90,5 @@ public class PrintWorkingDirectoryTest {
 		PrintWorkingDirectory.performOutcome(shell, input, 1, result);
 		assertEquals(result.getContents(), "/dir1/dir21/");
 	}
-	
 
 }

@@ -130,6 +130,16 @@ public class TreeTest {
 		dir3.addFile(dir4);
 		File file4 = new File("file4", "stuff", dir2);
 		dir2.addFile(file4);
+		//    At this point: the tree looks like this:
+		//    /
+		//        file1
+		//        file2
+		//        dir1
+		//	          file3
+		//	          dir3
+		//		          dir4
+		//        dir2
+		//	          file4
 		String[] parameters = {"tree"};
 		Tree.performOutcome(shell, parameters, 1, stdOutFile);
 		assertEquals(stdOutFile.getContents(),
