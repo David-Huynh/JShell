@@ -40,8 +40,6 @@ import java.util.*;
 
 public class Search extends ShellCommand {
 
-	private static ArrayList<String> paths = new ArrayList<String>();
-
 	/**
 	 * Returns if this command produces StdOut. (used by the Interpreter to know
 	 * whether or not to make a new file)
@@ -52,14 +50,6 @@ public class Search extends ShellCommand {
 		return true;
 	}
 
-	/**
-	 * Getter method for ArrayList that stores all paths after recSearch is done
-	 *
-	 * @return String ArrayList that store all paths
-	 */
-	public static ArrayList<String> getPaths() {
-		return paths;
-	}
 
 	/**
 	 * Provides the manual for how to use this command
@@ -113,12 +103,9 @@ public class Search extends ShellCommand {
 					currDir);
 			String name = parameters[parameters.length - 1]
 					.replaceAll("^\"+|\"+$", "");
-			recSearch(parent, name, parameters[tIndex+1]);
+			recSearch(parent, name, parameters[tIndex+1], stdout);
 		}
-		for (String p: paths) {
-			stdout.sendLine(p);
-		}
-		paths.clear();
+
 		stdout.closeStream();
 	}
 
@@ -134,9 +121,11 @@ public class Search extends ShellCommand {
 	 * @param type
 	 *            A string that signifies the type (f - for file and d - for
 	 *            directory)
+	 * @param stdout
+	 * 						Output stream
 	 *
 	 */
-	public static void recSearch(Directory parent, String name, String type) {
+	public static void recSearch(Directory parent, String name, String type, StdOut stdout) {
 		ArrayList<StorageUnit> contents = parent.getDirContents();
 		// Base Case
 		if (parent.getDirContents().isEmpty()) {
@@ -148,21 +137,21 @@ public class Search extends ShellCommand {
 				if (parent.getName().equals("/")) {
 					finalParent = "";
 				}
-				paths.add(finalParent+"/"+name);
+				stdout.sendLine(finalParent+"/"+name);
 			}
 		} else {
 			if (parent.isSubDir(name) != -1) {
 				if (parent.getName().equals("/")) {
 					finalParent = "";
 				}
-				paths.add(finalParent+"/"+name);
+				stdout.sendLine(finalParent+"/"+name);
 			}
 		}
 		// Recursive Case
 		for (StorageUnit sub : contents) {
 			if (sub.getClass().getSimpleName().equals("Directory")) {
 				Directory temp = (Directory) sub;
-				recSearch(temp, name, type);
+				recSearch(temp, name, type, stdout);
 			}
 		}
 	}
