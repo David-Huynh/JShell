@@ -200,35 +200,35 @@ public class Directory extends StorageUnit
 		}
 		return clonedDir;
 	}
-	
+
 	/**
 	 * Sets this and all StorageUnits inside this to be null, does not remove
-	 *  references to this
+	 * references to this
 	 * 
 	 */
 	public void delete() {
 		this.parentDir.contents.remove(this);
 		this.deleteRec();
 	}
-	
+
 	/**
-	 * Sets this and all StorageUnits inside this to be null, does not 
-	 * remove references to this, helper function for delete()
+	 * Sets this and all StorageUnits inside this to be null, does not remove
+	 * references to this, helper function for delete()
 	 * 
 	 */
 	protected void deleteRec() {
 		this.parentDir = null;
 		this.name = null;
-		
-		for(StorageUnit x: this.contents) {
+
+		for (StorageUnit x : this.contents) {
 			x.deleteRec();
 			x = null;
 		}
-		
-		for(int i = 0; i < this.contents.size(); i++) {
+
+		for (int i = 0; i < this.contents.size(); i++) {
 			this.contents.remove(i);
 		}
-		
+
 		this.contents = null;
 	}
 	/**

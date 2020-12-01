@@ -101,10 +101,13 @@ public class PopDirFromStack extends ShellCommand {
 		}
 	}
 
-	/**Check if the number of parameters the user enters is valid
+	/**
+	 * Check if the number of parameters the user enters is valid
 	 * 
-	 * @param paramNum The number of parameters the user entered
-	 * @param shell The JShell where the file system is
+	 * @param paramNum
+	 *            The number of parameters the user entered
+	 * @param shell
+	 *            The JShell where the file system is
 	 * @return True if paramNum is 1, false otherwise
 	 */
 	public static boolean checkParam(int paramNum, JShellInterface shell) {
@@ -116,10 +119,13 @@ public class PopDirFromStack extends ShellCommand {
 		return true;
 	}
 
-	/**Check if the stack size is valid
+	/**
+	 * Check if the stack size is valid
 	 * 
-	 * @param stackSize The size of the directory stack
-	 * @param shell The JShell where the directory stack is located
+	 * @param stackSize
+	 *            The size of the directory stack
+	 * @param shell
+	 *            The JShell where the directory stack is located
 	 * @return True if paramNum is not 0, false if 0
 	 */
 	public static boolean checkStackSize(int stackSize, JShellInterface shell) {

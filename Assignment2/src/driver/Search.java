@@ -50,7 +50,6 @@ public class Search extends ShellCommand {
 		return true;
 	}
 
-
 	/**
 	 * Provides the manual for how to use this command
 	 *
@@ -103,7 +102,7 @@ public class Search extends ShellCommand {
 					currDir);
 			String name = parameters[parameters.length - 1]
 					.replaceAll("^\"+|\"+$", "");
-			recSearch(parent, name, parameters[tIndex+1], stdout);
+			recSearch(parent, name, parameters[tIndex + 1], stdout);
 		}
 
 		stdout.closeStream();
@@ -122,10 +121,11 @@ public class Search extends ShellCommand {
 	 *            A string that signifies the type (f - for file and d - for
 	 *            directory)
 	 * @param stdout
-	 * 						Output stream
+	 *            Output stream
 	 *
 	 */
-	public static void recSearch(Directory parent, String name, String type, StdOut stdout) {
+	public static void recSearch(Directory parent, String name, String type,
+			StdOut stdout) {
 		ArrayList<StorageUnit> contents = parent.getDirContents();
 		// Base Case
 		if (parent.getDirContents().isEmpty()) {
@@ -137,14 +137,14 @@ public class Search extends ShellCommand {
 				if (parent.getName().equals("/")) {
 					finalParent = "";
 				}
-				stdout.sendLine(finalParent+"/"+name);
+				stdout.sendLine(finalParent + "/" + name);
 			}
 		} else {
 			if (parent.isSubDir(name) != -1) {
 				if (parent.getName().equals("/")) {
 					finalParent = "";
 				}
-				stdout.sendLine(finalParent+"/"+name);
+				stdout.sendLine(finalParent + "/" + name);
 			}
 		}
 		// Recursive Case
