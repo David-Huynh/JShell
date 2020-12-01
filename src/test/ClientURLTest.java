@@ -47,7 +47,7 @@ public class ClientURLTest {
 
 	/** Used to test print statements */
 	private final PrintStream printed = System.out;
-	private final ByteArrayOutputStream consoleStreamCaptor =
+	private final ByteArrayOutputStream consoleStreamCaptor = 
 			new ByteArrayOutputStream();
 
 	String txtContents = "There was once a king who had an illness, and no "
@@ -426,7 +426,8 @@ public class ClientURLTest {
 				+ "curl http://www.ub.edu/gilcub/SIMPLE/simple.html\n"
 				+ "Will get the contents of the file, i.e. simple.html "
 				+ "(raw HTML) and create a file called simple.html with the\n"
-				+ "contents in the current working directory.", driver.ClientURL.getManual());
+				+ "contents in the current working " + "directory.",
+				driver.ClientURL.getManual());
 	}
 
 	@Test
@@ -476,8 +477,7 @@ public class ClientURLTest {
 
 	@Test
 	public void testPerformOutcomeInvalidURL() {
-		String[] parameters = {"curl",
-				"http://collin.chan"};
+		String[] parameters = {"curl", "http://collin.chan"};
 		driver.ClientURL.performOutcome(shell, parameters, 1, stdOutFile);
 		assertEquals("curl: Could not read from this URL.",
 				consoleStreamCaptor.toString().trim());
