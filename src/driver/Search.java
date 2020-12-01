@@ -170,7 +170,7 @@ public class Search extends ShellCommand {
 	private static int isValid(JShell shell, String[] parameters) {
 		if (parameters.length < 6) {
 			PrintError.reportError(shell, "search",
-					"This command does not produce stdout.");
+					"Invalid number of arguments.");
 			return -1;
 		}
 		int tIndex = 0;

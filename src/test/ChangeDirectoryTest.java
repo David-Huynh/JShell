@@ -113,6 +113,7 @@ public class ChangeDirectoryTest {
   public void testPerformOutComeInvalidArg() {
     String [] parameters = {"cd"};
     driver.ChangeDirectory.performOutcome(shell, parameters, 1, stdOutFile);
-    assertEquals("cd: Invalid number of arguments.", consoleStreamCaptor.toString().trim());
+    assertEquals("cd: Invalid number of arguments.",
+        consoleStreamCaptor.toString().trim());
   }
 }
