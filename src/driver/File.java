@@ -106,4 +106,17 @@ public class File extends StorageUnit {
 	public File clone(Directory parentDir) {
 		return new File(this.name, this.contents, parentDir);
 	}
+	
+	/** Sets all instance variables to null */
+	public void delete() {
+		this.contents = null;
+		this.parentDir = null;
+		this.name = null;
+	}
+
+	@Override
+	protected void deleteRec() {
+		// TODO Auto-generated method stub
+		
+	}
 }

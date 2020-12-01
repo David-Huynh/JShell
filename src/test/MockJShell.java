@@ -30,6 +30,7 @@
 
 package test;
 
+import java.util.HashMap;
 import java.util.Stack;
 
 import driver.Directory;
@@ -72,5 +73,10 @@ public class MockJShell implements JShellInterface {
 	@Override
 	public Stack<Directory> getDirStack() {
 		return dirStack;
+	}
+
+	public void exit() {
+		// TODO Auto-generated method stub
+		
 	}
 }

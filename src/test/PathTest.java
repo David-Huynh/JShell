@@ -32,7 +32,9 @@ package test;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import driver.*;
@@ -43,12 +45,12 @@ import driver.*;
  */
 public class PathTest {
 
-	MockJShell shell;
-	Directory root, dir1, dir2, dir21;
-	File file1, file2;
+	static MockJShell shell;
+	static Directory root, dir1, dir2, dir21;
+	static File file1, file2;
 
-	@Before
-	public void setUp() {
+	@BeforeClass
+	public static void setUpBefore() {
 		shell = new MockJShell();
 		root = shell.getRootDir();
 
@@ -63,7 +65,10 @@ public class PathTest {
 		dir1.addFile(file1);
 		dir2.addFile(dir21);
 		dir21.addFile(file2);
-
+	}
+	
+	@Before
+	public void setUp() {
 		shell.setCurrentDir(dir1);
 	}
 
